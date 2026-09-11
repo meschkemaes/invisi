@@ -12,8 +12,8 @@ Site público da **Invisi**, uma LawTech brasileira em fase de validação volta
 
 ## Acesso público
 
-- Site: https://meschkemaes.github.io/invisi/
-- Pesquisa: https://meschkemaes.github.io/invisi/pesquisa.html
+- Site: https://invisi.com.br/
+- Pesquisa: https://invisi.com.br/pesquisa.html
 
 ## Execução local
 
