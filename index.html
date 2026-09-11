@@ -1,354 +1,775 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A Invisi identifica a exposição de dados pessoais de empresários e conduz solicitações de remoção e desindexação quando aplicáveis, com acompanhamento por 1 ano.">
-  <meta name="theme-color" content="#071a2b">
-  <meta property="og:title" content="Invisi | Privacidade para quem empreende">
-  <meta property="og:description" content="Sua empresa deve ser pública. Sua vida, não.">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="pt_BR">
-  <meta property="og:url" content="https://meschkemaes.github.io/invisi/">
-  <link rel="canonical" href="https://meschkemaes.github.io/invisi/">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
-  <title>Invisi | Privacidade para quem empreende</title>
-</head>
-<body>
-  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="A Invisi identifica a exposição de dados pessoais de empresários e conduz solicitações de remoção e desindexação quando aplicáveis, com acompanhamento por 1 ano."
+        />
+        <meta name="theme-color" content="#071a2b" />
+        <meta
+            property="og:title"
+            content="Invisi | Privacidade para quem empreende"
+        />
+        <meta
+            property="og:description"
+            content="Sua empresa deve ser pública. Sua vida, não."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="pt_BR" />
+        <meta
+            property="og:url"
+            content="https://meschkemaes.github.io/invisi/"
+        />
+        <link rel="canonical" href="https://meschkemaes.github.io/invisi/" />
+        <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+        <link rel="stylesheet" href="styles.css" />
+        <title>Invisi | Privacidade para quem empreende</title>
+    </head>
+    <body>
+        <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 
-  <header class="site-header" id="inicio">
-    <div class="container header-inner">
-      <a class="brand" href="#inicio" aria-label="Invisi, página inicial">
-        <svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true">
-          <path d="M22 3 38 9v11c0 10.4-6.5 17.2-16 21C12.5 37.2 6 30.4 6 20V9l16-6Z"/>
-          <path d="M14 22s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6Z"/>
-          <circle cx="22" cy="22" r="2.5"/>
-        </svg>
-        <span>invisi</span>
-      </a>
+        <header class="site-header" id="inicio">
+            <div class="container header-inner">
+                <a
+                    class="brand"
+                    href="#inicio"
+                    aria-label="Invisi, página inicial"
+                >
+                    <svg
+                        class="brand-mark"
+                        viewBox="0 0 44 44"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M22 3 38 9v11c0 10.4-6.5 17.2-16 21C12.5 37.2 6 30.4 6 20V9l16-6Z"
+                        />
+                        <path d="M14 22s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6Z" />
+                        <circle cx="22" cy="22" r="2.5" />
+                    </svg>
+                    <span>invisi</span>
+                </a>
 
-      <button class="menu-button" type="button" aria-expanded="false" aria-controls="main-nav">
-        <span class="sr-only">Abrir menu</span>
-        <span></span><span></span><span></span>
-      </button>
+                <button
+                    class="menu-button"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="main-nav"
+                >
+                    <span class="sr-only">Abrir menu</span>
+                    <span></span><span></span><span></span>
+                </button>
 
-      <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
-        <a href="#problema">O problema</a>
-        <a href="#como-funciona">Como funciona</a>
-        <a href="#garantia">Garantia</a>
-        <a class="button button-small" href="#diagnostico">Solicitar diagnóstico</a>
-      </nav>
-    </div>
-  </header>
-
-  <main id="conteudo">
-    <section class="hero">
-      <div class="hero-grid container">
-        <div class="hero-copy reveal">
-          <p class="eyebrow"><span></span> Privacidade empresarial no Brasil</p>
-          <h1>Sua empresa deve ser pública.<br><em>Sua vida, não.</em></h1>
-          <p class="hero-lead">A Invisi identifica onde seus dados pessoais estão expostos e conduz solicitações de remoção, correção e desindexação quando aplicáveis — com acompanhamento durante 1 ano.</p>
-          <div class="hero-actions">
-            <a class="button" href="#diagnostico">Quero proteger meus dados</a>
-            <a class="text-link" href="#como-funciona">Entenda o processo <span aria-hidden="true">→</span></a>
-          </div>
-          <ul class="trust-list" aria-label="Diferenciais">
-            <li>
-              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg>
-              Pagamento único
-            </li>
-            <li>
-              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg>
-              Processo confidencial
-            </li>
-            <li>
-              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg>
-              1 ano de acompanhamento
-            </li>
-          </ul>
-        </div>
-
-        <div class="hero-visual reveal" aria-label="Ilustração de diagnóstico de exposição digital">
-          <div class="scan-card">
-            <div class="scan-header">
-              <div>
-                <span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span>
-              </div>
-              <span class="secure-label"><span></span> Diagnóstico protegido</span>
+                <nav
+                    class="main-nav"
+                    id="main-nav"
+                    aria-label="Navegação principal"
+                >
+                    <a href="#problema">O problema</a>
+                    <a href="#como-funciona">Como funciona</a>
+                    <a href="#garantia">Garantia</a>
+                    <a class="button button-small" href="#diagnostico"
+                        >Solicitar diagnóstico</a
+                    >
+                </nav>
             </div>
-            <div class="scan-body">
-              <div class="identity-row">
-                <div class="identity-icon">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 8a7 7 0 0 0-14 0"/></svg>
+        </header>
+
+        <main id="conteudo">
+            <section class="hero">
+                <div class="hero-grid container">
+                    <div class="hero-copy reveal">
+                        <p class="eyebrow">
+                            <span></span> Privacidade empresarial no Brasil
+                        </p>
+                        <h1>
+                            Sua empresa deve ser pública.<br /><em
+                                >Sua vida, não.</em
+                            >
+                        </h1>
+                        <p class="hero-lead">
+                            A Invisi identifica onde seus dados pessoais estão
+                            expostos e conduz solicitações de remoção, correção
+                            e desindexação quando aplicáveis, com acompanhamento
+                            durante 1 ano.
+                        </p>
+                        <div class="hero-actions">
+                            <a class="button" href="#diagnostico"
+                                >Quero proteger meus dados</a
+                            >
+                            <a class="text-link" href="#como-funciona"
+                                >Entenda o processo
+                                <span aria-hidden="true">→</span></a
+                            >
+                        </div>
+                        <ul class="trust-list" aria-label="Diferenciais">
+                            <li>
+                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="m4 10 4 4 8-8" />
+                                </svg>
+                                Pagamento único
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="m4 10 4 4 8-8" />
+                                </svg>
+                                Escopo definido antes da contratação
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="m4 10 4 4 8-8" />
+                                </svg>
+                                1 ano de acompanhamento
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div
+                        class="hero-visual reveal"
+                        aria-label="Exemplo visual de um diagnóstico de exposição digital"
+                    >
+                        <div class="scan-card">
+                            <div class="scan-header">
+                                <div>
+                                    <span class="window-dot"></span
+                                    ><span class="window-dot"></span
+                                    ><span class="window-dot"></span>
+                                </div>
+                                <span class="secure-label"
+                                    ><span></span> Visualização
+                                    ilustrativa</span
+                                >
+                            </div>
+                            <div class="scan-body">
+                                <div class="identity-row">
+                                    <div class="identity-icon">
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            aria-hidden="true"
+                                        >
+                                            <path
+                                                d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 8a7 7 0 0 0-14 0"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <strong>Exemplo de diagnóstico</strong
+                                        ><span>Exemplo de ocorrência</span>
+                                    </div>
+                                    <div class="pulse-dot"></div>
+                                </div>
+                                <div class="scan-progress"><span></span></div>
+                                <div class="result-list">
+                                    <div class="result-item">
+                                        <span class="result-icon">N</span>
+                                        <div>
+                                            <strong>Nome completo</strong
+                                            ><small
+                                                >Exemplo de ocorrência</small
+                                            >
+                                        </div>
+                                        <b>Em avaliação</b>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-icon">T</span>
+                                        <div>
+                                            <strong>Telefone pessoal</strong
+                                            ><small
+                                                >Exemplo de ocorrência</small
+                                            >
+                                        </div>
+                                        <b>Em avaliação</b>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="result-icon">E</span>
+                                        <div>
+                                            <strong>Endereço vinculado</strong
+                                            ><small
+                                                >Exemplo de ocorrência</small
+                                            >
+                                        </div>
+                                        <b>Em avaliação</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="floating-badge badge-shield">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M12 3 20 6v6c0 5-3.2 8.3-8 10-4.8-1.7-8-5-8-10V6l8-3Z"
+                                />
+                                <path d="m8.5 12 2.2 2.2 4.8-5" />
+                            </svg>
+                            <span
+                                ><strong>Processo documentado</strong
+                                ><small
+                                    >Do diagnóstico ao acompanhamento</small
+                                ></span
+                            >
+                        </div>
+                        <div class="privacy-orbit orbit-one"></div>
+                        <div class="privacy-orbit orbit-two"></div>
+                    </div>
                 </div>
-                <div><strong>Exposição identificada</strong><span>Mapeamento em andamento</span></div>
-                <div class="pulse-dot"></div>
-              </div>
-              <div class="scan-progress"><span></span></div>
-              <div class="result-list">
-                <div class="result-item"><span class="result-icon">N</span><div><strong>Nome completo</strong><small>Fonte encontrada</small></div><b>Em análise</b></div>
-                <div class="result-item"><span class="result-icon">T</span><div><strong>Telefone pessoal</strong><small>Fonte encontrada</small></div><b>Elegível</b></div>
-                <div class="result-item"><span class="result-icon">E</span><div><strong>Endereço vinculado</strong><small>Fonte encontrada</small></div><b>Em análise</b></div>
-              </div>
+            </section>
+
+            <section class="context-strip" aria-label="Público atendido">
+                <div class="container strip-inner">
+                    <p>Proteção de privacidade para</p>
+                    <div class="audience-list">
+                        <span>Empresários</span><i></i><span>Sócios</span><i></i
+                        ><span>MEIs</span><i></i><span>Executivos</span><i></i
+                        ><span>Profissionais liberais</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="problem section" id="problema">
+                <div class="container">
+                    <div class="section-heading split-heading reveal">
+                        <div>
+                            <p class="eyebrow dark"><span></span> O problema</p>
+                            <h2>
+                                Abrir uma empresa não deveria significar
+                                <em>abrir sua vida.</em>
+                            </h2>
+                        </div>
+                        <p>
+                            Dados pessoais associados ao seu CNPJ podem se
+                            espalhar por buscadores e plataformas de consulta.
+                            Isso aumenta a superfície para contatos indesejados,
+                            engenharia social e golpes direcionados.
+                        </p>
+                    </div>
+
+                    <div class="risk-grid">
+                        <article class="risk-card reveal">
+                            <span class="card-number">01</span>
+                            <svg viewBox="0 0 32 32" aria-hidden="true">
+                                <path d="M5 7h22v16H5z" />
+                                <path d="m5 9 11 8L27 9M10 27h12" />
+                            </svg>
+                            <h3>Contato pessoal exposto</h3>
+                            <p>
+                                Telefone, e-mail e outros dados passam a
+                                circular fora do contexto em que foram
+                                fornecidos.
+                            </p>
+                        </article>
+                        <article class="risk-card reveal">
+                            <span class="card-number">02</span>
+                            <svg viewBox="0 0 32 32" aria-hidden="true">
+                                <path
+                                    d="M16 3 28 8v8c0 7-4.7 11.5-12 14C8.7 27.5 4 23 4 16V8l12-5Z"
+                                />
+                                <path d="M16 10v7m0 5v.1" />
+                            </svg>
+                            <h3>Golpes mais convincentes</h3>
+                            <p>
+                                Informações públicas ajudam criminosos a criar
+                                abordagens personalizadas contra você, sua
+                                equipe ou família.
+                            </p>
+                        </article>
+                        <article class="risk-card reveal">
+                            <span class="card-number">03</span>
+                            <svg viewBox="0 0 32 32" aria-hidden="true">
+                                <circle cx="16" cy="16" r="12" />
+                                <path
+                                    d="M4 16h24M16 4c4 4 6 8 6 12s-2 8-6 12c-4-4-6-8-6-12s2-8 6-12Z"
+                                />
+                            </svg>
+                            <h3>Propagação entre bases</h3>
+                            <p>
+                                Uma exposição pode ser replicada e indexada por
+                                diferentes páginas, tornando o controle mais
+                                complexo.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="method section" id="como-funciona">
+                <div class="container method-grid">
+                    <div class="method-intro reveal">
+                        <p class="eyebrow"><span></span> Método Invisi</p>
+                        <h2>Da exposição ao <em>controle.</em></h2>
+                        <p>
+                            Combinamos tecnologia, análise e um processo
+                            orientado pelos direitos previstos na LGPD para
+                            tratar cada ocorrência de forma responsável.
+                        </p>
+                        <a class="text-link light" href="#diagnostico"
+                            >Começar meu diagnóstico
+                            <span aria-hidden="true">→</span></a
+                        >
+                    </div>
+
+                    <ol class="steps-list">
+                        <li class="reveal">
+                            <span>01</span>
+                            <div>
+                                <h3>Varredura de exposição</h3>
+                                <p>
+                                    Mapeamos referências aos seus dados pessoais
+                                    em buscadores e fontes online relevantes.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="reveal">
+                            <span>02</span>
+                            <div>
+                                <h3>Análise de aplicabilidade</h3>
+                                <p>
+                                    Classificamos as ocorrências e avaliamos
+                                    quais medidas são cabíveis em cada fonte.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="reveal">
+                            <span>03</span>
+                            <div>
+                                <h3>Solicitações e acompanhamento</h3>
+                                <p>
+                                    Conduzimos pedidos elegíveis, registramos
+                                    respostas e acompanhamos o andamento.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="reveal">
+                            <span>04</span>
+                            <div>
+                                <h3>Acompanhamento definido</h3>
+                                <p>
+                                    Durante 1 ano, fazemos quatro verificações
+                                    trimestrais das ocorrências tratadas no
+                                    diagnóstico inicial.
+                                </p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <section class="scope section">
+                <div class="container scope-grid">
+                    <div class="scope-panel reveal">
+                        <p class="eyebrow dark">
+                            <span></span> O que analisamos
+                        </p>
+                        <h2>Uma visão clara da sua <em>pegada digital.</em></h2>
+                        <p>
+                            O diagnóstico prioriza dados que possam ampliar
+                            riscos à sua privacidade pessoal.
+                        </p>
+                        <div class="scope-tags">
+                            <span>Nome e vínculos</span>
+                            <span>Telefone pessoal</span>
+                            <span>E-mail exposto</span>
+                            <span>Endereço associado</span>
+                            <span>Resultados em buscadores</span>
+                            <span>Bases agregadoras</span>
+                        </div>
+                    </div>
+                    <aside class="principles-card reveal">
+                        <svg viewBox="0 0 48 48" aria-hidden="true">
+                            <path
+                                d="M24 4 41 11v11c0 11.2-6.7 18.3-17 22-10.3-3.7-17-10.8-17-22V11l17-7Z"
+                            />
+                            <path
+                                d="M18 25v-5a6 6 0 0 1 12 0v5m-14 0h16v11H16z"
+                            />
+                        </svg>
+                        <h3>Privacidade exige responsabilidade</h3>
+                        <p>
+                            A Invisi atua apenas sobre medidas técnica e
+                            juridicamente aplicáveis. Registros públicos,
+                            obrigações legais e decisões de terceiros podem
+                            limitar uma remoção.
+                        </p>
+                        <ul>
+                            <li>Sem promessas impossíveis</li>
+                            <li>Processo rastreável</li>
+                            <li>Coleta mínima de dados</li>
+                        </ul>
+                    </aside>
+                </div>
+            </section>
+
+            <section class="offer section" id="garantia">
+                <div class="container offer-grid">
+                    <div class="offer-copy reveal">
+                        <p class="eyebrow">
+                            <span></span> Oferta de lançamento
+                        </p>
+                        <h2>Recupere o controle da sua presença digital.</h2>
+                        <p>
+                            Diagnóstico, atuação e acompanhamento em um único
+                            serviço, por R$ 990 em pagamento único.
+                        </p>
+                        <div class="guarantee-callout">
+                            <span class="guarantee-icon">1</span>
+                            <div>
+                                <strong
+                                    >Garantia de acompanhamento por 1
+                                    ano</strong
+                                >
+                                <p>
+                                    A partir da entrega do relatório inicial,
+                                    realizamos quatro revisões trimestrais das
+                                    ocorrências incluídas no escopo. Se uma
+                                    delas reaparecer, fazemos uma nova análise e
+                                    reapresentamos os pedidos que continuarem
+                                    aplicáveis, sem cobrança adicional. A
+                                    garantia cobre a execução e o acompanhamento
+                                    do processo, não decisões de terceiros nem a
+                                    remoção de todos os dados da internet.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="price-card reveal">
+                        <p>Proteção Invisi</p>
+                        <div class="price">
+                            <span>R$</span><strong>990</strong>
+                        </div>
+                        <small>pagamento único · sem mensalidade</small>
+                        <ul>
+                            <li>
+                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="m4 10 4 4 8-8" /></svg
+                                >Diagnóstico de exposição
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="m4 10 4 4 8-8" /></svg
+                                >Análise individual das ocorrências
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="m4 10 4 4 8-8" /></svg
+                                >Solicitações elegíveis de tratamento
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="m4 10 4 4 8-8" /></svg
+                                >Acompanhamento documentado
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="m4 10 4 4 8-8" /></svg
+                                >4 verificações trimestrais em 1 ano
+                            </li>
+                        </ul>
+                        <p class="price-scope">
+                            Após a avaliação inicial, você recebe o escopo com
+                            as fontes e ocorrências incluídas, os limites do
+                            atendimento e o prazo estimado. A contratação só
+                            ocorre após sua aprovação.
+                        </p>
+                        <a class="button button-full" href="#diagnostico"
+                            >Solicitar diagnóstico</a
+                        >
+                        <p class="price-note">
+                            O envio inicia uma avaliação de escopo e não gera
+                            cobrança.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="faq section">
+                <div class="container faq-grid">
+                    <div class="section-heading reveal">
+                        <p class="eyebrow dark">
+                            <span></span> Dúvidas frequentes
+                        </p>
+                        <h2>Privacidade sem <em>letras miúdas.</em></h2>
+                    </div>
+                    <div class="accordion" data-accordion>
+                        <details class="reveal">
+                            <summary>
+                                Vocês garantem a remoção de todos os meus
+                                dados?<span></span>
+                            </summary>
+                            <p>
+                                Não seria responsável prometer isso. A
+                                possibilidade de remoção depende da fonte, da
+                                finalidade do tratamento, de obrigações legais e
+                                da decisão de terceiros. Garantimos a execução e
+                                o acompanhamento das medidas elegíveis previstas
+                                no escopo.
+                            </p>
+                        </details>
+                        <details class="reveal">
+                            <summary>
+                                O que a garantia de acompanhamento inclui?<span
+                                ></span>
+                            </summary>
+                            <p>
+                                Inclui revisões das URLs e ocorrências
+                                registradas no relatório inicial aos 3, 6, 9 e
+                                12 meses. Se uma delas reaparecer, fazemos uma
+                                nova análise e reapresentamos os pedidos que
+                                continuarem aplicáveis, sem cobrança adicional.
+                                Novas fontes ou situações que não faziam parte
+                                do diagnóstico inicial são avaliadas
+                                separadamente.
+                            </p>
+                        </details>
+                        <details class="reveal">
+                            <summary>
+                                Em quanto tempo verei resultados?<span></span>
+                            </summary>
+                            <p>
+                                Cada plataforma possui prazos e critérios
+                                próprios. Após o diagnóstico, apresentamos as
+                                ocorrências e acompanhamos as respostas,
+                                mantendo você informado sobre o andamento.
+                            </p>
+                        </details>
+                        <details class="reveal">
+                            <summary>
+                                A Invisi é um escritório de advocacia?<span
+                                ></span>
+                            </summary>
+                            <p>
+                                Não. A Invisi é uma empresa de tecnologia e
+                                serviços de privacidade. Casos que exijam
+                                atuação jurídica especializada podem demandar
+                                encaminhamento a profissional habilitado.
+                            </p>
+                        </details>
+                        <details class="reveal">
+                            <summary>
+                                Como meus dados são usados neste
+                                formulário?<span></span>
+                            </summary>
+                            <p>
+                                Os dados informados são usados para avaliar esta
+                                solicitação e responder ao contato. O WhatsApp é
+                                opcional. Não envie CPF, documentos, senhas ou
+                                dados financeiros neste formulário.
+                            </p>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <section class="contact section" id="diagnostico">
+                <div class="container contact-grid">
+                    <div class="contact-copy reveal">
+                        <p class="eyebrow"><span></span> Diagnóstico inicial</p>
+                        <h2>Descubra o que a internet revela sobre você.</h2>
+                        <p>
+                            Após o envio, faremos uma avaliação inicial da
+                            demanda e entraremos em contato para confirmar o
+                            escopo e os próximos passos.
+                        </p>
+                        <div class="confidential-note">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M7 11V8a5 5 0 0 1 10 0v3m-12 0h14v10H5z"
+                                />
+                            </svg>
+                            <span
+                                ><strong
+                                    >Dados usados somente para esta
+                                    solicitação</strong
+                                ><small
+                                    >Não envie CPF, documentos, senhas ou dados
+                                    financeiros.</small
+                                ></span
+                            >
+                        </div>
+                    </div>
+
+                    <form
+                        class="lead-form reveal"
+                        action="https://formsubmit.co/lmaesyt@gmail.com"
+                        method="POST"
+                        data-lead-form
+                    >
+                        <input
+                            type="hidden"
+                            name="_subject"
+                            value="Novo lead da landing page Invisi"
+                        />
+                        <input type="hidden" name="_template" value="table" />
+                        <input
+                            type="hidden"
+                            name="_next"
+                            value="https://meschkemaes.github.io/invisi/obrigado.html"
+                        />
+                        <input type="hidden" name="_captcha" value="true" />
+                        <input
+                            type="text"
+                            name="_honey"
+                            tabindex="-1"
+                            autocomplete="off"
+                            class="honeypot"
+                            aria-hidden="true"
+                        />
+
+                        <div class="field full-field">
+                            <label for="nome">Nome</label>
+                            <input
+                                id="nome"
+                                name="Nome"
+                                type="text"
+                                autocomplete="name"
+                                placeholder="Como podemos chamar você?"
+                                required
+                            />
+                        </div>
+                        <div class="form-row">
+                            <div class="field">
+                                <label for="email">E-mail</label>
+                                <input
+                                    id="email"
+                                    name="Email"
+                                    type="email"
+                                    autocomplete="email"
+                                    placeholder="voce@exemplo.com"
+                                    required
+                                />
+                            </div>
+                            <div class="field">
+                                <label for="telefone"
+                                    >WhatsApp <span>(opcional)</span></label
+                                >
+                                <input
+                                    id="telefone"
+                                    name="WhatsApp"
+                                    type="tel"
+                                    autocomplete="tel"
+                                    inputmode="numeric"
+                                    placeholder="(11) 99999-9999"
+                                    maxlength="15"
+                                    pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
+                                    title="Informe um celular brasileiro com DDD, no formato (11) 99999-9999"
+                                />
+                            </div>
+                        </div>
+                        <div class="field full-field">
+                            <label for="perfil">Qual é o seu perfil?</label>
+                            <select id="perfil" name="Perfil" required>
+                                <option value="" selected disabled>
+                                    Selecione uma opção
+                                </option>
+                                <option>Empresário(a) ou sócio(a)</option>
+                                <option>MEI</option>
+                                <option>Executivo(a)</option>
+                                <option>Profissional liberal</option>
+                                <option>Outro</option>
+                            </select>
+                        </div>
+                        <div class="field full-field">
+                            <label for="preocupacao"
+                                >O que mais preocupa você?
+                                <span>(opcional)</span></label
+                            >
+                            <textarea
+                                id="preocupacao"
+                                name="Preocupacao"
+                                rows="3"
+                                placeholder="Ex.: telefone pessoal aparecendo em resultados de busca"
+                            ></textarea>
+                        </div>
+                        <label class="consent">
+                            <input
+                                type="checkbox"
+                                name="Consentimento"
+                                value="Aceito"
+                                required
+                            />
+                            <span
+                                >Autorizo a Invisi a usar estes dados para
+                                entrar em contato sobre o diagnóstico, conforme
+                                a
+                                <a
+                                    href="privacidade.html"
+                                    target="_blank"
+                                    rel="noopener"
+                                    >Política de Privacidade</a
+                                >.</span
+                            >
+                        </label>
+                        <p class="form-note">
+                            O envio não gera cobrança nem contratação. Você
+                            receberá as condições do serviço antes de decidir.
+                        </p>
+                        <button
+                            class="button button-full submit-button"
+                            type="submit"
+                        >
+                            <span>Solicitar avaliação inicial</span>
+                            <svg viewBox="0 0 20 20" aria-hidden="true">
+                                <path d="m7 4 6 6-6 6" />
+                            </svg>
+                        </button>
+                        <p
+                            class="form-status"
+                            role="status"
+                            aria-live="polite"
+                        ></p>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container footer-top">
+                <a
+                    class="brand footer-brand"
+                    href="#inicio"
+                    aria-label="Invisi, voltar ao início"
+                >
+                    <svg
+                        class="brand-mark"
+                        viewBox="0 0 44 44"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M22 3 38 9v11c0 10.4-6.5 17.2-16 21C12.5 37.2 6 30.4 6 20V9l16-6Z"
+                        />
+                        <path d="M14 22s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6Z" />
+                        <circle cx="22" cy="22" r="2.5" />
+                    </svg>
+                    <span>invisi</span>
+                </a>
+                <p>Privacidade para quem move negócios.</p>
+                <a href="mailto:lmaesyt@gmail.com">lmaesyt@gmail.com</a>
             </div>
-          </div>
-          <div class="floating-badge badge-shield">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 6v6c0 5-3.2 8.3-8 10-4.8-1.7-8-5-8-10V6l8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg>
-            <span><strong>Solicitações documentadas</strong><small>Do início ao acompanhamento</small></span>
-          </div>
-          <div class="privacy-orbit orbit-one"></div>
-          <div class="privacy-orbit orbit-two"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="context-strip" aria-label="Público atendido">
-      <div class="container strip-inner">
-        <p>Proteção de privacidade para</p>
-        <div class="audience-list">
-          <span>Empresários</span><i></i><span>Sócios</span><i></i><span>MEIs</span><i></i><span>Executivos</span><i></i><span>Profissionais liberais</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="problem section" id="problema">
-      <div class="container">
-        <div class="section-heading split-heading reveal">
-          <div>
-            <p class="eyebrow dark"><span></span> O problema</p>
-            <h2>Abrir uma empresa não deveria significar <em>abrir sua vida.</em></h2>
-          </div>
-          <p>Dados pessoais associados ao seu CNPJ podem se espalhar por buscadores e plataformas de consulta. Isso aumenta a superfície para contatos indesejados, engenharia social e golpes direcionados.</p>
-        </div>
-
-        <div class="risk-grid">
-          <article class="risk-card reveal">
-            <span class="card-number">01</span>
-            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 7h22v16H5z"/><path d="m5 9 11 8L27 9M10 27h12"/></svg>
-            <h3>Contato pessoal exposto</h3>
-            <p>Telefone, e-mail e outros dados passam a circular fora do contexto em que foram fornecidos.</p>
-          </article>
-          <article class="risk-card reveal">
-            <span class="card-number">02</span>
-            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 28 8v8c0 7-4.7 11.5-12 14C8.7 27.5 4 23 4 16V8l12-5Z"/><path d="M16 10v7m0 5v.1"/></svg>
-            <h3>Golpes mais convincentes</h3>
-            <p>Informações públicas ajudam criminosos a criar abordagens personalizadas contra você, sua equipe ou família.</p>
-          </article>
-          <article class="risk-card reveal">
-            <span class="card-number">03</span>
-            <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12"/><path d="M4 16h24M16 4c4 4 6 8 6 12s-2 8-6 12c-4-4-6-8-6-12s2-8 6-12Z"/></svg>
-            <h3>Propagação entre bases</h3>
-            <p>Uma exposição pode ser replicada e indexada por diferentes páginas, tornando o controle mais complexo.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="method section" id="como-funciona">
-      <div class="container method-grid">
-        <div class="method-intro reveal">
-          <p class="eyebrow"><span></span> Método Invisi</p>
-          <h2>Da exposição ao <em>controle.</em></h2>
-          <p>Combinamos tecnologia, análise e um processo orientado pelos direitos previstos na LGPD para tratar cada ocorrência de forma responsável.</p>
-          <a class="text-link light" href="#diagnostico">Começar meu diagnóstico <span aria-hidden="true">→</span></a>
-        </div>
-
-        <ol class="steps-list">
-          <li class="reveal">
-            <span>01</span>
-            <div><h3>Varredura de exposição</h3><p>Mapeamos referências aos seus dados pessoais em buscadores e fontes online relevantes.</p></div>
-          </li>
-          <li class="reveal">
-            <span>02</span>
-            <div><h3>Análise de aplicabilidade</h3><p>Classificamos as ocorrências e avaliamos quais medidas são cabíveis em cada fonte.</p></div>
-          </li>
-          <li class="reveal">
-            <span>03</span>
-            <div><h3>Solicitações e acompanhamento</h3><p>Conduzimos pedidos elegíveis, registramos respostas e acompanhamos o andamento.</p></div>
-          </li>
-          <li class="reveal">
-            <span>04</span>
-            <div><h3>Acompanhamento definido</h3><p>Durante 1 ano, fazemos quatro verificações trimestrais das ocorrências tratadas no diagnóstico inicial.</p></div>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <section class="scope section">
-      <div class="container scope-grid">
-        <div class="scope-panel reveal">
-          <p class="eyebrow dark"><span></span> O que analisamos</p>
-          <h2>Uma visão clara da sua <em>pegada digital.</em></h2>
-          <p>O diagnóstico prioriza dados que possam ampliar riscos à sua privacidade pessoal.</p>
-          <div class="scope-tags">
-            <span>Nome e vínculos</span>
-            <span>Telefone pessoal</span>
-            <span>E-mail exposto</span>
-            <span>Endereço associado</span>
-            <span>Resultados em buscadores</span>
-            <span>Bases agregadoras</span>
-          </div>
-        </div>
-        <aside class="principles-card reveal">
-          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 41 11v11c0 11.2-6.7 18.3-17 22-10.3-3.7-17-10.8-17-22V11l17-7Z"/><path d="M18 25v-5a6 6 0 0 1 12 0v5m-14 0h16v11H16z"/></svg>
-          <h3>Privacidade exige responsabilidade</h3>
-          <p>A Invisi atua apenas sobre medidas técnica e juridicamente aplicáveis. Registros públicos, obrigações legais e decisões de terceiros podem limitar uma remoção.</p>
-          <ul>
-            <li>Sem promessas impossíveis</li>
-            <li>Processo rastreável</li>
-            <li>Coleta mínima de dados</li>
-          </ul>
-        </aside>
-      </div>
-    </section>
-
-    <section class="offer section" id="garantia">
-      <div class="container offer-grid">
-        <div class="offer-copy reveal">
-          <p class="eyebrow"><span></span> Oferta de lançamento</p>
-          <h2>Recupere o controle da sua presença digital.</h2>
-          <p>Um processo completo, com preço transparente e sem mensalidades.</p>
-          <div class="guarantee-callout">
-            <span class="guarantee-icon">1</span>
-            <div><strong>Garantia Invisi de 1 ano</strong><p>A partir do relatório inicial, fazemos quatro verificações trimestrais. Se uma ocorrência coberta reaparecer, reanalisamos e reapresentamos solicitações elegíveis sem custo.</p></div>
-          </div>
-        </div>
-
-        <div class="price-card reveal">
-          <p>Proteção Invisi</p>
-          <div class="price"><span>R$</span><strong>990</strong></div>
-          <small>pagamento único · sem mensalidade</small>
-          <ul>
-            <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg>Diagnóstico de exposição</li>
-            <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg>Análise individual das ocorrências</li>
-            <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg>Solicitações elegíveis de tratamento</li>
-            <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg>Acompanhamento documentado</li>
-            <li><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg>4 verificações trimestrais em 1 ano</li>
-          </ul>
-          <a class="button button-full" href="#diagnostico">Solicitar diagnóstico</a>
-          <p class="price-note">Primeiro contato sem compromisso.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="faq section">
-      <div class="container faq-grid">
-        <div class="section-heading reveal">
-          <p class="eyebrow dark"><span></span> Dúvidas frequentes</p>
-          <h2>Privacidade sem <em>letras miúdas.</em></h2>
-        </div>
-        <div class="accordion" data-accordion>
-          <details class="reveal">
-            <summary>Vocês garantem a remoção de todos os meus dados?<span></span></summary>
-            <p>Não seria responsável prometer isso. A possibilidade de remoção depende da fonte, da finalidade do tratamento, de obrigações legais e da decisão de terceiros. Garantimos a execução e o acompanhamento das medidas elegíveis previstas no escopo.</p>
-          </details>
-          <details class="reveal">
-            <summary>O que a garantia de 1 ano cobre?<span></span></summary>
-            <p>O período começa na entrega do relatório inicial e inclui quatro verificações trimestrais das URLs e ocorrências registradas nele. Se uma ocorrência coberta reaparecer, reanalisamos e reapresentamos as solicitações aplicáveis sem nova cobrança. Novas fontes ou situações fora do diagnóstico inicial são avaliadas separadamente.</p>
-          </details>
-          <details class="reveal">
-            <summary>Em quanto tempo verei resultados?<span></span></summary>
-            <p>Cada plataforma possui prazos e critérios próprios. Após o diagnóstico, apresentamos as ocorrências e acompanhamos as respostas, mantendo você informado sobre o andamento.</p>
-          </details>
-          <details class="reveal">
-            <summary>A Invisi é um escritório de advocacia?<span></span></summary>
-            <p>Não. A Invisi é uma empresa de tecnologia e serviços de privacidade. Casos que exijam atuação jurídica especializada podem demandar encaminhamento a profissional habilitado.</p>
-          </details>
-          <details class="reveal">
-            <summary>Como meus dados são protegidos?<span></span></summary>
-            <p>Coletamos apenas o necessário para o diagnóstico e o contato, restringimos o uso à prestação solicitada e tratamos as informações de forma confidencial.</p>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <section class="contact section" id="diagnostico">
-      <div class="container contact-grid">
-        <div class="contact-copy reveal">
-          <p class="eyebrow"><span></span> Diagnóstico inicial</p>
-          <h2>Descubra o que a internet revela sobre você.</h2>
-          <p>Conte-nos como entrar em contato. Um especialista da Invisi fará uma avaliação inicial e explicará os próximos passos, sem compromisso.</p>
-          <div class="confidential-note">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3m-12 0h14v10H5z"/></svg>
-            <span><strong>Contato confidencial</strong><small>Não informe dados sensíveis neste formulário.</small></span>
-          </div>
-        </div>
-
-        <form class="lead-form reveal" action="https://formsubmit.co/lmaesyt@gmail.com" method="POST" data-lead-form>
-          <input type="hidden" name="_subject" value="Novo lead da landing page Invisi">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next" value="https://meschkemaes.github.io/invisi/obrigado.html">
-          <input type="hidden" name="_captcha" value="true">
-          <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="honeypot" aria-hidden="true">
-
-          <div class="field full-field">
-            <label for="nome">Nome completo</label>
-            <input id="nome" name="Nome" type="text" autocomplete="name" placeholder="Como podemos chamar você?" required>
-          </div>
-          <div class="form-row">
-            <div class="field">
-              <label for="email">E-mail profissional</label>
-              <input id="email" name="Email" type="email" autocomplete="email" placeholder="voce@empresa.com.br" required>
+            <div class="container privacy-text">
+                <p>
+                    <strong>Privacidade:</strong> os dados enviados são usados
+                    para avaliar a solicitação e responder ao contato. Não
+                    vendemos essas informações. Consulte a
+                    <a href="privacidade.html"
+                        >Política de Privacidade completa</a
+                    >.
+                </p>
+                <p>
+                    <strong>Aviso:</strong> a Invisi não é um escritório de
+                    advocacia e não garante a eliminação universal de
+                    informações legítimas, registros públicos ou conteúdos
+                    mantidos por obrigação legal. A aplicabilidade de cada
+                    solicitação depende da análise da fonte e do contexto.
+                </p>
             </div>
-            <div class="field">
-              <label for="telefone">WhatsApp</label>
-              <input id="telefone" name="WhatsApp" type="tel" autocomplete="tel" inputmode="numeric" placeholder="(11) 99999-9999" maxlength="15" pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}" title="Informe um celular brasileiro com DDD, no formato (11) 99999-9999" required>
+            <div class="container footer-bottom">
+                <span
+                    >© <span data-year>2026</span> Invisi. Todos os direitos
+                    reservados.</span
+                >
+                <span>Invisi · Privacidade digital para quem empreende</span>
             </div>
-          </div>
-          <div class="field full-field">
-            <label for="perfil">Qual é o seu perfil?</label>
-            <select id="perfil" name="Perfil" required>
-              <option value="" selected disabled>Selecione uma opção</option>
-              <option>Empresário(a) ou sócio(a)</option>
-              <option>MEI</option>
-              <option>Executivo(a)</option>
-              <option>Profissional liberal</option>
-              <option>Outro</option>
-            </select>
-          </div>
-          <div class="field full-field">
-            <label for="preocupacao">O que mais preocupa você? <span>(opcional)</span></label>
-            <textarea id="preocupacao" name="Preocupacao" rows="3" placeholder="Ex.: telefone pessoal aparecendo em resultados de busca"></textarea>
-          </div>
-          <label class="consent">
-            <input type="checkbox" name="Consentimento" value="Aceito" required>
-            <span>Autorizo a Invisi a usar estes dados para entrar em contato sobre o diagnóstico, conforme a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.</span>
-          </label>
-          <button class="button button-full submit-button" type="submit">
-            <span>Solicitar diagnóstico confidencial</span>
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 6 6-6 6"/></svg>
-          </button>
-          <p class="form-status" role="status" aria-live="polite"></p>
-        </form>
-      </div>
-    </section>
-  </main>
+        </footer>
 
-  <footer class="site-footer"></footer>
-    <div class="container footer-top">
-      <a class="brand footer-brand" href="#inicio" aria-label="Invisi, voltar ao início">
-        <svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true">
-          <path d="M22 3 38 9v11c0 10.4-6.5 17.2-16 21C12.5 37.2 6 30.4 6 20V9l16-6Z"/>
-          <path d="M14 22s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6Z"/>
-          <circle cx="22" cy="22" r="2.5"/>
-        </svg>
-        <span>invisi</span>
-      </a>
-      <p>Privacidade para quem move negócios.</p>
-      <a href="mailto:lmaesyt@gmail.com">lmaesyt@gmail.com</a>
-    </div>
-    <div class="container privacy-text">
-      <p><strong>Privacidade:</strong> os dados enviados são usados para responder ao contato e avaliar o interesse no serviço. Não vendemos essas informações. Consulte a <a href="privacidade.html">Política de Privacidade completa</a>.</p>
-      <p><strong>Aviso:</strong> a Invisi não é um escritório de advocacia e não garante a eliminação universal de informações legítimas, registros públicos ou conteúdos mantidos por obrigação legal. A aplicabilidade de cada solicitação depende da análise da fonte e do contexto.</p>
-    </div>
-    <div class="container footer-bottom">
-      <span>© <span data-year>2026</span> Invisi. Todos os direitos reservados.</span>
-      <span>LawTech brasileira em validação</span>
-    </div>
-  </footer>
-
-  <script src="script.js" defer></script>
-</body>
+        <script src="script.js" defer></script>
+    </body>
 </html>

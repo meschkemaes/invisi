@@ -1,4 +1,10 @@
 const surveyForm = document.querySelector("[data-survey-form]");
+const surveyRemainder = document.querySelector("[data-survey-remainder]");
+const ineligibleInput = document.querySelector("[data-ineligible]");
+const ineligibleMessage = document.querySelector("[data-ineligible-message]");
+const selectionLimitRefreshers = [];
+
+const isSurveyIneligible = () => Boolean(ineligibleInput?.checked);
 
 const configureReturnUrl = () => {
   const nextInput = surveyForm?.querySelector('input[name="_next"]');
@@ -10,25 +16,127 @@ const configureReturnUrl = () => {
   ).href;
 };
 
-const setupExclusiveOptions = () => {
-  document.querySelectorAll("[data-exclusive]").forEach((exclusiveInput) => {
-    const groupName = exclusiveInput.name;
-    const groupInputs = document.querySelectorAll(`input[name="${groupName}"]`);
+const clearCheckboxGroupError = (group) => {
+  const checkboxes = group.querySelectorAll('input[type="checkbox"]');
+  const hasSelection = [...checkboxes].some((checkbox) => checkbox.checked);
 
-    groupInputs.forEach((input) => {
+  if (!hasSelection) return;
+
+  group.setAttribute("aria-invalid", "false");
+  const error = group.querySelector("[data-group-error]");
+  if (error) error.textContent = "";
+};
+
+const setupExclusiveOptions = () => {
+  document.querySelectorAll("[data-checkbox-group]").forEach((group) => {
+    const checkboxes = [...group.querySelectorAll('input[type="checkbox"]')];
+    const exclusiveInputs = checkboxes.filter((input) =>
+      input.matches("[data-exclusive]"),
+    );
+
+    if (exclusiveInputs.length === 0) return;
+
+    checkboxes.forEach((input) => {
       input.addEventListener("change", () => {
         if (!input.checked) return;
 
-        if (input === exclusiveInput) {
-          groupInputs.forEach((otherInput) => {
-            if (otherInput !== exclusiveInput) otherInput.checked = false;
+        if (input.matches("[data-exclusive]")) {
+          checkboxes.forEach((otherInput) => {
+            if (otherInput !== input) otherInput.checked = false;
           });
         } else {
-          exclusiveInput.checked = false;
+          exclusiveInputs.forEach((exclusiveInput) => {
+            exclusiveInput.checked = false;
+          });
         }
+
+        clearCheckboxGroupError(group);
       });
     });
   });
+};
+
+const setupCheckboxGroupFeedback = () => {
+  document.querySelectorAll("[data-checkbox-group]").forEach((group) => {
+    group.addEventListener("change", () => clearCheckboxGroupError(group));
+  });
+};
+
+const setupSelectionLimits = () => {
+  document.querySelectorAll("[data-max-selections]").forEach((group) => {
+    const maximum = Number.parseInt(group.dataset.maxSelections, 10);
+    const checkboxes = [...group.querySelectorAll('input[type="checkbox"]')];
+    const counter = group.querySelector("[data-selection-count]");
+
+    if (!Number.isFinite(maximum) || maximum < 1) return;
+
+    const refresh = () => {
+      const selectedCount = checkboxes.filter(
+        (checkbox) => checkbox.checked,
+      ).length;
+      const limitReached = selectedCount >= maximum;
+
+      checkboxes.forEach((checkbox) => {
+        if (!checkbox.checked) {
+          checkbox.disabled = limitReached || isSurveyIneligible();
+        }
+      });
+
+      if (counter) {
+        const selectionLabel =
+          selectedCount === 1 ? "selecionada" : "selecionadas";
+        const limitLabel = limitReached ? " Limite atingido." : "";
+        counter.textContent = `${selectedCount} de ${maximum} ${selectionLabel}.${limitLabel}`;
+      }
+    };
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", refresh);
+    });
+
+    selectionLimitRefreshers.push(refresh);
+    refresh();
+  });
+};
+
+const setEligibilityState = ({ announce = false } = {}) => {
+  if (!surveyForm || !surveyRemainder || !ineligibleMessage) return;
+
+  const ineligible = isSurveyIneligible();
+  const remainderControls = surveyRemainder.querySelectorAll(
+    "input, button, select, textarea",
+  );
+
+  surveyForm.dataset.eligibility = ineligible ? "ineligible" : "eligible";
+  ineligibleMessage.hidden = !ineligible;
+  surveyRemainder.hidden = ineligible;
+
+  remainderControls.forEach((control) => {
+    control.disabled = ineligible;
+  });
+
+  if (!ineligible) {
+    selectionLimitRefreshers.forEach((refresh) => refresh());
+  }
+
+  if (ineligible && announce) {
+    ineligibleMessage.focus({ preventScroll: true });
+    ineligibleMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+};
+
+const setupEligibilityGate = () => {
+  if (!surveyForm || !ineligibleInput) return;
+
+  surveyForm
+    .querySelectorAll('input[name="01_Relacao_com_CNPJ"]')
+    .forEach((input) => {
+      input.addEventListener("change", () =>
+        setEligibilityState({ announce: true }),
+      );
+    });
+
+  setEligibilityState();
 };
 
 const contactName = document.querySelector("#survey-name");
@@ -41,16 +149,18 @@ if (contactPhone) {
     const digits = event.target.value.replace(/\D/g, "").slice(0, 11);
     let formatted = digits;
 
-    if (digits.length > 2)
+    if (digits.length > 2) {
       formatted = `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
-    if (digits.length > 7)
+    }
+    if (digits.length > 7) {
       formatted = `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+    }
 
     event.target.value = formatted;
   });
 }
 
-const validateOptionalContact = () => {
+const validateOptionalContact = ({ focusInvalid = true } = {}) => {
   if (!contactName || !contactPhone || !contactConsent) return true;
 
   const hasName = contactName.value.trim().length > 0;
@@ -68,6 +178,10 @@ const validateOptionalContact = () => {
     "aria-invalid",
     String(wantsContact && (!hasPhone || !contactPhone.checkValidity())),
   );
+  contactConsent.setAttribute(
+    "aria-invalid",
+    String(wantsContact && !contactConsent.checked),
+  );
 
   if (contactError) {
     contactError.textContent = isValid
@@ -75,30 +189,53 @@ const validateOptionalContact = () => {
       : "Para solicitar contato, informe nome e WhatsApp válidos e aceite a autorização.";
   }
 
-  if (!isValid) {
+  if (!isValid && focusInvalid) {
     contactName.scrollIntoView({ behavior: "smooth", block: "center" });
     if (!hasName) contactName.focus({ preventScroll: true });
-    else if (!hasPhone || !contactPhone.checkValidity())
+    else if (!hasPhone || !contactPhone.checkValidity()) {
       contactPhone.focus({ preventScroll: true });
-    else contactConsent.focus({ preventScroll: true });
+    } else {
+      contactConsent.focus({ preventScroll: true });
+    }
   }
 
   return isValid;
 };
 
+[contactName, contactPhone].forEach((input) => {
+  input?.addEventListener("input", () =>
+    validateOptionalContact({ focusInvalid: false }),
+  );
+});
+contactConsent?.addEventListener("change", () =>
+  validateOptionalContact({ focusInvalid: false }),
+);
+
 const validateCheckboxGroups = () => {
   let firstInvalidGroup = null;
 
   document.querySelectorAll("[data-checkbox-group]").forEach((group) => {
-    const checkboxes = group.querySelectorAll('input[type="checkbox"]');
+    const checkboxes = [...group.querySelectorAll('input[type="checkbox"]')];
     const error = group.querySelector("[data-group-error]");
-    const hasSelection = [...checkboxes].some((checkbox) => checkbox.checked);
+    const maximum = Number.parseInt(group.dataset.maxSelections, 10);
+    const selectedCount = checkboxes.filter(
+      (checkbox) => checkbox.checked,
+    ).length;
+    const hasSelection = selectedCount > 0;
+    const exceedsLimit = Number.isFinite(maximum) && selectedCount > maximum;
+    const isValid = hasSelection && !exceedsLimit;
 
-    group.setAttribute("aria-invalid", String(!hasSelection));
+    group.setAttribute("aria-invalid", String(!isValid));
     if (error) {
-      error.textContent = hasSelection ? "" : "Selecione pelo menos uma opção.";
+      if (!hasSelection) {
+        error.textContent = "Selecione pelo menos uma opção.";
+      } else if (exceedsLimit) {
+        error.textContent = `Selecione no máximo ${maximum} opções.`;
+      } else {
+        error.textContent = "";
+      }
     }
-    if (!hasSelection && !firstInvalidGroup) firstInvalidGroup = group;
+    if (!isValid && !firstInvalidGroup) firstInvalidGroup = group;
   });
 
   if (firstInvalidGroup) {
@@ -112,9 +249,18 @@ const validateCheckboxGroups = () => {
 
 configureReturnUrl();
 setupExclusiveOptions();
+setupCheckboxGroupFeedback();
+setupSelectionLimits();
+setupEligibilityGate();
 
 if (surveyForm) {
   surveyForm.addEventListener("submit", (event) => {
+    if (isSurveyIneligible()) {
+      event.preventDefault();
+      setEligibilityState({ announce: true });
+      return;
+    }
+
     if (!validateCheckboxGroups() || !validateOptionalContact()) {
       event.preventDefault();
       return;
@@ -127,7 +273,9 @@ if (surveyForm) {
       button.disabled = true;
       button.textContent = "Enviando respostas...";
     }
-    if (status)
-      status.textContent = "Aguarde. Você será redirecionado após o envio.";
+    if (status) {
+      status.textContent =
+        "Aguarde. Você será redirecionado após a confirmação do envio.";
+    }
   });
 }

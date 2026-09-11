@@ -17,6 +17,9 @@
 * {
     box-sizing: border-box;
 }
+[hidden] {
+    display: none !important;
+}
 html {
     scroll-behavior: smooth;
 }
@@ -35,6 +38,14 @@ input {
 }
 a {
     color: inherit;
+}
+:where(a, button, input):focus-visible {
+    outline: 3px solid #0b6f65;
+    outline-offset: 3px;
+}
+.survey-hero a:focus-visible,
+.submit-card :focus-visible {
+    outline-color: var(--white);
 }
 
 .skip-link {
@@ -163,13 +174,15 @@ a {
     position: relative;
     z-index: 2;
 }
-.survey-form {
+.survey-form,
+.survey-remainder {
     display: grid;
     gap: 14px;
 }
 .intro-card,
 .question-card,
 .contact-card,
+.eligibility-card,
 .submit-card {
     padding: 30px;
     background: var(--white);
@@ -180,6 +193,14 @@ a {
 .intro-card {
     border-top: 5px solid var(--teal-500);
     box-shadow: var(--shadow);
+}
+.eligibility-card {
+    border-top: 5px solid var(--teal-500);
+    box-shadow: var(--shadow);
+}
+.eligibility-card:focus {
+    outline: 3px solid #0b6f65;
+    outline-offset: 4px;
 }
 .intro-card h2 {
     margin: 0 0 10px;
@@ -192,6 +213,16 @@ a {
 }
 .intro-card strong {
     color: var(--ink);
+}
+.eligibility-card h2 {
+    margin: 0 0 8px;
+    color: var(--navy-950);
+    font-size: 24px;
+    letter-spacing: -0.6px;
+}
+.eligibility-card p:last-child {
+    margin: 0;
+    color: var(--muted);
 }
 .privacy-note {
     display: flex;
@@ -222,12 +253,16 @@ a {
     margin: 0;
 }
 .question-card legend {
+    float: left;
     width: 100%;
     padding: 0;
     color: var(--navy-950);
     font-size: 17px;
     font-weight: 800;
     line-height: 1.35;
+}
+.question-card > :not(legend) {
+    clear: both;
 }
 .question-number {
     display: inline-grid;
@@ -279,6 +314,15 @@ a {
     background: #ecfaf7;
     border-color: var(--teal-500);
 }
+.option:focus-within {
+    outline: 3px solid #0b6f65;
+    outline-offset: 2px;
+}
+.option:has(input:disabled) {
+    cursor: not-allowed;
+    opacity: 0.52;
+    transform: none;
+}
 .option input {
     width: 18px;
     height: 18px;
@@ -315,6 +359,13 @@ a {
     font-size: 12px;
     line-height: 1.2;
 }
+.scale .option span {
+    min-width: 0;
+}
+.scale .option strong {
+    display: block;
+    font-size: 16px;
+}
 
 .contact-card h2 {
     margin: 0 0 8px;
@@ -328,7 +379,7 @@ a {
 }
 .optional-label {
     margin: 0 0 8px;
-    color: var(--teal-500);
+    color: #0b6f65;
     font-size: 11px;
     font-weight: 850;
     letter-spacing: 0.1em;
@@ -358,7 +409,11 @@ a {
 }
 .text-field input:focus {
     border-color: var(--teal-500);
-    box-shadow: 0 0 0 3px rgba(30, 184, 166, 0.13);
+    box-shadow: 0 0 0 3px rgba(30, 184, 166, 0.2);
+}
+.text-field input:focus-visible {
+    outline: 3px solid #0b6f65;
+    outline-offset: 2px;
 }
 .text-field input[aria-invalid="true"] {
     border-color: var(--error);
@@ -463,7 +518,7 @@ a {
     margin: 5px 0;
 }
 .survey-footer a {
-    color: #147e73;
+    color: #0b6f65;
     font-weight: 700;
 }
 
@@ -483,6 +538,7 @@ a {
     .intro-card,
     .question-card,
     .contact-card,
+    .eligibility-card,
     .submit-card {
         padding: 23px 19px;
     }

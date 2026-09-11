@@ -5,12 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
             name="description"
-            content="Pesquisa de mercado sobre exposição online de dados pessoais ligados a atividades empresariais."
+            content="Pesquisa de mercado sobre como pessoas com CNPJ encontram e lidam com seus dados na internet."
         />
         <meta name="robots" content="noindex" />
         <meta name="theme-color" content="#071a2b" />
         <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-        <link rel="stylesheet" href="pesquisa.css" />
+        <link rel="stylesheet" href="pesquisa.css?v=20260911-1" />
         <title>Pesquisa de mercado | Invisi</title>
     </head>
     <body>
@@ -36,13 +36,14 @@
                 <div class="hero-copy">
                     <p class="eyebrow">Pesquisa de mercado</p>
                     <h1>
-                        Quanto da sua vida ficou <em>público</em> ao abrir um
-                        CNPJ?
+                        Como pessoas com CNPJ lidam com seus
+                        <em>dados</em> na internet?
                     </h1>
                     <p>
-                        Queremos entender como a exposição de dados pessoais
-                        afeta quem empreende no Brasil. Suas respostas ajudam a
-                        validar um serviço mais responsável e útil.
+                        Queremos entender o que você já encontrou, se isso gera
+                        preocupação, como tentou resolver e o que espera de um
+                        serviço especializado. Respostas positivas, negativas ou
+                        indiferentes são igualmente importantes.
                     </p>
                     <ul
                         class="survey-meta"
@@ -66,7 +67,7 @@
                 <input
                     type="hidden"
                     name="_subject"
-                    value="Nova resposta — Pesquisa de mercado Invisi"
+                    value="Nova resposta: Pesquisa de mercado Invisi v2.0"
                 />
                 <input type="hidden" name="_template" value="table" />
                 <input type="hidden" name="_next" value="" />
@@ -74,7 +75,7 @@
                 <input
                     type="hidden"
                     name="Versao_da_pesquisa"
-                    value="1.0 — setembro de 2026"
+                    value="2.0: setembro de 2026"
                 />
                 <input
                     class="honeypot"
@@ -88,26 +89,30 @@
                 <section class="intro-card" aria-labelledby="antes-de-comecar">
                     <h2 id="antes-de-comecar">Antes de começar</h2>
                     <p>
-                        Esta pesquisa é exclusiva para
+                        Esta pesquisa é destinada a
                         <strong
-                            >MEIs, empresários, sócios e profissionais autônomos
-                            com CNPJ</strong
-                        >.
+                            >titulares, sócios, administradores e profissionais
+                            autônomos que atuam com CNPJ</strong
+                        >. A primeira pergunta confirma se este é o seu caso.
                     </p>
                     <p>
-                        Você pode responder sem informar nome, número do CNPJ,
-                        telefone, endereço ou links. Ao final, há um contato
-                        comercial totalmente opcional.
+                        Não solicitamos número do CNPJ, CPF, endereço, documentos
+                        ou links. A equipe terá acesso às respostas individuais
+                        para análise, e os resultados serão apresentados apenas de
+                        forma agregada, sem exposição de participantes.
+                    </p>
+                    <p>
+                        Ao final, nome e WhatsApp são opcionais. Se informados,
+                        serão enviados junto com as respostas e ficarão vinculados
+                        a elas.
                     </p>
                     <div class="privacy-note">
                         <svg viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M7 11V8a5 5 0 0 1 10 0v3m-12 0h14v10H5z" />
                         </svg>
                         <p>
-                            As respostas serão usadas de forma agregada para
-                            validação acadêmica e de mercado. Ao enviar, você
-                            confirma que pertence ao público indicado e que leu
-                            a
+                            As respostas serão usadas em análise acadêmica e de
+                            mercado. Ao enviar, você confirma que leu a
                             <a
                                 href="privacidade.html"
                                 target="_blank"
@@ -120,631 +125,853 @@
 
                 <fieldset class="question-card">
                     <legend>
-                        <b class="question-number">01</b> Qual opção descreve
-                        melhor seu perfil profissional?
-                    </legend>
-                    <div class="options options-grid">
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="01_Perfil_profissional"
-                                value="MEI"
-                                required
-                            />
-                            MEI</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="01_Perfil_profissional"
-                                value="Empresário(a)"
-                                required
-                            />
-                            Empresário(a)</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="01_Perfil_profissional"
-                                value="Sócio(a) ou administrador(a)"
-                                required
-                            />
-                            Sócio(a) ou administrador(a)</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="01_Perfil_profissional"
-                                value="Autônomo(a) ou profissional liberal com CNPJ"
-                                required
-                            />
-                            Autônomo(a) ou profissional liberal com CNPJ</label
-                        >
-                    </div>
-                </fieldset>
-
-                <fieldset class="question-card">
-                    <legend>
-                        <b class="question-number">02</b> Há quanto tempo você
-                        possui ou participa de um CNPJ?
-                    </legend>
-                    <div class="options options-grid">
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="02_Tempo_com_CNPJ"
-                                value="Menos de 1 ano"
-                                required
-                            />
-                            Menos de 1 ano</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="02_Tempo_com_CNPJ"
-                                value="De 1 a 3 anos"
-                                required
-                            />
-                            De 1 a 3 anos</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="02_Tempo_com_CNPJ"
-                                value="De 4 a 7 anos"
-                                required
-                            />
-                            De 4 a 7 anos</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="02_Tempo_com_CNPJ"
-                                value="8 anos ou mais"
-                                required
-                            />
-                            8 anos ou mais</label
-                        >
-                    </div>
-                </fieldset>
-
-                <fieldset class="question-card">
-                    <legend>
-                        <b class="question-number">03</b> Você já pesquisou seu
-                        nome ou CNPJ em buscadores para verificar quais
-                        informações aparecem?
-                    </legend>
-                    <div class="options">
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="03_Ja_pesquisou"
-                                value="Sim, faço isso periodicamente"
-                                required
-                            />
-                            Sim, faço isso periodicamente</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="03_Ja_pesquisou"
-                                value="Sim, mas apenas uma ou poucas vezes"
-                                required
-                            />
-                            Sim, mas apenas uma ou poucas vezes</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="03_Ja_pesquisou"
-                                value="Não, nunca verifiquei"
-                                required
-                            />
-                            Não, nunca verifiquei</label
-                        >
-                    </div>
-                </fieldset>
-
-                <fieldset class="question-card">
-                    <legend>
-                        <b class="question-number">04</b> Você já encontrou
-                        dados pessoais seus vinculados à empresa em buscadores,
-                        agregadores ou sites de consulta?
-                    </legend>
-                    <div class="options options-grid">
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="04_Encontrou_dados"
-                                value="Sim"
-                                required
-                            />
-                            Sim</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="04_Encontrou_dados"
-                                value="Não"
-                                required
-                            />
-                            Não</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="04_Encontrou_dados"
-                                value="Não tenho certeza"
-                                required
-                            />
-                            Não tenho certeza</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="04_Encontrou_dados"
-                                value="Nunca procurei"
-                                required
-                            />
-                            Nunca procurei</label
-                        >
-                    </div>
-                </fieldset>
-
-                <fieldset class="question-card" data-checkbox-group>
-                    <legend>
-                        <b class="question-number">05</b> Quais informações
-                        pessoais você encontrou ou acredita que estejam
-                        expostas?
+                        <b class="question-number">01</b> Pensando no CNPJ sobre
+                        o qual responderá, qual é sua principal relação atual com
+                        ele?
                     </legend>
                     <p class="question-help">
-                        Selecione todas as opções aplicáveis.
-                    </p>
-                    <div class="options options-grid">
-                        <label class="option"
-                            ><input
-                                type="checkbox"
-                                name="05_Dados_expostos[]"
-                                value="Telefone pessoal"
-                            />
-                            Telefone pessoal</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="checkbox"
-                                name="05_Dados_expostos[]"
-                                value="Endereço residencial"
-                            />
-                            Endereço residencial</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="checkbox"
-                                name="05_Dados_expostos[]"
-                                value="E-mail pessoal"
-                            />
-                            E-mail pessoal</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="checkbox"
-                                name="05_Dados_expostos[]"
-                                value="Nome e vínculos societários"
-                            />
-                            Nome e vínculos societários</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="checkbox"
-                                name="05_Dados_expostos[]"
-                                value="Informações desatualizadas"
-                            />
-                            Informações desatualizadas</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="checkbox"
-                                name="05_Dados_expostos[]"
-                                value="Outras informações"
-                            />
-                            Outras informações</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="checkbox"
-                                name="05_Dados_expostos[]"
-                                value="Não encontrei ou não sei"
-                                data-exclusive
-                            />
-                            Não encontrei ou não sei</label
-                        >
-                    </div>
-                    <p class="group-error" data-group-error role="alert"></p>
-                </fieldset>
-
-                <fieldset class="question-card">
-                    <legend>
-                        <b class="question-number">06</b> Quanto essa exposição
-                        de dados pessoais incomoda ou preocupa você?
-                    </legend>
-                    <p class="question-help">Use uma escala de 1 a 5.</p>
-                    <div class="options scale">
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="06_Nivel_de_incomodo"
-                                value="1 — Não incomoda"
-                                required
-                            />
-                            1 — Não incomoda</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="06_Nivel_de_incomodo"
-                                value="2"
-                                required
-                            />
-                            2</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="06_Nivel_de_incomodo"
-                                value="3"
-                                required
-                            />
-                            3</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="06_Nivel_de_incomodo"
-                                value="4"
-                                required
-                            />
-                            4</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="06_Nivel_de_incomodo"
-                                value="5 — Incomoda muito"
-                                required
-                            />
-                            5 — Incomoda muito</label
-                        >
-                    </div>
-                </fieldset>
-
-                <fieldset class="question-card" data-checkbox-group>
-                    <legend>
-                        <b class="question-number">07</b> Você já enfrentou
-                        alguma consequência que acredita ter relação com dados
-                        empresariais ou pessoais expostos?
-                    </legend>
-                    <p class="question-help">
-                        Selecione todas as opções aplicáveis.
+                        Esta pergunta define a elegibilidade para a pesquisa.
                     </p>
                     <div class="options">
-                        <label class="option"
-                            ><input
-                                type="checkbox"
-                                name="07_Consequencias[]"
-                                value="Spam ou contatos comerciais indesejados"
-                            />
-                            Spam ou contatos comerciais indesejados</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="checkbox"
-                                name="07_Consequencias[]"
-                                value="Tentativas de golpe ou phishing"
-                            />
-                            Tentativas de golpe ou phishing</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="checkbox"
-                                name="07_Consequencias[]"
-                                value="Assédio ou contato em canal pessoal"
-                            />
-                            Assédio ou contato em canal pessoal</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="checkbox"
-                                name="07_Consequencias[]"
-                                value="Preocupação com a segurança pessoal ou familiar"
-                            />
-                            Preocupação com a segurança pessoal ou
-                            familiar</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="checkbox"
-                                name="07_Consequencias[]"
-                                value="Informações antigas causando confusão"
-                            />
-                            Informações antigas causando confusão</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="checkbox"
-                                name="07_Consequencias[]"
-                                value="Nenhuma consequência percebida"
-                                data-exclusive
-                            />
-                            Nenhuma consequência percebida</label
-                        >
-                    </div>
-                    <p class="group-error" data-group-error role="alert"></p>
-                </fieldset>
-
-                <fieldset class="question-card">
-                    <legend>
-                        <b class="question-number">08</b> Você já tentou
-                        corrigir, restringir ou remover essas informações?
-                    </legend>
-                    <div class="options">
-                        <label class="option"
-                            ><input
+                        <label class="option">
+                            <input
                                 type="radio"
-                                name="08_Tentativa_de_resolver"
-                                value="Nunca tentei porque não sabia que era possível"
+                                name="01_Relacao_com_CNPJ"
+                                value="Titular de MEI ou empresário(a) individual"
                                 required
                             />
-                            Nunca tentei porque não sabia que era
-                            possível</label
-                        >
-                        <label class="option"
-                            ><input
+                            <span>Titular de MEI ou empresário(a) individual</span>
+                        </label>
+                        <label class="option">
+                            <input
                                 type="radio"
-                                name="08_Tentativa_de_resolver"
-                                value="Nunca tentei porque parece trabalhoso ou confuso"
+                                name="01_Relacao_com_CNPJ"
+                                value="Sócio(a) ou titular de outra empresa"
                                 required
                             />
-                            Nunca tentei porque parece trabalhoso ou
-                            confuso</label
-                        >
-                        <label class="option"
-                            ><input
+                            <span>Sócio(a) ou titular de outra empresa</span>
+                        </label>
+                        <label class="option">
+                            <input
                                 type="radio"
-                                name="08_Tentativa_de_resolver"
-                                value="Tentei, mas não consegui"
+                                name="01_Relacao_com_CNPJ"
+                                value="Administrador(a) ou representante legal"
                                 required
                             />
-                            Tentei, mas não consegui</label
-                        >
-                        <label class="option"
-                            ><input
+                            <span>Administrador(a) ou representante legal</span>
+                        </label>
+                        <label class="option">
+                            <input
                                 type="radio"
-                                name="08_Tentativa_de_resolver"
-                                value="Consegui apenas parcialmente"
+                                name="01_Relacao_com_CNPJ"
+                                value="Profissional autônomo(a) ou liberal que atua com CNPJ"
                                 required
                             />
-                            Consegui apenas parcialmente</label
-                        >
-                        <label class="option"
-                            ><input
+                            <span
+                                >Profissional autônomo(a) ou liberal que atua com
+                                CNPJ</span
+                            >
+                        </label>
+                        <label class="option">
+                            <input
                                 type="radio"
-                                name="08_Tentativa_de_resolver"
-                                value="Consegui resolver"
+                                name="01_Relacao_com_CNPJ"
+                                value="Não tenho relação atual com um CNPJ"
+                                data-ineligible
                                 required
                             />
-                            Consegui resolver</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="08_Tentativa_de_resolver"
-                                value="Não se aplica ou não encontrei dados"
-                                required
-                            />
-                            Não se aplica ou não encontrei dados</label
-                        >
-                    </div>
-                </fieldset>
-
-                <fieldset class="question-card">
-                    <legend>
-                        <b class="question-number">09</b> Qual seria seu nível
-                        de interesse em contratar uma empresa para diagnosticar,
-                        conduzir solicitações cabíveis e acompanhar o caso por
-                        um ano?
-                    </legend>
-                    <div class="options scale">
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="09_Interesse_no_servico"
-                                value="1 — Nenhum interesse"
-                                required
-                            />
-                            1 — Nenhum</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="09_Interesse_no_servico"
-                                value="2"
-                                required
-                            />
-                            2</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="09_Interesse_no_servico"
-                                value="3"
-                                required
-                            />
-                            3</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="09_Interesse_no_servico"
-                                value="4"
-                                required
-                            />
-                            4</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="09_Interesse_no_servico"
-                                value="5 — Muito interesse"
-                                required
-                            />
-                            5 — Muito</label
-                        >
-                    </div>
-                </fieldset>
-
-                <fieldset class="question-card">
-                    <legend>
-                        <b class="question-number">10</b> Quanto você estaria
-                        disposto(a) a pagar por esse pacote completo?
-                    </legend>
-                    <p class="question-help">
-                        Considere diagnóstico, análise, solicitações aplicáveis
-                        e quatro verificações trimestrais durante 12 meses. Não
-                        há promessa de remoção universal.
-                    </p>
-                    <div class="options">
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="10_Disposicao_de_pagamento"
-                                value="Não contrataria"
-                                required
-                            />
-                            Não contrataria esse tipo de serviço</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="10_Disposicao_de_pagamento"
-                                value="Até R$ 299"
-                                required
-                            />
-                            Até R$ 299</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="10_Disposicao_de_pagamento"
-                                value="De R$ 300 a R$ 599"
-                                required
-                            />
-                            De R$ 300 a R$ 599</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="10_Disposicao_de_pagamento"
-                                value="De R$ 600 a R$ 989"
-                                required
-                            />
-                            De R$ 600 a R$ 989</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="10_Disposicao_de_pagamento"
-                                value="R$ 990"
-                                required
-                            />
-                            R$ 990</label
-                        >
-                        <label class="option"
-                            ><input
-                                type="radio"
-                                name="10_Disposicao_de_pagamento"
-                                value="Mais de R$ 990"
-                                required
-                            />
-                            Mais de R$ 990</label
-                        >
+                            <span
+                                >Não tenho atualmente nenhuma dessas relações com
+                                um CNPJ</span
+                            >
+                        </label>
                     </div>
                 </fieldset>
 
                 <section
-                    class="contact-card"
-                    aria-labelledby="contato-opcional"
+                    class="eligibility-card"
+                    data-ineligible-message
+                    tabindex="-1"
+                    aria-labelledby="fora-do-publico"
+                    hidden
                 >
-                    <p class="optional-label">
-                        Opcional · não faz parte das 10 perguntas
-                    </p>
-                    <h2 id="contato-opcional">Quer conversar com a Invisi?</h2>
+                    <p class="optional-label">Fim da pesquisa</p>
+                    <h2 id="fora-do-publico">Obrigado pelo interesse.</h2>
                     <p>
-                        Deixe os dois campos em branco para manter a resposta
-                        anônima. Se preenchê-los, usaremos os dados somente para
-                        entrar em contato sobre uma avaliação inicial.
+                        Neste momento, a pesquisa considera apenas pessoas com uma
+                        relação atual com um CNPJ. Sua seleção não foi enviada. Se
+                        marcou essa opção por engano, escolha outra resposta na
+                        pergunta 1 para continuar.
                     </p>
-                    <div class="contact-grid">
-                        <label class="text-field" for="survey-name">
-                            Nome
-                            <input
-                                id="survey-name"
-                                name="Contato_Nome"
-                                type="text"
-                                autocomplete="name"
-                                placeholder="Como podemos chamar você?"
-                            />
-                        </label>
-                        <label class="text-field" for="survey-phone">
-                            WhatsApp
-                            <input
-                                id="survey-phone"
-                                name="Contato_WhatsApp"
-                                type="tel"
-                                autocomplete="tel"
-                                inputmode="numeric"
-                                maxlength="15"
-                                pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
-                                placeholder="(11) 99999-9999"
-                            />
-                        </label>
-                    </div>
-                    <label class="contact-consent">
-                        <input
-                            id="survey-contact-consent"
-                            name="Consentimento_de_contato"
-                            type="checkbox"
-                            value="Aceito"
-                        />
-                        Autorizo a Invisi a usar meu nome e WhatsApp para
-                        responder a esta solicitação, conforme a Política de
-                        Privacidade.
-                    </label>
-                    <p class="group-error" data-contact-error role="alert"></p>
                 </section>
 
-                <section class="submit-card" aria-labelledby="enviar-titulo">
-                    <h2 id="enviar-titulo">Pronto para enviar?</h2>
-                    <p>
-                        Revise suas respostas. Sem o contato opcional, elas
-                        serão recebidas sem identificadores diretos e analisadas
-                        de forma agregada.
-                    </p>
-                    <button class="submit-button" type="submit">
-                        Enviar respostas
-                    </button>
-                    <p class="form-status" role="status" aria-live="polite"></p>
-                </section>
+                <div class="survey-remainder" data-survey-remainder>
+                    <fieldset class="question-card">
+                        <legend>
+                            <b class="question-number">02</b> Há quanto tempo você
+                            possui ou participa do CNPJ escolhido para responder?
+                        </legend>
+                        <div class="options options-grid">
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="02_Tempo_com_CNPJ"
+                                    value="Menos de 1 ano"
+                                    required
+                                />
+                                <span>Menos de 1 ano</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="02_Tempo_com_CNPJ"
+                                    value="De 1 a 3 anos"
+                                    required
+                                />
+                                <span>De 1 a 3 anos</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="02_Tempo_com_CNPJ"
+                                    value="De 4 a 7 anos"
+                                    required
+                                />
+                                <span>De 4 a 7 anos</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="02_Tempo_com_CNPJ"
+                                    value="8 anos ou mais"
+                                    required
+                                />
+                                <span>8 anos ou mais</span>
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="question-card">
+                        <legend>
+                            <b class="question-number">03</b> Nos últimos 12
+                            meses, você pesquisou seu nome ou esse CNPJ para
+                            verificar quais informações apareciam na internet?
+                        </legend>
+                        <div class="options">
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="03_Busca_nos_ultimos_12_meses"
+                                    value="Sim, mais de uma vez"
+                                    required
+                                />
+                                <span>Sim, mais de uma vez</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="03_Busca_nos_ultimos_12_meses"
+                                    value="Sim, uma vez"
+                                    required
+                                />
+                                <span>Sim, uma vez</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="03_Busca_nos_ultimos_12_meses"
+                                    value="Não nos últimos 12 meses, mas já pesquisei antes"
+                                    required
+                                />
+                                <span
+                                    >Não nos últimos 12 meses, mas já pesquisei
+                                    antes</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="03_Busca_nos_ultimos_12_meses"
+                                    value="Não, nunca pesquisei"
+                                    required
+                                />
+                                <span>Não, nunca pesquisei</span>
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="question-card">
+                        <legend>
+                            <b class="question-number">04</b> Na busca mais
+                            recente, ou em buscas anteriores, você encontrou
+                            informações pessoais ligadas a esse CNPJ?
+                        </legend>
+                        <div class="options options-grid">
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="04_Encontrou_informacao_pessoal"
+                                    value="Sim"
+                                    required
+                                />
+                                <span>Sim</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="04_Encontrou_informacao_pessoal"
+                                    value="Não"
+                                    required
+                                />
+                                <span>Não</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="04_Encontrou_informacao_pessoal"
+                                    value="Não tenho certeza"
+                                    required
+                                />
+                                <span>Não tenho certeza</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="04_Encontrou_informacao_pessoal"
+                                    value="Não se aplica: nunca pesquisei"
+                                    required
+                                />
+                                <span>Não se aplica: nunca pesquisei</span>
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset
+                        class="question-card"
+                        data-checkbox-group
+                        aria-describedby="q5-help q5-error"
+                    >
+                        <legend>
+                            <b class="question-number">05</b> Quais informações
+                            pessoais você de fato encontrou ligadas a esse CNPJ?
+                        </legend>
+                        <p class="question-help" id="q5-help">
+                            Selecione todas as opções aplicáveis. Se não encontrou
+                            ou não procurou, use uma das duas últimas opções.
+                        </p>
+                        <div class="options options-grid">
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="05_Informacoes_encontradas[]"
+                                    value="Telefone pessoal"
+                                />
+                                <span>Telefone pessoal</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="05_Informacoes_encontradas[]"
+                                    value="Endereço residencial"
+                                />
+                                <span>Endereço residencial</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="05_Informacoes_encontradas[]"
+                                    value="E-mail pessoal"
+                                />
+                                <span>E-mail pessoal</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="05_Informacoes_encontradas[]"
+                                    value="Nome completo ligado a vínculos empresariais"
+                                />
+                                <span
+                                    >Nome completo ligado a vínculos
+                                    empresariais</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="05_Informacoes_encontradas[]"
+                                    value="Informações pessoais desatualizadas"
+                                />
+                                <span>Informações pessoais desatualizadas</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="05_Informacoes_encontradas[]"
+                                    value="Outra informação pessoal"
+                                />
+                                <span>Outra informação pessoal</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="05_Informacoes_encontradas[]"
+                                    value="Não encontrei informações pessoais"
+                                    data-exclusive
+                                />
+                                <span>Não encontrei informações pessoais</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="05_Informacoes_encontradas[]"
+                                    value="Não sei ou nunca procurei"
+                                    data-exclusive
+                                />
+                                <span>Não sei ou nunca procurei</span>
+                            </label>
+                        </div>
+                        <p
+                            class="group-error"
+                            id="q5-error"
+                            data-group-error
+                            role="alert"
+                        ></p>
+                    </fieldset>
+
+                    <fieldset class="question-card">
+                        <legend>
+                            <b class="question-number">06</b> Quanto a
+                            possibilidade de encontrar dados pessoais ligados ao
+                            seu CNPJ preocupa você?
+                        </legend>
+                        <p class="question-help">Use uma escala de 1 a 5.</p>
+                        <div class="options scale">
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="06_Nivel_de_preocupacao"
+                                    value="1: Nada preocupado(a)"
+                                    required
+                                />
+                                <span><strong>1</strong><small>Nada</small></span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="06_Nivel_de_preocupacao"
+                                    value="2: Pouco preocupado(a)"
+                                    required
+                                />
+                                <span><strong>2</strong><small>Pouco</small></span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="06_Nivel_de_preocupacao"
+                                    value="3: Moderadamente preocupado(a)"
+                                    required
+                                />
+                                <span
+                                    ><strong>3</strong
+                                    ><small>Moderadamente</small></span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="06_Nivel_de_preocupacao"
+                                    value="4: Muito preocupado(a)"
+                                    required
+                                />
+                                <span><strong>4</strong><small>Muito</small></span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="06_Nivel_de_preocupacao"
+                                    value="5: Extremamente preocupado(a)"
+                                    required
+                                />
+                                <span
+                                    ><strong>5</strong
+                                    ><small>Extremamente</small></span
+                                >
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <fieldset
+                        class="question-card"
+                        data-checkbox-group
+                        aria-describedby="q7-help q7-error"
+                    >
+                        <legend>
+                            <b class="question-number">07</b> Depois que passou a
+                            ter ou participar desse CNPJ, você percebeu alguma
+                            destas situações?
+                        </legend>
+                        <p class="question-help" id="q7-help">
+                            Não é necessário ter certeza de que o CNPJ foi a causa.
+                            Selecione todas as opções aplicáveis.
+                        </p>
+                        <div class="options">
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="07_Situacoes_percebidas[]"
+                                    value="Ligações ou mensagens comerciais indesejadas"
+                                />
+                                <span
+                                    >Ligações ou mensagens comerciais
+                                    indesejadas</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="07_Situacoes_percebidas[]"
+                                    value="Tentativas de golpe ou mensagens suspeitas"
+                                />
+                                <span
+                                    >Tentativas de golpe ou mensagens suspeitas</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="07_Situacoes_percebidas[]"
+                                    value="Contatos profissionais em número ou e-mail pessoal"
+                                />
+                                <span
+                                    >Contatos profissionais em número ou e-mail
+                                    pessoal</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="07_Situacoes_percebidas[]"
+                                    value="Confusão causada por informações antigas ou incorretas"
+                                />
+                                <span
+                                    >Confusão causada por informações antigas ou
+                                    incorretas</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="07_Situacoes_percebidas[]"
+                                    value="Contato direcionado a pessoas próximas"
+                                />
+                                <span>Contato direcionado a pessoas próximas</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="07_Situacoes_percebidas[]"
+                                    value="Nenhuma dessas situações"
+                                    data-exclusive
+                                />
+                                <span>Nenhuma dessas situações</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="07_Situacoes_percebidas[]"
+                                    value="Não sei ou não me lembro"
+                                    data-exclusive
+                                />
+                                <span>Não sei ou não me lembro</span>
+                            </label>
+                        </div>
+                        <p
+                            class="group-error"
+                            id="q7-error"
+                            data-group-error
+                            role="alert"
+                        ></p>
+                    </fieldset>
+
+                    <fieldset
+                        class="question-card"
+                        data-checkbox-group
+                        aria-describedby="q8-help q8-error"
+                    >
+                        <legend>
+                            <b class="question-number">08</b> O que você já fez
+                            para corrigir, restringir ou remover alguma informação?
+                        </legend>
+                        <p class="question-help" id="q8-help">
+                            Selecione todas as opções aplicáveis.
+                        </p>
+                        <div class="options">
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="08_Alternativas_tentadas[]"
+                                    value="Pedi correção ou remoção diretamente ao site"
+                                />
+                                <span
+                                    >Pedi correção ou remoção diretamente ao
+                                    site</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="08_Alternativas_tentadas[]"
+                                    value="Solicitei atualização em cadastro, órgão ou contador"
+                                />
+                                <span
+                                    >Solicitei atualização em cadastro, órgão ou
+                                    contador</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="08_Alternativas_tentadas[]"
+                                    value="Pedi remoção ou desindexação a um buscador"
+                                />
+                                <span
+                                    >Pedi remoção ou desindexação a um buscador</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="08_Alternativas_tentadas[]"
+                                    value="Alterei canais ou dados de contato do CNPJ"
+                                />
+                                <span
+                                    >Alterei canais ou dados de contato do CNPJ</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="08_Alternativas_tentadas[]"
+                                    value="Busquei ajuda jurídica, técnica ou especializada"
+                                />
+                                <span
+                                    >Busquei ajuda jurídica, técnica ou
+                                    especializada</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="08_Alternativas_tentadas[]"
+                                    value="Tentei outra medida"
+                                />
+                                <span>Tentei outra medida</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="08_Alternativas_tentadas[]"
+                                    value="Não tomei nenhuma medida"
+                                    data-exclusive
+                                />
+                                <span>Não tomei nenhuma medida</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="08_Alternativas_tentadas[]"
+                                    value="Não se aplica: não encontrei informação a corrigir"
+                                    data-exclusive
+                                />
+                                <span
+                                    >Não se aplica: não encontrei informação a
+                                    corrigir</span
+                                >
+                            </label>
+                        </div>
+                        <p
+                            class="group-error"
+                            id="q8-error"
+                            data-group-error
+                            role="alert"
+                        ></p>
+                    </fieldset>
+
+                    <fieldset
+                        class="question-card"
+                        data-checkbox-group
+                        data-max-selections="3"
+                        aria-describedby="q9-help q9-error"
+                    >
+                        <legend>
+                            <b class="question-number">09</b> O que seria mais
+                            importante para você confiar em uma empresa desse tipo?
+                        </legend>
+                        <p class="question-help" id="q9-help">
+                            Selecione até 3 opções.
+                            <span data-selection-count aria-live="polite"
+                                >0 de 3 selecionadas.</span
+                            >
+                        </p>
+                        <div class="options options-grid">
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="09_Criterios_de_confianca[]"
+                                    value="Escopo, limites e prazos explicados com clareza"
+                                />
+                                <span
+                                    >Escopo, limites e prazos explicados com
+                                    clareza</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="09_Criterios_de_confianca[]"
+                                    value="Relatório com fontes e ocorrências identificadas"
+                                />
+                                <span
+                                    >Relatório com fontes e ocorrências
+                                    identificadas</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="09_Criterios_de_confianca[]"
+                                    value="Métodos e fundamentos das solicitações transparentes"
+                                />
+                                <span
+                                    >Métodos e fundamentos das solicitações
+                                    transparentes</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="09_Criterios_de_confianca[]"
+                                    value="Qualificações verificáveis de quem executa"
+                                />
+                                <span
+                                    >Qualificações verificáveis de quem executa</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="09_Criterios_de_confianca[]"
+                                    value="Proteção e uso mínimo dos dados fornecidos"
+                                />
+                                <span
+                                    >Proteção e uso mínimo dos dados fornecidos</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="09_Criterios_de_confianca[]"
+                                    value="Preço e condições de contratação claros"
+                                />
+                                <span
+                                    >Preço e condições de contratação claros</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="09_Criterios_de_confianca[]"
+                                    value="Atualizações durante a execução e o acompanhamento"
+                                />
+                                <span
+                                    >Atualizações durante a execução e o
+                                    acompanhamento</span
+                                >
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="checkbox"
+                                    name="09_Criterios_de_confianca[]"
+                                    value="Avaliações ou indicações de outros clientes"
+                                />
+                                <span
+                                    >Avaliações ou indicações de outros clientes</span
+                                >
+                            </label>
+                        </div>
+                        <p
+                            class="group-error"
+                            id="q9-error"
+                            data-group-error
+                            role="alert"
+                        ></p>
+                    </fieldset>
+
+                    <fieldset class="question-card">
+                        <legend>
+                            <b class="question-number">10</b> Se esse serviço
+                            custasse R$ 990 em pagamento único, qual seria sua
+                            decisão mais provável?
+                        </legend>
+                        <p class="question-help">
+                            Considere um serviço que identifica ocorrências,
+                            analisa pedidos aplicáveis, conduz solicitações e
+                            acompanha o caso por 12 meses. Resultados dependem de
+                            terceiros e não há garantia de remoção universal.
+                        </p>
+                        <div class="options">
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="10_Intencao_no_preco_de_990"
+                                    value="Certamente não contrataria"
+                                    required
+                                />
+                                <span>Certamente não contrataria</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="10_Intencao_no_preco_de_990"
+                                    value="Provavelmente não contrataria"
+                                    required
+                                />
+                                <span>Provavelmente não contrataria</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="10_Intencao_no_preco_de_990"
+                                    value="Talvez contratasse"
+                                    required
+                                />
+                                <span>Talvez contratasse</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="10_Intencao_no_preco_de_990"
+                                    value="Provavelmente contrataria"
+                                    required
+                                />
+                                <span>Provavelmente contrataria</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="10_Intencao_no_preco_de_990"
+                                    value="Certamente contrataria"
+                                    required
+                                />
+                                <span>Certamente contrataria</span>
+                            </label>
+                            <label class="option">
+                                <input
+                                    type="radio"
+                                    name="10_Intencao_no_preco_de_990"
+                                    value="Não tenho informações suficientes para avaliar"
+                                    required
+                                />
+                                <span
+                                    >Não tenho informações suficientes para
+                                    avaliar</span
+                                >
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <section
+                        class="contact-card"
+                        aria-labelledby="contato-opcional"
+                        aria-describedby="contact-guidance contact-error"
+                    >
+                        <p class="optional-label">
+                            Opcional · não faz parte das 10 perguntas
+                        </p>
+                        <h2 id="contato-opcional">Quer conversar com a Invisi?</h2>
+                        <p id="contact-guidance">
+                            Se você preencher estes campos, nome e WhatsApp serão
+                            enviados junto com suas respostas e ficarão vinculados
+                            a elas. Os dados serão usados somente para responder ao
+                            seu pedido de contato.
+                        </p>
+                        <div class="contact-grid">
+                            <label class="text-field" for="survey-name">
+                                Nome
+                                <input
+                                    id="survey-name"
+                                    name="Contato_Nome"
+                                    type="text"
+                                    autocomplete="name"
+                                    aria-describedby="contact-guidance contact-error"
+                                    placeholder="Como podemos chamar você?"
+                                />
+                            </label>
+                            <label class="text-field" for="survey-phone">
+                                WhatsApp
+                                <input
+                                    id="survey-phone"
+                                    name="Contato_WhatsApp"
+                                    type="tel"
+                                    autocomplete="tel"
+                                    inputmode="numeric"
+                                    maxlength="15"
+                                    pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
+                                    aria-describedby="contact-guidance contact-error"
+                                    placeholder="(11) 99999-9999"
+                                />
+                            </label>
+                        </div>
+                        <label class="contact-consent">
+                            <input
+                                id="survey-contact-consent"
+                                name="Consentimento_de_contato"
+                                type="checkbox"
+                                value="Aceito"
+                                aria-describedby="contact-guidance contact-error"
+                            />
+                            <span
+                                >Autorizo a Invisi a usar meu nome e WhatsApp para
+                                responder a esta solicitação, conforme a Política
+                                de Privacidade.</span
+                            >
+                        </label>
+                        <p
+                            class="group-error"
+                            id="contact-error"
+                            data-contact-error
+                            role="alert"
+                        ></p>
+                    </section>
+
+                    <section class="submit-card" aria-labelledby="enviar-titulo">
+                        <h2 id="enviar-titulo">Pronto para enviar?</h2>
+                        <p>
+                            Revise suas respostas. A equipe poderá acessar cada
+                            resposta para análise; a apresentação dos resultados
+                            será somente agregada, sem exposição de participantes.
+                        </p>
+                        <button class="submit-button" type="submit">
+                            Enviar respostas
+                        </button>
+                        <p
+                            class="form-status"
+                            role="status"
+                            aria-live="polite"
+                        ></p>
+                    </section>
+                </div>
             </form>
         </main>
 
         <footer class="survey-footer">
-            <p>Invisi · LawTech brasileira em fase de validação</p>
+            <p>Invisi · Privacidade digital para quem empreende</p>
             <p>
                 <a href="privacidade.html">Política de Privacidade</a> ·
                 <a href="./">Conheça a proposta</a>
             </p>
         </footer>
 
-        <script src="pesquisa.js" defer></script>
+        <script src="pesquisa.js?v=20260911-1" defer></script>
     </body>
 </html>

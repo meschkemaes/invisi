@@ -930,6 +930,12 @@ h2 em {
 .price-card li svg {
     flex: 0 0 18px;
 }
+.price-scope {
+    margin: 0 0 22px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
 .price-note {
     margin: 12px 0 0;
     color: var(--muted);
@@ -1123,6 +1129,13 @@ h2 em {
     opacity: 0.7;
     cursor: wait;
     transform: none;
+}
+.form-note {
+    margin: 0;
+    color: #60717d;
+    font-size: 11px;
+    line-height: 1.5;
+    text-align: center;
 }
 .form-status {
     min-height: 0;

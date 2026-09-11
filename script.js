@@ -63,9 +63,9 @@ if (form) {
 
     if (button && buttonText) {
       button.disabled = true;
-      buttonText.textContent = "Enviando com segurança...";
+      buttonText.textContent = "Enviando...";
     }
-    if (status) status.textContent = "Você será redirecionado após o envio.";
+    if (status) status.textContent = "Aguarde a confirmação do envio.";
   });
 }
 
