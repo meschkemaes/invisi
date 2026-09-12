@@ -889,28 +889,6 @@ h2 em {
     letter-spacing: 1.2px;
     text-transform: uppercase;
 }
-.price {
-    display: flex;
-    align-items: flex-start;
-    line-height: 1;
-}
-.price span {
-    margin: 11px 7px 0 0;
-    color: #526777;
-    font-size: 15px;
-    font-weight: 700;
-}
-.price strong {
-    font:
-        800 64px/1 "Manrope",
-        sans-serif;
-    letter-spacing: -4px;
-}
-.price-card > small {
-    display: block;
-    margin-top: 8px;
-    color: var(--muted);
-}
 .price-card ul {
     display: grid;
     gap: 13px;
@@ -1387,9 +1365,6 @@ h2 em {
     .price-card,
     .lead-form {
         padding: 28px 22px;
-    }
-    .price strong {
-        font-size: 55px;
     }
     .form-row {
         grid-template-columns: 1fr;
