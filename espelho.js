@@ -1,3 +1,4 @@
+(() => {
 const PATHS = [
   {
     key: "buscadores",
@@ -315,3 +316,4 @@ if (form) {
     if (submitLabel) submitLabel.textContent = "Ver exposição";
   });
 }
+})();
