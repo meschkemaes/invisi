@@ -679,6 +679,21 @@ a.result-item:focus-visible {
     color: #879291;
     font-size: 9px;
 }
+.result-item .result-value {
+    color: #3d4f4e;
+    font-size: 12px;
+    line-height: 1.45;
+    word-break: break-word;
+}
+.result-item.is-found .result-value {
+    color: var(--ink);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+.result-item.is-missing .result-value {
+    color: #879291;
+    font-weight: 500;
+}
 .result-item b {
     color: #148d81;
     font-size: 9px;
