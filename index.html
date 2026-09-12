@@ -89,10 +89,10 @@
                             >
                         </h1>
                         <p class="hero-lead" data-mirror-lead>
-                            Digite o seu nome como o Google já conhece você. Em
-                            segundos, você mesmo vê os caminhos públicos até a
-                            vida pessoal — e decide se quer que a Invisi trate o
-                            que for cabível.
+                            Digite o seu nome como no cadastro. Em segundos a
+                            Invisi mostra o que já está público — incompleto. O
+                            agregador mostra o resto. Aí você decide se quer
+                            que a Invisi trate o que for cabível.
                         </p>
                         <form
                             class="mirror-form"
@@ -113,7 +113,7 @@
                                     autocomplete="name"
                                     maxlength="80"
                                     spellcheck="false"
-                                    placeholder="Seu nome completo, como no Google"
+                                    placeholder="Seu nome completo, como no cadastro"
                                     required
                                 />
                                 <button class="button" type="submit">
@@ -125,8 +125,9 @@
                             <p class="mirror-hint">
                                 Use só o seu nome. Não pedimos CPF, CNPJ nem
                                 documento. Ao continuar, você confirma que este
-                                é o seu nome e autoriza a prévia de caminhos
-                                públicos, conforme a
+                                é o seu nome e autoriza a consulta a cadastros
+                                públicos de empresa, com recorte mascarado na
+                                tela, conforme a
                                 <a href="privacidade.html">Política de Privacidade</a>.
                             </p>
                             <p
@@ -636,15 +637,17 @@
                                 O que a prévia de exposição mostra?<span></span>
                             </summary>
                             <p>
-                                A prévia monta, a partir do nome que você
-                                digitou, os caminhos públicos onde dados
-                                pessoais de quem empreende costumam aparecer.
-                                Não pedimos CPF ou CNPJ e não exibimos telefone,
-                                e-mail ou endereço nesta página: se estiverem
-                                públicos, você mesmo os vê ao abrir um caminho.
-                                Use somente o seu nome. O diagnóstico completo,
-                                as solicitações cabíveis e o acompanhamento de 1
-                                ano começam depois do contato.
+                                A prévia consulta, a partir do nome que você
+                                digitou, cadastros públicos de sócio e CNPJ. Se
+                                achar telefone, e-mail, endereço ou documento,
+                                a Invisi estampa o recorte mascarado nesta
+                                página — o mesmo tipo de dado que o agregador
+                                já solta, só que incompleto. Não pedimos CPF
+                                nem CNPJ. Se a busca não achar, dizemos que não
+                                achou. Use somente o seu nome. O diagnóstico
+                                completo, as solicitações cabíveis e o
+                                acompanhamento de 1 ano começam depois do
+                                contato.
                             </p>
                         </details>
                         <details class="reveal">
@@ -733,7 +736,7 @@
                         />
                         <input
                             type="hidden"
-                            name="Caminhos_abertos"
+                            name="Campos_encontrados"
                             value=""
                             data-opened-paths
                         />
@@ -871,7 +874,8 @@
             <div class="container privacy-text">
                 <p>
                     <strong>Privacidade:</strong> a prévia usa o nome informado
-                    para montar caminhos públicos no seu navegador. Os dados do
+                    para consultar cadastros públicos de empresa no seu
+                    navegador e mostrar um recorte mascarado. Os dados do
                     formulário são usados para avaliar a solicitação e
                     responder ao contato. Não vendemos essas informações.
                     Consulte a

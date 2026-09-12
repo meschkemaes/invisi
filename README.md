@@ -21,7 +21,7 @@ O site usa somente HTML, CSS e JavaScript. Não há etapa de build: abra `index.
 
 ## Prévia de exposição
 
-A landing page oferece uma prévia no próprio site: o visitante informa o nome e vê os caminhos públicos em que dados pessoais de quem empreende costumam aparecer. A prévia não raspa nem exibe telefone, e-mail ou endereço. O diagnóstico completo continua no formulário de contato.
+A landing page oferece uma prévia no próprio site: o visitante informa o nome, o navegador consulta cadastros públicos de sócio e CNPJ e a página mostra um recorte mascarado do que veio. Se a busca não achar, a prévia diz que não achou. O diagnóstico completo continua no formulário de contato.
 
 ## Formulários
 
