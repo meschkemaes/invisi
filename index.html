@@ -69,8 +69,8 @@
                     <a href="#problema">O problema</a>
                     <a href="#como-funciona">Como funciona</a>
                     <a href="#garantia">Garantia</a>
-                    <a class="button button-small" href="#diagnostico"
-                        >Solicitar diagnóstico</a
+                    <a class="button button-small" href="#espelho"
+                        >Ver minha exposição</a
                     >
                 </nav>
             </div>
@@ -88,20 +88,73 @@
                                 >Sua vida, não.</em
                             >
                         </h1>
-                        <p class="hero-lead">
-                            A Invisi identifica onde seus dados pessoais estão
-                            expostos e conduz solicitações de remoção, correção
-                            e desindexação quando aplicáveis, com acompanhamento
-                            durante 1 ano.
+                        <p class="hero-lead" data-mirror-lead>
+                            Digite o seu nome como o Google já conhece você. Em
+                            segundos, você mesmo vê os caminhos públicos até a
+                            vida pessoal — e decide se quer que a Invisi trate o
+                            que for cabível.
                         </p>
-                        <div class="hero-actions">
-                            <a class="button" href="#diagnostico"
-                                >Quero proteger meus dados</a
+                        <form
+                            class="mirror-form"
+                            id="espelho"
+                            data-mirror-form
+                            novalidate
+                        >
+                            <label class="sr-only" for="mirror-name"
+                                >Seu nome completo</label
                             >
-                            <a class="text-link" href="#como-funciona"
-                                >Entenda o processo
-                                <span aria-hidden="true">→</span></a
+                            <div class="mirror-row">
+                                <input
+                                    id="mirror-name"
+                                    name="nome"
+                                    type="text"
+                                    autocomplete="name"
+                                    maxlength="80"
+                                    spellcheck="false"
+                                    placeholder="Seu nome completo, como no Google"
+                                    required
+                                />
+                                <button class="button" type="submit">
+                                    <span data-mirror-submit-label
+                                        >Ver exposição</span
+                                    >
+                                </button>
+                            </div>
+                            <p class="mirror-hint">
+                                Use só o seu nome. Não pedimos CPF, CNPJ nem
+                                documento. Ao continuar, você confirma que este
+                                é o seu nome e autoriza a prévia de caminhos
+                                públicos, conforme a
+                                <a href="privacidade.html">Política de Privacidade</a>.
+                            </p>
+                            <p
+                                class="mirror-error"
+                                data-mirror-error
+                                role="alert"
+                                hidden
+                            ></p>
+                        </form>
+                        <div class="mirror-conclusion" data-mirror-conclusion hidden>
+                            <p class="mirror-verdict" data-mirror-verdict></p>
+                            <div class="hero-actions">
+                                <a
+                                    class="button"
+                                    href="#diagnostico"
+                                    data-mirror-cta
+                                    >Quero o diagnóstico completo</a
+                                >
+                                <a class="text-link light" href="#como-funciona"
+                                    >Ver como a Invisi trata isso
+                                    <span aria-hidden="true">→</span></a
+                                >
+                            </div>
+                            <button
+                                class="mirror-reset"
+                                type="button"
+                                data-mirror-reset
                             >
+                                Não é você? Corrigir o nome
+                            </button>
                         </div>
                         <ul class="trust-list" aria-label="Diferenciais">
                             <li>
@@ -127,9 +180,10 @@
 
                     <div
                         class="hero-visual reveal"
-                        aria-label="Exemplo visual de um diagnóstico de exposição digital"
+                        data-mirror-visual
+                        aria-label="Prévia de exposição digital a partir do nome"
                     >
-                        <div class="scan-card">
+                        <div class="scan-card" data-mirror-card>
                             <div class="scan-header">
                                 <div>
                                     <span class="window-dot"></span
@@ -137,8 +191,10 @@
                                     ><span class="window-dot"></span>
                                 </div>
                                 <span class="secure-label"
-                                    ><span></span> Visualização
-                                    ilustrativa</span
+                                    ><span></span>
+                                    <b data-mirror-label
+                                        >Visualização ilustrativa</b
+                                    ></span
                                 >
                             </div>
                             <div class="scan-body">
@@ -154,19 +210,34 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <strong>Exemplo de diagnóstico</strong
-                                        ><span>Exemplo de ocorrência</span>
+                                        <strong data-mirror-who
+                                            >Exemplo de diagnóstico</strong
+                                        ><span data-mirror-status
+                                            >A prévia começa com o seu
+                                            nome</span
+                                        >
                                     </div>
-                                    <div class="pulse-dot"></div>
+                                    <div
+                                        class="pulse-dot"
+                                        data-mirror-pulse
+                                    ></div>
                                 </div>
-                                <div class="scan-progress"><span></span></div>
-                                <div class="result-list">
+                                <div
+                                    class="scan-progress"
+                                    data-mirror-progress
+                                >
+                                    <span></span>
+                                </div>
+                                <div
+                                    class="result-list"
+                                    data-mirror-results
+                                >
                                     <div class="result-item">
                                         <span class="result-icon">N</span>
                                         <div>
                                             <strong>Nome completo</strong
                                             ><small
-                                                >Exemplo de ocorrência</small
+                                                >Rastro em buscadores</small
                                             >
                                         </div>
                                         <b>Em avaliação</b>
@@ -176,7 +247,7 @@
                                         <div>
                                             <strong>Telefone pessoal</strong
                                             ><small
-                                                >Exemplo de ocorrência</small
+                                                >Caminho até o WhatsApp</small
                                             >
                                         </div>
                                         <b>Em avaliação</b>
@@ -186,12 +257,24 @@
                                         <div>
                                             <strong>Endereço vinculado</strong
                                             ><small
-                                                >Exemplo de ocorrência</small
+                                                >Residencial colado ao
+                                                CNPJ</small
                                             >
                                         </div>
                                         <b>Em avaliação</b>
                                     </div>
                                 </div>
+                                <p
+                                    class="mirror-live"
+                                    data-mirror-live
+                                    role="status"
+                                    aria-live="polite"
+                                ></p>
+                                <div
+                                    class="mirror-insight"
+                                    data-mirror-insight
+                                    hidden
+                                ></div>
                             </div>
                         </div>
                         <div class="floating-badge badge-shield">
@@ -301,8 +384,8 @@
                             orientado pelos direitos previstos na LGPD para
                             tratar cada ocorrência de forma responsável.
                         </p>
-                        <a class="text-link light" href="#diagnostico"
-                            >Começar meu diagnóstico
+                        <a class="text-link light" href="#espelho"
+                            >Ver o que a internet já sabe
                             <span aria-hidden="true">→</span></a
                         >
                     </div>
@@ -466,8 +549,8 @@
                             atendimento e o prazo estimado. A contratação só
                             ocorre após sua aprovação.
                         </p>
-                        <a class="button button-full" href="#diagnostico"
-                            >Solicitar diagnóstico</a
+                        <a class="button button-full" href="#espelho"
+                            >Ver minha exposição</a
                         >
                         <p class="price-note">
                             O envio inicia uma avaliação de escopo e não gera
@@ -541,6 +624,22 @@
                         </details>
                         <details class="reveal">
                             <summary>
+                                O que a prévia de exposição mostra?<span></span>
+                            </summary>
+                            <p>
+                                A prévia monta, a partir do nome que você
+                                digitou, os caminhos públicos onde dados
+                                pessoais de quem empreende costumam aparecer.
+                                Não pedimos CPF ou CNPJ e não exibimos telefone,
+                                e-mail ou endereço nesta página: se estiverem
+                                públicos, você mesmo os vê ao abrir um caminho.
+                                Use somente o seu nome. O diagnóstico completo,
+                                as solicitações cabíveis e o acompanhamento de 1
+                                ano começam depois do contato.
+                            </p>
+                        </details>
+                        <details class="reveal">
+                            <summary>
                                 Como meus dados são usados neste
                                 formulário?<span></span>
                             </summary>
@@ -559,8 +658,10 @@
                 <div class="container contact-grid">
                     <div class="contact-copy reveal">
                         <p class="eyebrow"><span></span> Diagnóstico inicial</p>
-                        <h2>Descubra o que a internet revela sobre você.</h2>
-                        <p>
+                        <h2 data-contact-title>
+                            Descubra o que a internet revela sobre você.
+                        </h2>
+                        <p data-contact-text>
                             Após o envio, faremos uma avaliação inicial da
                             demanda e entraremos em contato para confirmar o
                             escopo e os próximos passos.
@@ -608,6 +709,24 @@
                             autocomplete="off"
                             class="honeypot"
                             aria-hidden="true"
+                        />
+                        <input
+                            type="hidden"
+                            name="Previa_exposicao"
+                            value="Nao"
+                            data-preview-field
+                        />
+                        <input
+                            type="hidden"
+                            name="Nome_consultado"
+                            value=""
+                            data-consulted-name
+                        />
+                        <input
+                            type="hidden"
+                            name="Caminhos_abertos"
+                            value=""
+                            data-opened-paths
                         />
 
                         <div class="field full-field">
@@ -742,9 +861,11 @@
             </div>
             <div class="container privacy-text">
                 <p>
-                    <strong>Privacidade:</strong> os dados enviados são usados
-                    para avaliar a solicitação e responder ao contato. Não
-                    vendemos essas informações. Consulte a
+                    <strong>Privacidade:</strong> a prévia usa o nome informado
+                    para montar caminhos públicos no seu navegador. Os dados do
+                    formulário são usados para avaliar a solicitação e
+                    responder ao contato. Não vendemos essas informações.
+                    Consulte a
                     <a href="privacidade.html"
                         >Política de Privacidade completa</a
                     >.
@@ -767,5 +888,6 @@
         </footer>
 
         <script src="script.js" defer></script>
+        <script src="espelho.js" defer></script>
     </body>
 </html>
