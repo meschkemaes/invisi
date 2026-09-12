@@ -1,0 +1,16 @@
+{
+  "name": "Invisi static site",
+  "terminals": [
+    {
+      "name": "web",
+      "command": "python3 -m http.server 8000",
+      "description": "Serves the static site (index.html, pesquisa.html, privacidade.html, etc.) on http://localhost:8000. No build step: the site is plain HTML, CSS and JS."
+    }
+  ],
+  "ports": [
+    {
+      "name": "web server",
+      "port": 8000
+    }
+  ]
+}
