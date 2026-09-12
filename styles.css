@@ -316,6 +316,187 @@ h2 em {
 .hero .text-link {
     color: white;
 }
+
+.mirror-form {
+    max-width: 560px;
+}
+.mirror-row {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+}
+.mirror-row input {
+    flex: 1;
+    min-width: 0;
+    min-height: 52px;
+    padding: 0 16px;
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition:
+        border-color 0.2s,
+        background 0.2s,
+        box-shadow 0.2s;
+}
+.mirror-row input::placeholder {
+    color: rgba(255, 255, 255, 0.42);
+}
+.mirror-row input:focus {
+    border-color: rgba(49, 209, 189, 0.7);
+    background: rgba(255, 255, 255, 0.09);
+    box-shadow: 0 0 0 4px rgba(30, 184, 166, 0.14);
+}
+.mirror-row .button {
+    flex-shrink: 0;
+    min-width: 168px;
+}
+.mirror-form[data-busy="true"] .button,
+.mirror-form[data-busy="true"] input {
+    cursor: wait;
+}
+.mirror-hint,
+.mirror-error {
+    margin: 12px 0 0;
+    font-size: 13px;
+    line-height: 1.6;
+}
+.mirror-hint {
+    color: rgba(255, 255, 255, 0.5);
+}
+.mirror-hint a {
+    color: var(--teal-400);
+    font-weight: 700;
+}
+.mirror-error {
+    color: #ffc4a8;
+}
+.mirror-conclusion {
+    max-width: 560px;
+}
+.mirror-verdict {
+    margin: 0 0 22px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 18px;
+    line-height: 1.7;
+}
+.mirror-reset {
+    display: inline-flex;
+    margin-top: 18px;
+    padding: 0;
+    color: rgba(255, 255, 255, 0.5);
+    background: none;
+    border: 0;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.mirror-reset:hover {
+    color: var(--teal-400);
+}
+.hero.is-mirror-report .hero-lead,
+.hero.is-mirror-report .mirror-form {
+    display: none;
+}
+.secure-label b {
+    font: inherit;
+    font-weight: 700;
+}
+
+.scan-card.is-scanning,
+.scan-card.is-report {
+    transform: none;
+}
+.scan-card.is-scanning .scan-progress span,
+.scan-card.is-report .scan-progress span {
+    animation: none;
+    width: var(--mirror-progress, 12%);
+    transition: width 0.45s ease;
+}
+.scan-card.is-report .scan-progress span {
+    width: 100%;
+}
+.pulse-dot.is-live {
+    background: var(--teal-500);
+    box-shadow: 0 0 0 5px rgba(30, 184, 166, 0.16);
+    animation: pulse-live 1.2s ease-in-out infinite;
+}
+.pulse-dot.is-ready {
+    background: var(--teal-500);
+    box-shadow: 0 0 0 5px rgba(30, 184, 166, 0.16);
+}
+@keyframes pulse-live {
+    50% {
+        transform: scale(0.72);
+        opacity: 0.7;
+    }
+}
+
+a.result-item {
+    text-decoration: none;
+    color: inherit;
+}
+a.result-item:hover,
+a.result-item:focus-visible {
+    background: #eef7f5;
+    border-color: #b7d8d2;
+}
+.result-item.is-checking {
+    opacity: 0.55;
+}
+.result-item.is-ready b,
+.result-item.is-opened b {
+    color: #148d81;
+}
+.result-item.is-opened {
+    background: #eef7f5;
+    border-color: #c5e0db;
+}
+.mirror-live {
+    min-height: 1.4em;
+    margin: 14px 0 0;
+    color: #5d7170;
+    font-size: 12px;
+}
+.mirror-insight {
+    margin-top: 16px;
+    padding: 14px 16px;
+    color: #3d5856;
+    background: #f3faf8;
+    border: 1px solid #d5ebe6;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.65;
+}
+.mirror-insight strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--ink);
+    font-size: 13px;
+}
+.mirror-card-cta {
+    margin-top: 14px;
+}
+.hero.is-mirror-report .hero-visual,
+.hero.is-mirror-scanning .hero-visual {
+    align-items: flex-start;
+    padding: 36px 0 48px;
+}
+.hero.is-mirror-report,
+.hero.is-mirror-scanning {
+    min-height: auto;
+}
+.hero.is-mirror-report .hero-grid,
+.hero.is-mirror-scanning .hero-grid {
+    min-height: auto;
+    align-items: start;
+    padding-bottom: 48px;
+}
+.hero.is-mirror-report .floating-badge,
+.hero.is-mirror-scanning .floating-badge {
+    display: none;
+}
 .trust-list {
     display: flex;
     flex-wrap: wrap;
@@ -1308,6 +1489,16 @@ h2 em {
     .hero-actions .text-link {
         justify-content: center;
     }
+    .mirror-row {
+        flex-direction: column;
+    }
+    .mirror-row .button {
+        min-width: 0;
+        width: 100%;
+    }
+    .mirror-verdict {
+        font-size: 16px;
+    }
     .trust-list {
         flex-direction: column;
         gap: 11px;
@@ -1332,6 +1523,14 @@ h2 em {
     }
     .result-item b {
         display: none;
+    }
+    .scan-card.is-report .result-item,
+    .scan-card.is-scanning .result-item {
+        grid-template-columns: 32px 1fr auto;
+    }
+    .scan-card.is-report .result-item b,
+    .scan-card.is-scanning .result-item b {
+        display: block;
     }
     .audience-list {
         gap: 10px 14px;

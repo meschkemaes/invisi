@@ -19,6 +19,10 @@ Site público da **Invisi**, uma LawTech brasileira em fase de validação volta
 
 O site usa somente HTML, CSS e JavaScript. Não há etapa de build: abra `index.html` ou `pesquisa.html` diretamente no navegador.
 
+## Prévia de exposição
+
+A landing page oferece uma prévia no próprio site: o visitante informa o nome e vê os caminhos públicos em que dados pessoais de quem empreende costumam aparecer. A prévia não raspa nem exibe telefone, e-mail ou endereço. O diagnóstico completo continua no formulário de contato.
+
 ## Formulários
 
 O formulário de diagnóstico e a pesquisa utilizam [FormSubmit](https://formsubmit.co/) e encaminham as submissões para o canal responsável da Invisi.
@@ -29,7 +33,7 @@ A pesquisa contém 10 perguntas e pode ser respondida sem identificadores direto
 
 ## Arquivos públicos
 
-- `index.html`, `styles.css` e `script.js`: landing page;
+- `index.html`, `styles.css`, `script.js` e `espelho.js`: landing page e prévia de exposição;
 - `pesquisa.html`, `pesquisa.css` e `pesquisa.js`: pesquisa de mercado;
 - `obrigado.html` e `pesquisa-obrigado.html`: páginas de confirmação;
 - `privacidade.html`: informações sobre tratamento de dados;
