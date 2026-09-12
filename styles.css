@@ -475,6 +475,9 @@ a.result-item:focus-visible {
     color: var(--ink);
     font-size: 13px;
 }
+.mirror-card-cta {
+    margin-top: 14px;
+}
 .hero.is-mirror-report .hero-visual,
 .hero.is-mirror-scanning .hero-visual {
     align-items: flex-start;

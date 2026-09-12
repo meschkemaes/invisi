@@ -64,6 +64,7 @@ if (form) {
   const verdict = document.querySelector("[data-mirror-verdict]");
   const lead = document.querySelector("[data-mirror-lead]");
   const cta = document.querySelector("[data-mirror-cta]");
+  const cardCta = document.querySelector("[data-mirror-card-cta]");
   const resetButton = document.querySelector("[data-mirror-reset]");
   const leadName = document.querySelector("#nome");
   const leadNote = document.querySelector("#preocupacao");
@@ -176,6 +177,7 @@ if (form) {
         : "<strong>Não mostramos o dado nesta tela.</strong> Se telefone, e-mail ou endereço estiverem públicos, eles aparecem do outro lado do caminho. A Invisi não republica a sua vida para provar o serviço.";
     }
     if (conclusion) conclusion.hidden = false;
+    if (cardCta) cardCta.hidden = false;
     hero?.classList.add("is-mirror-report");
     fillLeadForm(name);
   };
@@ -243,6 +245,7 @@ if (form) {
       insight.replaceChildren();
     }
     if (conclusion) conclusion.hidden = true;
+    if (cardCta) cardCta.hidden = true;
     if (lead) lead.textContent = IDLE_LEAD;
     setProgress(0.08);
 
@@ -278,6 +281,12 @@ if (form) {
     nameInput.disabled = false;
     if (submitLabel) submitLabel.textContent = "Ver de novo";
     hero?.classList.remove("is-mirror-scanning");
+    if (window.matchMedia("(max-width: 980px)").matches) {
+      (cardCta || card)?.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "nearest",
+      });
+    }
   };
 
   form.addEventListener("submit", (event) => {
@@ -304,13 +313,16 @@ if (form) {
     }
   });
 
-  cta?.addEventListener("click", () => {
+  const onCta = () => {
     if (queriedName) fillLeadForm(queriedName);
-  });
+  };
+  cta?.addEventListener("click", onCta);
+  cardCta?.addEventListener("click", onCta);
 
   resetButton?.addEventListener("click", () => {
     hero?.classList.remove("is-mirror-report", "is-mirror-scanning");
     if (conclusion) conclusion.hidden = true;
+    if (cardCta) cardCta.hidden = true;
     nameInput.disabled = false;
     nameInput.focus();
     if (submitLabel) submitLabel.textContent = "Ver exposição";
