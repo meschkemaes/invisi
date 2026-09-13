@@ -292,6 +292,7 @@ if (form) {
           title: "Nome no cadastro público",
           value: titleCaseName(socio.nome.toLowerCase()),
           badge: "Público",
+          tone: "public",
           found: true,
         },
         {
@@ -299,7 +300,8 @@ if (form) {
           icon: "T",
           title: "Telefone associado",
           value: phone ? maskPhone(phone.area, phone.number) : "Não veio neste cadastro público",
-          badge: phone ? "Parcial" : "Não achado",
+          badge: phone ? "a venda" : "Não achado",
+          tone: phone ? "alert" : undefined,
           found: Boolean(phone),
         },
         {
@@ -307,7 +309,8 @@ if (form) {
           icon: "M",
           title: "E-mail no cadastro",
           value: email ? maskEmail(email) : "Não veio neste cadastro público",
-          badge: email ? "Parcial" : "Não achado",
+          badge: email ? "a venda" : "Não achado",
+          tone: email ? "alert" : undefined,
           found: Boolean(email),
         },
         {
@@ -315,7 +318,8 @@ if (form) {
           icon: "E",
           title: "Endereço vinculado",
           value: address || "Não veio neste cadastro público",
-          badge: address ? "Parcial" : "Não achado",
+          badge: address ? "a venda" : "Não achado",
+          tone: address ? "alert" : undefined,
           found: Boolean(address),
         },
         {
@@ -323,7 +327,8 @@ if (form) {
           icon: "D",
           title: "Documento",
           value: document || "Não veio neste cadastro público",
-          badge: document ? "Parcial" : "Não achado",
+          badge: document ? "a venda" : "Não achado",
+          tone: document ? "alert" : undefined,
           found: Boolean(document),
         },
         {
@@ -334,6 +339,7 @@ if (form) {
             ? `CNPJ ${company}${city ? ` · ${city}` : ""}`
             : "Sócio em cadastro público",
           badge: "Público",
+          tone: "public",
           found: true,
         },
       ],
@@ -408,11 +414,13 @@ if (form) {
       item.querySelector("small").textContent = ready
         ? row.value
         : row.scanning || "Consultando cadastro público";
-      item.querySelector("b").textContent = ready
+      const badge = item.querySelector("b");
+      badge.textContent = ready
         ? row.badge
         : checking
           ? "Lendo"
           : "Na fila";
+      if (ready && row.tone) badge.classList.add(`is-${row.tone}`);
       results.append(item);
     });
   };
@@ -453,7 +461,7 @@ if (form) {
       } else {
         insight.innerHTML = report.others
           ? `<strong>Há outros cadastros públicos com esse nome.</strong> Mostramos o de melhor casamento: ${report.person}. Se não for você, corrija o nome.`
-          : `<strong>Isso já estava público.</strong> A Invisi só fura o que o cadastro empresarial já solta. O diagnóstico completo mapeia o resto e trata o que for cabível.`;
+          : `<strong>Seus dados estão à venda.</strong> O que o cadastro empresarial solta, a internet já vende. A Invisi mostra o recorte.`;
       }
     }
     if (conclusion) conclusion.hidden = false;
@@ -615,7 +623,7 @@ if (form) {
     }
     if (live) {
       live.textContent =
-        "Valores incompletos de cadastro público. A Invisi não inventa o que a fonte não mandou.";
+        "O recorte público já circula à venda na internet.";
     }
     if (label) label.textContent = "Relatório de exposição · prévia";
     renderRows(report.rows, "report");

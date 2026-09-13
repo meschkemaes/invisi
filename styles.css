@@ -700,6 +700,20 @@ a.result-item:focus-visible {
     font-weight: 700;
     text-transform: uppercase;
 }
+.result-item b.is-public,
+.result-item.is-ready b.is-public,
+.result-item.is-opened b.is-public {
+    color: #c9a227;
+}
+.result-item b.is-alert,
+.result-item.is-ready b.is-alert,
+.result-item.is-opened b.is-alert {
+    color: #b42318;
+    background: var(--danger-soft);
+    padding: 4px 7px;
+    border-radius: 6px;
+    letter-spacing: 0.04em;
+}
 .floating-badge {
     position: absolute;
     z-index: 4;
