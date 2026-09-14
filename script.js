@@ -56,6 +56,32 @@ if (form) {
     nextInput.value = new URL("obrigado.html", window.location.href).href;
   }
 
+  const utmParams = new URLSearchParams(window.location.search);
+  ["source", "medium", "campaign", "content"].forEach((key) => {
+    const field = form.querySelector(`input[name="UTM_${key}"]`);
+    const storageKey = `invisi.utm.${key}`;
+    const fromQuery = (utmParams.get(`utm_${key}`) || "").trim().slice(0, 200);
+
+    if (fromQuery) {
+      try {
+        sessionStorage.setItem(storageKey, fromQuery);
+      } catch (_) {
+        /* sessionStorage may be unavailable */
+      }
+    }
+
+    let value = fromQuery;
+    if (!value) {
+      try {
+        value = sessionStorage.getItem(storageKey) || "";
+      } catch (_) {
+        value = "";
+      }
+    }
+
+    if (field) field.value = value;
+  });
+
   form.addEventListener("submit", () => {
     const button = form.querySelector(".submit-button");
     const buttonText = button?.querySelector("span");
