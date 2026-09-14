@@ -23,6 +23,9 @@
 * {
     box-sizing: border-box;
 }
+[hidden] {
+    display: none !important;
+}
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 88px;
@@ -92,6 +95,9 @@ svg {
     outline: 3px solid #0b6f65;
     outline-offset: 3px;
 }
+.button:focus-visible {
+    outline-color: var(--navy-900);
+}
 .site-header :focus-visible,
 .hero :focus-visible,
 .method :focus-visible,
@@ -100,7 +106,7 @@ svg {
 .site-footer :focus-visible,
 .context-strip :focus-visible,
 .skip-link:focus-visible {
-    outline-color: var(--teal-400);
+    outline-color: #fff;
 }
 .mirror-row input:focus-visible,
 .field input:focus-visible,
