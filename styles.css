@@ -23,6 +23,9 @@
 * {
     box-sizing: border-box;
 }
+[hidden] {
+    display: none !important;
+}
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 88px;
@@ -87,6 +90,29 @@ svg {
 }
 .skip-link:focus {
     transform: translateY(0);
+}
+:where(a, button, input, select, textarea, summary):focus-visible {
+    outline: 3px solid #0b6f65;
+    outline-offset: 3px;
+}
+.button:focus-visible {
+    outline-color: var(--navy-900);
+}
+.site-header :focus-visible,
+.hero :focus-visible,
+.method :focus-visible,
+.offer :focus-visible,
+.contact-copy :focus-visible,
+.site-footer :focus-visible,
+.context-strip :focus-visible,
+.skip-link:focus-visible {
+    outline-color: #fff;
+}
+.mirror-row input:focus-visible,
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+    outline: none;
 }
 
 .site-header {
@@ -350,7 +376,7 @@ h2 em {
 }
 .mirror-row .button {
     flex-shrink: 0;
-    min-width: 168px;
+    min-width: 196px;
 }
 .mirror-form[data-busy="true"] .button,
 .mirror-form[data-busy="true"] input {
@@ -1253,6 +1279,12 @@ a.result-item:focus-visible {
 .field label span {
     color: #82909a;
     font-weight: 400;
+}
+.field-hint {
+    margin: 0;
+    color: #82909a;
+    font-size: 11px;
+    line-height: 1.45;
 }
 .field input,
 .field select,

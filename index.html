@@ -102,10 +102,9 @@
                             >
                         </h1>
                         <p class="hero-lead" data-mirror-lead>
-                            Digite o seu nome como no cadastro. Em segundos a
-                            Invisi mostra o que já está público — incompleto. O
-                            agregador mostra o resto. Aí você decide se quer
-                            que a Invisi trate o que for cabível.
+                            Digite o nome como no cadastro. A Invisi mostra o
+                            que já está público — incompleto. Você decide se
+                            quer tratar o que for cabível.
                         </p>
                         <form
                             class="mirror-form"
@@ -127,20 +126,20 @@
                                     maxlength="80"
                                     spellcheck="false"
                                     placeholder="Seu nome completo, como no cadastro"
+                                    aria-describedby="mirror-hint"
                                     required
                                 />
                                 <button class="button" type="submit">
                                     <span data-mirror-submit-label
-                                        >Ver exposição</span
+                                        >Ver minha exposição</span
                                     >
                                 </button>
                             </div>
-                            <p class="mirror-hint">
-                                Use só o seu nome. Não pedimos CPF, CNPJ nem
-                                documento. Ao continuar, você confirma que este
-                                é o seu nome e autoriza a consulta a cadastros
-                                públicos de empresa, com recorte mascarado na
-                                tela, conforme a
+                            <p class="mirror-hint" id="mirror-hint">
+                                Use só o seu nome — sem CPF, CNPJ ou documento.
+                                Ao continuar, você confirma que é o seu nome e
+                                autoriza a consulta a cadastros públicos, com
+                                recorte mascarado. Veja a
                                 <a href="privacidade.html">Política de Privacidade</a>.
                             </p>
                             <p
@@ -157,7 +156,7 @@
                                     class="button"
                                     href="#diagnostico"
                                     data-mirror-cta
-                                    >Quero o diagnóstico completo</a
+                                    >Pedir avaliação inicial</a
                                 >
                                 <a class="text-link light" href="#como-funciona"
                                     >Ver como a Invisi trata isso
@@ -296,7 +295,7 @@
                                     href="#diagnostico"
                                     data-mirror-card-cta
                                     hidden
-                                    >Quero o diagnóstico completo</a
+                                    >Pedir avaliação inicial</a
                                 >
                             </div>
                         </div>
@@ -408,7 +407,7 @@
                             tratar cada ocorrência de forma responsável.
                         </p>
                         <a class="text-link light" href="#espelho"
-                            >Ver o que a internet já sabe
+                            >Ver minha exposição
                             <span aria-hidden="true">→</span></a
                         >
                     </div>
@@ -523,15 +522,14 @@
                                     ano</strong
                                 >
                                 <p>
-                                    A partir da entrega do relatório inicial,
-                                    realizamos quatro revisões trimestrais das
-                                    ocorrências incluídas no escopo. Se uma
-                                    delas reaparecer, fazemos uma nova análise e
-                                    reapresentamos os pedidos que continuarem
-                                    aplicáveis, sem cobrança adicional. A
-                                    garantia cobre a execução e o acompanhamento
-                                    do processo, não decisões de terceiros nem a
-                                    remoção de todos os dados da internet.
+                                    Após o relatório inicial, fazemos quatro
+                                    revisões trimestrais do que entrou no
+                                    escopo. Se algo reaparecer, analisamos de
+                                    novo e reapresentamos os pedidos que ainda
+                                    forem cabíveis, sem cobrança extra. A
+                                    garantia cobre execução e acompanhamento —
+                                    não decisões de terceiros nem a remoção de
+                                    todos os dados da internet.
                                 </p>
                             </div>
                         </div>
@@ -576,8 +574,8 @@
                             >Ver minha exposição</a
                         >
                         <p class="price-note">
-                            O envio inicia uma avaliação de escopo e não gera
-                            cobrança.
+                            A prévia não gera cobrança. A avaliação de escopo
+                            começa depois do contato.
                         </p>
                     </div>
                 </div>
@@ -598,12 +596,10 @@
                                 dados?<span></span>
                             </summary>
                             <p>
-                                Não seria responsável prometer isso. A
-                                possibilidade de remoção depende da fonte, da
-                                finalidade do tratamento, de obrigações legais e
-                                da decisão de terceiros. Garantimos a execução e
-                                o acompanhamento das medidas elegíveis previstas
-                                no escopo.
+                                Não. Remoção depende da fonte, da finalidade, de
+                                obrigações legais e da decisão de terceiros. O
+                                que garantimos é executar e acompanhar as
+                                medidas elegíveis do escopo.
                             </p>
                         </details>
                         <details class="reveal">
@@ -650,15 +646,12 @@
                                 O que a prévia de exposição mostra?<span></span>
                             </summary>
                             <p>
-                                A prévia consulta, a partir do nome que você
-                                digitou, cadastros públicos de sócio e CNPJ. Se
+                                A prévia usa o nome que você digitou para
+                                consultar cadastros públicos de sócio e CNPJ. Se
                                 achar telefone, e-mail, endereço ou documento,
-                                a Invisi estampa o recorte mascarado nesta
-                                página — o mesmo tipo de dado que o agregador
-                                já solta, só que incompleto. Não pedimos CPF
-                                nem CNPJ. Se a busca não achar, dizemos que não
-                                achou. Use somente o seu nome. O diagnóstico
-                                completo, as solicitações cabíveis e o
+                                mostra o recorte mascarado — incompleto. Sem
+                                CPF nem CNPJ. Se não achar, dizemos que não
+                                achou. Diagnóstico, pedidos cabíveis e
                                 acompanhamento de 1 ano começam depois do
                                 contato.
                             </p>
@@ -775,25 +768,30 @@
                         />
 
                         <div class="field full-field">
-                            <label for="nome">Nome</label>
+                            <label for="nome">Seu nome</label>
                             <input
                                 id="nome"
                                 name="Nome"
                                 type="text"
                                 autocomplete="name"
-                                placeholder="Como podemos chamar você?"
+                                placeholder="Nome e sobrenome"
+                                aria-describedby="nome-ajuda"
                                 required
                             />
+                            <p class="field-hint" id="nome-ajuda">
+                                Para falarmos com você. Não envie CPF nem
+                                documento.
+                            </p>
                         </div>
                         <div class="form-row">
                             <div class="field">
-                                <label for="email">E-mail</label>
+                                <label for="email">E-mail para retorno</label>
                                 <input
                                     id="email"
                                     name="Email"
                                     type="email"
                                     autocomplete="email"
-                                    placeholder="voce@exemplo.com"
+                                    placeholder="voce@empresa.com.br"
                                     required
                                 />
                             </div>
@@ -811,7 +809,12 @@
                                     maxlength="15"
                                     pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
                                     title="Informe um celular brasileiro com DDD, no formato (11) 99999-9999"
+                                    aria-describedby="telefone-ajuda"
                                 />
+                                <p class="field-hint" id="telefone-ajuda">
+                                    Celular com DDD, só se quiser retorno por
+                                    WhatsApp.
+                                </p>
                             </div>
                         </div>
                         <div class="field full-field">
@@ -866,7 +869,7 @@
                             class="button button-full submit-button"
                             type="submit"
                         >
-                            <span>Solicitar avaliação inicial</span>
+                            <span>Pedir avaliação inicial</span>
                             <svg viewBox="0 0 20 20" aria-hidden="true">
                                 <path d="m7 4 6 6-6 6" />
                             </svg>
