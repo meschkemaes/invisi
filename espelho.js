@@ -42,7 +42,7 @@ const OFFICE_LOOKUPS = [
 ];
 
 const IDLE_LEAD =
-  "Digite o seu nome como no cadastro. Em segundos a Invisi mostra o que já está público — incompleto. O agregador mostra o resto.";
+  "Digite o nome como no cadastro. A Invisi mostra o que já está público — incompleto. Você decide se quer tratar o que for cabível.";
 
 const PARTICLES = new Set(["DA", "DE", "DO", "DAS", "DOS", "E", "DI", "DU"]);
 
@@ -367,8 +367,8 @@ if (form) {
     if (leadName && !leadName.value.trim()) leadName.value = name;
     if (leadNote && !leadNote.value.trim()) {
       leadNote.value = report
-        ? "Fiz a prévia de exposição no site e vi dados públicos incompletos. Quero o diagnóstico completo e saber o que dá para tratar."
-        : "Fiz a prévia de exposição no site. Quero o diagnóstico completo e saber o que dá para tratar.";
+        ? "Fiz a prévia de exposição no site e vi dados públicos incompletos. Quero a avaliação inicial e saber o que dá para tratar."
+        : "Fiz a prévia de exposição no site. Quero a avaliação inicial e saber o que dá para tratar.";
     }
     if (previewField) previewField.value = "Sim";
     if (consultedName) consultedName.value = name;
@@ -378,7 +378,7 @@ if (form) {
     if (contactTitle) {
       contactTitle.textContent = report
         ? "Você já viu o pedaço público. Agora a Invisi trata o que for cabível."
-        : "A prévia não achou esse nome. O diagnóstico completo ainda pode ir atrás.";
+        : "A prévia não achou esse nome. A avaliação inicial ainda pode ir atrás.";
     }
     if (contactText) {
       contactText.textContent =
@@ -666,7 +666,7 @@ if (form) {
     if (cardCta) cardCta.hidden = true;
     nameInput.disabled = false;
     nameInput.focus();
-    if (submitLabel) submitLabel.textContent = "Ver exposição";
+    if (submitLabel) submitLabel.textContent = "Ver minha exposição";
   });
 }
 })();
