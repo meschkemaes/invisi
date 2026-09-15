@@ -1,6 +1,6 @@
 # Invisi
 
-Site público da **Invisi**, uma LawTech brasileira em fase de validação voltada à redução responsável da exposição online de dados pessoais ligados a atividades empresariais.
+Site público da **Invisi**, empresa brasileira de tecnologia e serviços de privacidade voltada à redução responsável da exposição online de dados pessoais ligados a atividades empresariais.
 
 ## Páginas
 
