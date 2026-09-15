@@ -18,12 +18,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
             name="description"
-            content="Pesquisa de mercado sobre como pessoas com CNPJ encontram e lidam com seus dados na internet."
+            content="Pesquisa da Invisi para quem tem CNPJ: o que aparece de dado pessoal na internet e se um serviço para reduzir isso faria sentido."
         />
         <meta name="robots" content="noindex" />
         <meta name="theme-color" content="#071a2b" />
         <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-        <link rel="stylesheet" href="pesquisa.css?v=20260911-1" />
+        <link rel="stylesheet" href="pesquisa.css?v=20260915-1" />
         <title>Pesquisa de mercado | Invisi</title>
     </head>
     <body>
@@ -49,14 +49,14 @@
                 <div class="hero-copy">
                     <p class="eyebrow">Pesquisa de mercado</p>
                     <h1>
-                        Como pessoas com CNPJ lidam com seus
-                        <em>dados</em> na internet?
+                        Seu CNPJ é público. E os seus
+                        <em>dados pessoais</em>?
                     </h1>
                     <p>
-                        Queremos entender o que você já encontrou, se isso gera
-                        preocupação, como tentou resolver e o que espera de um
-                        serviço especializado. Respostas positivas, negativas ou
-                        indiferentes são igualmente importantes.
+                        A Invisi quer ouvir quem empreende no Brasil. Não
+                        precisa saber de lei nem de tecnologia: conte o que já
+                        viu na internet, se isso te preocupa e o que você já
+                        tentou. Tanto faz se a resposta for “não me importo”.
                     </p>
                     <ul
                         class="survey-meta"
@@ -80,7 +80,7 @@
                 <input
                     type="hidden"
                     name="_subject"
-                    value="Nova resposta: Pesquisa de mercado Invisi v2.0"
+                    value="Nova resposta: Pesquisa de mercado Invisi v2.1"
                 />
                 <input type="hidden" name="_template" value="table" />
                 <input type="hidden" name="_next" value="" />
@@ -88,7 +88,7 @@
                 <input
                     type="hidden"
                     name="Versao_da_pesquisa"
-                    value="2.0: setembro de 2026"
+                    value="2.1: setembro de 2026"
                 />
                 <input
                     class="honeypot"
@@ -100,32 +100,39 @@
                 />
 
                 <section class="intro-card" aria-labelledby="antes-de-comecar">
-                    <h2 id="antes-de-comecar">Antes de começar</h2>
+                    <h2 id="antes-de-comecar">Quem é a Invisi e para quem é esta pesquisa</h2>
+                    <div class="who-block">
+                        <p>
+                            <strong>O que a Invisi faz</strong>
+                            A Invisi é uma empresa brasileira de tecnologia,
+                            ainda em fase de validação, que ajuda quem tem CNPJ
+                            a reduzir dados pessoais expostos na internet. A
+                            gente procura onde seu telefone, endereço, e-mail ou
+                            nome aparece ligado à empresa, pede para tirar ou
+                            corrigir quando isso for possível, e acompanha o
+                            caso por 1 ano. Não somos escritório de advocacia e
+                            não prometemos apagar tudo da internet.
+                        </p>
+                    </div>
                     <p>
-                        Esta pesquisa é destinada a
-                        <strong
-                            >titulares, sócios, administradores e profissionais
-                            autônomos que atuam com CNPJ</strong
-                        >. A primeira pergunta confirma se este é o seu caso.
+                        Esta pesquisa serve para ouvir empresários ocupados: o
+                        que já apareceu, se isso incomoda e se um serviço assim
+                        faria sentido. Responda se você é MEI, sócio,
+                        administrador ou atua com CNPJ hoje — a primeira
+                        pergunta confirma isso.
                     </p>
                     <p>
-                        Não solicitamos número do CNPJ, CPF, endereço, documentos
-                        ou links. A equipe terá acesso às respostas individuais
-                        para análise, e os resultados serão apresentados apenas de
-                        forma agregada, sem exposição de participantes.
-                    </p>
-                    <p>
-                        Ao final, nome e WhatsApp são opcionais. Se informados,
-                        serão enviados junto com as respostas e ficarão vinculados
-                        a elas.
+                        Não pedimos número de CNPJ, CPF, endereço nem
+                        documentos. No final, nome e WhatsApp são opcionais, só
+                        se quiser que a gente fale com você.
                     </p>
                     <div class="privacy-note">
                         <svg viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M7 11V8a5 5 0 0 1 10 0v3m-12 0h14v10H5z" />
                         </svg>
                         <p>
-                            As respostas serão usadas em análise acadêmica e de
-                            mercado. Ao enviar, você confirma que leu a
+                            Usamos as respostas para entender o mercado. Ao
+                            enviar, você confirma que leu a
                             <a
                                 href="privacidade.html"
                                 target="_blank"
@@ -138,12 +145,12 @@
 
                 <fieldset class="question-card">
                     <legend>
-                        <b class="question-number">01</b> Pensando no CNPJ sobre
-                        o qual responderá, qual é sua principal relação atual com
-                        ele?
+                        <b class="question-number">01</b> Você tem um CNPJ hoje?
+                        Qual é a sua relação com ele?
                     </legend>
                     <p class="question-help">
-                        Esta pergunta define a elegibilidade para a pesquisa.
+                        Esta pesquisa é só para quem tem ou participa de um CNPJ
+                        agora. Se não for o seu caso, escolha a última opção.
                     </p>
                     <div class="options">
                         <label class="option">
@@ -153,7 +160,7 @@
                                 value="Titular de MEI ou empresário(a) individual"
                                 required
                             />
-                            <span>Titular de MEI ou empresário(a) individual</span>
+                            <span>Sou MEI ou empresário individual</span>
                         </label>
                         <label class="option">
                             <input
@@ -162,7 +169,7 @@
                                 value="Sócio(a) ou titular de outra empresa"
                                 required
                             />
-                            <span>Sócio(a) ou titular de outra empresa</span>
+                            <span>Sou sócio ou dono de uma empresa (não MEI)</span>
                         </label>
                         <label class="option">
                             <input
@@ -171,7 +178,7 @@
                                 value="Administrador(a) ou representante legal"
                                 required
                             />
-                            <span>Administrador(a) ou representante legal</span>
+                            <span>Administro ou represento a empresa</span>
                         </label>
                         <label class="option">
                             <input
@@ -180,10 +187,7 @@
                                 value="Profissional autônomo(a) ou liberal que atua com CNPJ"
                                 required
                             />
-                            <span
-                                >Profissional autônomo(a) ou liberal que atua com
-                                CNPJ</span
-                            >
+                            <span>Sou profissional autônomo e atuo com CNPJ</span>
                         </label>
                         <label class="option">
                             <input
@@ -193,10 +197,7 @@
                                 data-ineligible
                                 required
                             />
-                            <span
-                                >Não tenho atualmente nenhuma dessas relações com
-                                um CNPJ</span
-                            >
+                            <span>Não tenho CNPJ / não me encaixo nessas opções</span>
                         </label>
                     </div>
                 </fieldset>
@@ -211,18 +212,17 @@
                     <p class="optional-label">Fim da pesquisa</p>
                     <h2 id="fora-do-publico">Obrigado pelo interesse.</h2>
                     <p>
-                        Neste momento, a pesquisa considera apenas pessoas com uma
-                        relação atual com um CNPJ. Sua seleção não foi enviada. Se
-                        marcou essa opção por engano, escolha outra resposta na
-                        pergunta 1 para continuar.
+                        Esta pesquisa é só para quem tem ou participa de um CNPJ
+                        hoje. Sua resposta não foi enviada. Se marcou essa opção
+                        por engano, volte à pergunta 1 e escolha outra.
                     </p>
                 </section>
 
                 <div class="survey-remainder" data-survey-remainder>
                     <fieldset class="question-card">
                         <legend>
-                            <b class="question-number">02</b> Há quanto tempo você
-                            possui ou participa do CNPJ escolhido para responder?
+                            <b class="question-number">02</b> Há quanto tempo
+                            você tem ou participa desse CNPJ?
                         </legend>
                         <div class="options options-grid">
                             <label class="option">
@@ -267,8 +267,8 @@
                     <fieldset class="question-card">
                         <legend>
                             <b class="question-number">03</b> Nos últimos 12
-                            meses, você pesquisou seu nome ou esse CNPJ para
-                            verificar quais informações apareciam na internet?
+                            meses, você pesquisou seu nome ou o CNPJ no Google
+                            (ou em outro site) para ver o que aparece?
                         </legend>
                         <div class="options">
                             <label class="option">
@@ -296,10 +296,7 @@
                                     value="Não nos últimos 12 meses, mas já pesquisei antes"
                                     required
                                 />
-                                <span
-                                    >Não nos últimos 12 meses, mas já pesquisei
-                                    antes</span
-                                >
+                                <span>Não neste último ano, mas já pesquisei antes</span>
                             </label>
                             <label class="option">
                                 <input
@@ -315,10 +312,13 @@
 
                     <fieldset class="question-card">
                         <legend>
-                            <b class="question-number">04</b> Na busca mais
-                            recente, ou em buscas anteriores, você encontrou
-                            informações pessoais ligadas a esse CNPJ?
+                            <b class="question-number">04</b> Nessas buscas,
+                            você achou algum dado pessoal seu ligado ao CNPJ?
                         </legend>
+                        <p class="question-help">
+                            Por exemplo: telefone particular, endereço de casa
+                            ou e-mail pessoal.
+                        </p>
                         <div class="options options-grid">
                             <label class="option">
                                 <input
@@ -354,7 +354,7 @@
                                     value="Não se aplica: nunca pesquisei"
                                     required
                                 />
-                                <span>Não se aplica: nunca pesquisei</span>
+                                <span>Nunca pesquisei, então não sei</span>
                             </label>
                         </div>
                     </fieldset>
@@ -365,12 +365,12 @@
                         aria-describedby="q5-help q5-error"
                     >
                         <legend>
-                            <b class="question-number">05</b> Quais informações
-                            pessoais você de fato encontrou ligadas a esse CNPJ?
+                            <b class="question-number">05</b> Que dados pessoais
+                            seus você já viu ligados a esse CNPJ na internet?
                         </legend>
                         <p class="question-help" id="q5-help">
-                            Selecione todas as opções aplicáveis. Se não encontrou
-                            ou não procurou, use uma das duas últimas opções.
+                            Marque tudo o que já apareceu. Se não achou nada ou
+                            nunca procurou, use uma das duas últimas opções.
                         </p>
                         <div class="options options-grid">
                             <label class="option">
@@ -379,7 +379,7 @@
                                     name="05_Informacoes_encontradas[]"
                                     value="Telefone pessoal"
                                 />
-                                <span>Telefone pessoal</span>
+                                <span>Meu telefone pessoal</span>
                             </label>
                             <label class="option">
                                 <input
@@ -387,7 +387,7 @@
                                     name="05_Informacoes_encontradas[]"
                                     value="Endereço residencial"
                                 />
-                                <span>Endereço residencial</span>
+                                <span>Meu endereço de casa</span>
                             </label>
                             <label class="option">
                                 <input
@@ -395,7 +395,7 @@
                                     name="05_Informacoes_encontradas[]"
                                     value="E-mail pessoal"
                                 />
-                                <span>E-mail pessoal</span>
+                                <span>Meu e-mail pessoal</span>
                             </label>
                             <label class="option">
                                 <input
@@ -403,10 +403,7 @@
                                     name="05_Informacoes_encontradas[]"
                                     value="Nome completo ligado a vínculos empresariais"
                                 />
-                                <span
-                                    >Nome completo ligado a vínculos
-                                    empresariais</span
-                                >
+                                <span>Meu nome completo como sócio ou titular</span>
                             </label>
                             <label class="option">
                                 <input
@@ -414,7 +411,7 @@
                                     name="05_Informacoes_encontradas[]"
                                     value="Informações pessoais desatualizadas"
                                 />
-                                <span>Informações pessoais desatualizadas</span>
+                                <span>Dado meu desatualizado (telefone ou endereço antigo)</span>
                             </label>
                             <label class="option">
                                 <input
@@ -422,7 +419,7 @@
                                     name="05_Informacoes_encontradas[]"
                                     value="Outra informação pessoal"
                                 />
-                                <span>Outra informação pessoal</span>
+                                <span>Outro dado pessoal</span>
                             </label>
                             <label class="option">
                                 <input
@@ -431,7 +428,7 @@
                                     value="Não encontrei informações pessoais"
                                     data-exclusive
                                 />
-                                <span>Não encontrei informações pessoais</span>
+                                <span>Não achei dado pessoal nenhum</span>
                             </label>
                             <label class="option">
                                 <input
@@ -453,11 +450,11 @@
 
                     <fieldset class="question-card">
                         <legend>
-                            <b class="question-number">06</b> Quanto a
-                            possibilidade de encontrar dados pessoais ligados ao
-                            seu CNPJ preocupa você?
+                            <b class="question-number">06</b> Isso te preocupa:
+                            dados pessoais seus aparecerem ligados ao CNPJ na
+                            internet?
                         </legend>
-                        <p class="question-help">Use uma escala de 1 a 5.</p>
+                        <p class="question-help">1 é nada. 5 é demais.</p>
                         <div class="options scale">
                             <label class="option">
                                 <input
@@ -486,7 +483,7 @@
                                 />
                                 <span
                                     ><strong>3</strong
-                                    ><small>Moderadamente</small></span
+                                    ><small>Mais ou menos</small></span
                                 >
                             </label>
                             <label class="option">
@@ -507,7 +504,7 @@
                                 />
                                 <span
                                     ><strong>5</strong
-                                    ><small>Extremamente</small></span
+                                    ><small>Demais</small></span
                                 >
                             </label>
                         </div>
@@ -519,13 +516,13 @@
                         aria-describedby="q7-help q7-error"
                     >
                         <legend>
-                            <b class="question-number">07</b> Depois que passou a
-                            ter ou participar desse CNPJ, você percebeu alguma
-                            destas situações?
+                            <b class="question-number">07</b> Depois que você
+                            passou a ter esse CNPJ, aconteceu alguma destas
+                            coisas?
                         </legend>
                         <p class="question-help" id="q7-help">
-                            Não é necessário ter certeza de que o CNPJ foi a causa.
-                            Selecione todas as opções aplicáveis.
+                            Não precisa ter certeza de que o CNPJ foi a causa.
+                            Marque tudo o que se aplica.
                         </p>
                         <div class="options">
                             <label class="option">
@@ -534,10 +531,7 @@
                                     name="07_Situacoes_percebidas[]"
                                     value="Ligações ou mensagens comerciais indesejadas"
                                 />
-                                <span
-                                    >Ligações ou mensagens comerciais
-                                    indesejadas</span
-                                >
+                                <span>Ligações ou mensagens de venda que eu não pedi</span>
                             </label>
                             <label class="option">
                                 <input
@@ -545,9 +539,7 @@
                                     name="07_Situacoes_percebidas[]"
                                     value="Tentativas de golpe ou mensagens suspeitas"
                                 />
-                                <span
-                                    >Tentativas de golpe ou mensagens suspeitas</span
-                                >
+                                <span>Tentativa de golpe ou mensagem suspeita</span>
                             </label>
                             <label class="option">
                                 <input
@@ -556,8 +548,8 @@
                                     value="Contatos profissionais em número ou e-mail pessoal"
                                 />
                                 <span
-                                    >Contatos profissionais em número ou e-mail
-                                    pessoal</span
+                                    >Cliente ou fornecedor me procurou no
+                                    telefone ou e-mail pessoal</span
                                 >
                             </label>
                             <label class="option">
@@ -567,8 +559,8 @@
                                     value="Confusão causada por informações antigas ou incorretas"
                                 />
                                 <span
-                                    >Confusão causada por informações antigas ou
-                                    incorretas</span
+                                    >Alguém se confundiu por causa de informação
+                                    antiga ou errada</span
                                 >
                             </label>
                             <label class="option">
@@ -577,7 +569,10 @@
                                     name="07_Situacoes_percebidas[]"
                                     value="Contato direcionado a pessoas próximas"
                                 />
-                                <span>Contato direcionado a pessoas próximas</span>
+                                <span
+                                    >Alguém tentou falar comigo pela família,
+                                    sócio ou funcionário</span
+                                >
                             </label>
                             <label class="option">
                                 <input
@@ -586,7 +581,7 @@
                                     value="Nenhuma dessas situações"
                                     data-exclusive
                                 />
-                                <span>Nenhuma dessas situações</span>
+                                <span>Nenhuma dessas coisas</span>
                             </label>
                             <label class="option">
                                 <input
@@ -612,11 +607,11 @@
                         aria-describedby="q8-help q8-error"
                     >
                         <legend>
-                            <b class="question-number">08</b> O que você já fez
-                            para corrigir, restringir ou remover alguma informação?
+                            <b class="question-number">08</b> Você já tentou
+                            tirar, corrigir ou esconder algum desses dados?
                         </legend>
                         <p class="question-help" id="q8-help">
-                            Selecione todas as opções aplicáveis.
+                            Marque tudo o que já fez.
                         </p>
                         <div class="options">
                             <label class="option">
@@ -625,10 +620,7 @@
                                     name="08_Alternativas_tentadas[]"
                                     value="Pedi correção ou remoção diretamente ao site"
                                 />
-                                <span
-                                    >Pedi correção ou remoção diretamente ao
-                                    site</span
-                                >
+                                <span>Pedi ao site para corrigir ou apagar</span>
                             </label>
                             <label class="option">
                                 <input
@@ -637,8 +629,8 @@
                                     value="Solicitei atualização em cadastro, órgão ou contador"
                                 />
                                 <span
-                                    >Solicitei atualização em cadastro, órgão ou
-                                    contador</span
+                                    >Pedi ao contador, à Junta ou a outro
+                                    cadastro para atualizar</span
                                 >
                             </label>
                             <label class="option">
@@ -648,7 +640,8 @@
                                     value="Pedi remoção ou desindexação a um buscador"
                                 />
                                 <span
-                                    >Pedi remoção ou desindexação a um buscador</span
+                                    >Pedi ao Google (ou outro buscador) para
+                                    parar de mostrar o resultado</span
                                 >
                             </label>
                             <label class="option">
@@ -658,7 +651,8 @@
                                     value="Alterei canais ou dados de contato do CNPJ"
                                 />
                                 <span
-                                    >Alterei canais ou dados de contato do CNPJ</span
+                                    >Troquei o telefone, o e-mail ou o endereço
+                                    da empresa</span
                                 >
                             </label>
                             <label class="option">
@@ -667,10 +661,7 @@
                                     name="08_Alternativas_tentadas[]"
                                     value="Busquei ajuda jurídica, técnica ou especializada"
                                 />
-                                <span
-                                    >Busquei ajuda jurídica, técnica ou
-                                    especializada</span
-                                >
+                                <span>Procurei advogado, técnico ou outro especialista</span>
                             </label>
                             <label class="option">
                                 <input
@@ -678,7 +669,7 @@
                                     name="08_Alternativas_tentadas[]"
                                     value="Tentei outra medida"
                                 />
-                                <span>Tentei outra medida</span>
+                                <span>Tentei outra coisa</span>
                             </label>
                             <label class="option">
                                 <input
@@ -687,7 +678,7 @@
                                     value="Não tomei nenhuma medida"
                                     data-exclusive
                                 />
-                                <span>Não tomei nenhuma medida</span>
+                                <span>Não fiz nada</span>
                             </label>
                             <label class="option">
                                 <input
@@ -696,10 +687,7 @@
                                     value="Não se aplica: não encontrei informação a corrigir"
                                     data-exclusive
                                 />
-                                <span
-                                    >Não se aplica: não encontrei informação a
-                                    corrigir</span
-                                >
+                                <span>Não achei nada para corrigir</span>
                             </label>
                         </div>
                         <p
@@ -717,11 +705,14 @@
                         aria-describedby="q9-help q9-error"
                     >
                         <legend>
-                            <b class="question-number">09</b> O que seria mais
-                            importante para você confiar em uma empresa desse tipo?
+                            <b class="question-number">09</b> Se você fosse
+                            contratar a Invisi, o que mais importaria para
+                            confiar no serviço?
                         </legend>
                         <p class="question-help" id="q9-help">
-                            Selecione até 3 opções.
+                            Lembre: a Invisi acha dados pessoais ligados ao
+                            CNPJ, pede para tirar ou corrigir quando der, e
+                            acompanha por 1 ano. Marque até 3 opções.
                             <span data-selection-count aria-live="polite"
                                 >0 de 3 selecionadas.</span
                             >
@@ -734,8 +725,8 @@
                                     value="Escopo, limites e prazos explicados com clareza"
                                 />
                                 <span
-                                    >Escopo, limites e prazos explicados com
-                                    clareza</span
+                                    >Explicar com clareza o que entra, o que não
+                                    entra e em quanto tempo</span
                                 >
                             </label>
                             <label class="option">
@@ -744,10 +735,7 @@
                                     name="09_Criterios_de_confianca[]"
                                     value="Relatório com fontes e ocorrências identificadas"
                                 />
-                                <span
-                                    >Relatório com fontes e ocorrências
-                                    identificadas</span
-                                >
+                                <span>Um relatório mostrando onde seus dados apareceram</span>
                             </label>
                             <label class="option">
                                 <input
@@ -755,10 +743,7 @@
                                     name="09_Criterios_de_confianca[]"
                                     value="Métodos e fundamentos das solicitações transparentes"
                                 />
-                                <span
-                                    >Métodos e fundamentos das solicitações
-                                    transparentes</span
-                                >
+                                <span>Mostrar o que foi pedido, para quem e por quê</span>
                             </label>
                             <label class="option">
                                 <input
@@ -766,9 +751,7 @@
                                     name="09_Criterios_de_confianca[]"
                                     value="Qualificações verificáveis de quem executa"
                                 />
-                                <span
-                                    >Qualificações verificáveis de quem executa</span
-                                >
+                                <span>Saber quem faz o trabalho e a formação dessa pessoa</span>
                             </label>
                             <label class="option">
                                 <input
@@ -776,9 +759,7 @@
                                     name="09_Criterios_de_confianca[]"
                                     value="Proteção e uso mínimo dos dados fornecidos"
                                 />
-                                <span
-                                    >Proteção e uso mínimo dos dados fornecidos</span
-                                >
+                                <span>Usar só o necessário dos seus dados e proteger o resto</span>
                             </label>
                             <label class="option">
                                 <input
@@ -786,9 +767,7 @@
                                     name="09_Criterios_de_confianca[]"
                                     value="Preço e condições de contratação claros"
                                 />
-                                <span
-                                    >Preço e condições de contratação claros</span
-                                >
+                                <span>Preço e regras do contrato bem claros</span>
                             </label>
                             <label class="option">
                                 <input
@@ -796,10 +775,7 @@
                                     name="09_Criterios_de_confianca[]"
                                     value="Atualizações durante a execução e o acompanhamento"
                                 />
-                                <span
-                                    >Atualizações durante a execução e o
-                                    acompanhamento</span
-                                >
+                                <span>Avisar o andamento ao longo do ano</span>
                             </label>
                             <label class="option">
                                 <input
@@ -807,9 +783,7 @@
                                     name="09_Criterios_de_confianca[]"
                                     value="Avaliações ou indicações de outros clientes"
                                 />
-                                <span
-                                    >Avaliações ou indicações de outros clientes</span
-                                >
+                                <span>Opinião ou indicação de outros clientes</span>
                             </label>
                         </div>
                         <p
@@ -822,15 +796,15 @@
 
                     <fieldset class="question-card">
                         <legend>
-                            <b class="question-number">10</b> Se esse serviço
-                            custasse R$ 990 em pagamento único, qual seria sua
-                            decisão mais provável?
+                            <b class="question-number">10</b> Se a Invisi
+                            cobrasse R$ 990, à vista, você contrataria?
                         </legend>
                         <p class="question-help">
-                            Considere um serviço que identifica ocorrências,
-                            analisa pedidos aplicáveis, conduz solicitações e
-                            acompanha o caso por 12 meses. Resultados dependem de
-                            terceiros e não há garantia de remoção universal.
+                            O serviço procura onde seus dados pessoais aparecem
+                            ligados ao CNPJ, pede remoção ou correção quando for
+                            possível, e acompanha por 1 ano. Sites e buscadores
+                            é que decidem o que sai. Não dá para garantir que
+                            tudo some da internet.
                         </p>
                         <div class="options">
                             <label class="option">
@@ -840,7 +814,7 @@
                                     value="Certamente não contrataria"
                                     required
                                 />
-                                <span>Certamente não contrataria</span>
+                                <span>Com certeza não</span>
                             </label>
                             <label class="option">
                                 <input
@@ -849,7 +823,7 @@
                                     value="Provavelmente não contrataria"
                                     required
                                 />
-                                <span>Provavelmente não contrataria</span>
+                                <span>Provavelmente não</span>
                             </label>
                             <label class="option">
                                 <input
@@ -858,7 +832,7 @@
                                     value="Talvez contratasse"
                                     required
                                 />
-                                <span>Talvez contratasse</span>
+                                <span>Talvez</span>
                             </label>
                             <label class="option">
                                 <input
@@ -867,7 +841,7 @@
                                     value="Provavelmente contrataria"
                                     required
                                 />
-                                <span>Provavelmente contrataria</span>
+                                <span>Provavelmente sim</span>
                             </label>
                             <label class="option">
                                 <input
@@ -876,7 +850,7 @@
                                     value="Certamente contrataria"
                                     required
                                 />
-                                <span>Certamente contrataria</span>
+                                <span>Com certeza sim</span>
                             </label>
                             <label class="option">
                                 <input
@@ -885,10 +859,7 @@
                                     value="Não tenho informações suficientes para avaliar"
                                     required
                                 />
-                                <span
-                                    >Não tenho informações suficientes para
-                                    avaliar</span
-                                >
+                                <span>Ainda não tenho informação suficiente para decidir</span>
                             </label>
                         </div>
                     </fieldset>
@@ -901,12 +872,11 @@
                         <p class="optional-label">
                             Opcional · não faz parte das 10 perguntas
                         </p>
-                        <h2 id="contato-opcional">Quer conversar com a Invisi?</h2>
+                        <h2 id="contato-opcional">Quer que a gente fale com você?</h2>
                         <p id="contact-guidance">
-                            Se você preencher estes campos, nome e WhatsApp serão
-                            enviados junto com suas respostas e ficarão vinculados
-                            a elas. Os dados serão usados somente para responder ao
-                            seu pedido de contato.
+                            Se quiser, deixe nome e WhatsApp. Usamos só para
+                            responder você. Vai junto com as respostas desta
+                            pesquisa.
                         </p>
                         <div class="contact-grid">
                             <label class="text-field" for="survey-name">
@@ -917,7 +887,7 @@
                                     type="text"
                                     autocomplete="name"
                                     aria-describedby="contact-guidance contact-error"
-                                    placeholder="Como podemos chamar você?"
+                                    placeholder="Como podemos te chamar?"
                                 />
                             </label>
                             <label class="text-field" for="survey-phone">
@@ -944,9 +914,14 @@
                                 aria-describedby="contact-guidance contact-error"
                             />
                             <span
-                                >Autorizo a Invisi a usar meu nome e WhatsApp para
-                                responder a esta solicitação, conforme a Política
-                                de Privacidade.</span
+                                >Autorizo a Invisi a me chamar no WhatsApp sobre
+                                esta pesquisa, conforme a
+                                <a
+                                    href="privacidade.html"
+                                    target="_blank"
+                                    rel="noopener"
+                                    >Política de Privacidade</a
+                                >.</span
                             >
                         </label>
                         <p
@@ -960,9 +935,9 @@
                     <section class="submit-card" aria-labelledby="enviar-titulo">
                         <h2 id="enviar-titulo">Pronto para enviar?</h2>
                         <p>
-                            Revise suas respostas. A equipe poderá acessar cada
-                            resposta para análise; a apresentação dos resultados
-                            será somente agregada, sem exposição de participantes.
+                            Confira as respostas. A gente lê cada uma para
+                            análise. Os resultados públicos saem só em conjunto,
+                            sem identificar você.
                         </p>
                         <button class="submit-button" type="submit">
                             Enviar respostas
@@ -985,6 +960,6 @@
             </p>
         </footer>
 
-        <script src="pesquisa.js?v=20260911-1" defer></script>
+        <script src="pesquisa.js?v=20260915-1" defer></script>
     </body>
 </html>

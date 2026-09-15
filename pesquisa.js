@@ -186,7 +186,7 @@ const validateOptionalContact = ({ focusInvalid = true } = {}) => {
   if (contactError) {
     contactError.textContent = isValid
       ? ""
-      : "Para solicitar contato, informe nome e WhatsApp válidos e aceite a autorização.";
+      : "Para a gente te chamar, preencha nome e WhatsApp e marque a autorização.";
   }
 
   if (!isValid && focusInvalid) {
@@ -275,7 +275,7 @@ if (surveyForm) {
     }
     if (status) {
       status.textContent =
-        "Aguarde. Você será redirecionado após a confirmação do envio.";
+        "Aguarde. Em seguida você verá a confirmação.";
     }
   });
 }
