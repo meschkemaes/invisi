@@ -470,6 +470,7 @@ if (form) {
     }
     if (insight) {
       insight.hidden = false;
+      insight.classList.toggle("is-alert", Boolean(report) && !report.others && kind !== "error");
       if (kind === "error") {
         insight.innerHTML =
           "<strong>A fonte pública falhou.</strong> Sem API no ar, a prévia para. Não voltamos ao teatro de números mascarados.";
@@ -505,6 +506,7 @@ if (form) {
     if (who) who.textContent = name;
     if (insight) {
       insight.hidden = true;
+      insight.classList.remove("is-alert");
       insight.replaceChildren();
     }
     if (conclusion) conclusion.hidden = true;
@@ -563,7 +565,7 @@ if (form) {
       setProgress(1);
       if (status) status.textContent = "Nada público compatível com esse nome";
       if (live) live.textContent = "A busca não achou sócio que case com o nome digitado.";
-      if (label) label.textContent = "Relatório de exposição · prévia";
+      if (label) label.textContent = "Relatório de exposição";
       if (who) who.textContent = name;
       renderRows(
         [
@@ -634,16 +636,9 @@ if (form) {
     pulse?.classList.remove("is-live");
     pulse?.classList.add("is-ready");
     setProgress(1);
-    if (status) {
-      status.textContent = foundFields.includes("telefone") || foundFields.includes("email")
-        ? "Prévia pronta. Isso já estava público."
-        : "Prévia pronta. O nome aparece; o contato não veio.";
-    }
-    if (live) {
-      live.textContent =
-        "O recorte público já circula à venda na internet.";
-    }
-    if (label) label.textContent = "Relatório de exposição · prévia";
+    if (status) status.textContent = "";
+    if (live) live.textContent = "";
+    if (label) label.textContent = "Relatório de exposição";
     renderRows(report.rows, "report");
     revealConclusion(name, report);
     form.dataset.busy = "false";

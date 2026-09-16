@@ -542,6 +542,14 @@ a.result-item:focus-visible {
     font-size: 13px;
     line-height: 1.65;
 }
+.mirror-insight.is-alert {
+    color: #5c3320;
+    background: var(--danger-soft);
+    border-color: #edc2a0;
+}
+.mirror-insight.is-alert strong {
+    color: #9a3412;
+}
 .mirror-insight strong {
     display: block;
     margin-bottom: 4px;
