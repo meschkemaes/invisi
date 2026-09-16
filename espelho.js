@@ -395,12 +395,23 @@ if (form) {
       const ready =
         mode === "report" ||
         (mode === "scanning" && index < Number(card.dataset.activeIndex || -1));
-      const item = document.createElement("div");
+      const isSale = ready && row.badge === "a venda" && row.tone === "alert";
+      const item = document.createElement(isSale ? "a" : "div");
       item.className = "result-item";
       if (checking) item.classList.add("is-checking");
       if (ready) item.classList.add("is-ready");
       if (ready && row.found) item.classList.add("is-found");
       if (ready && !row.found) item.classList.add("is-missing");
+      if (isSale) {
+        item.classList.add("is-sale");
+        item.href = "#avaliacao-inicial";
+        item.setAttribute("data-intent-open", "");
+        item.setAttribute("data-intent-field", row.key || "");
+        item.setAttribute(
+          "aria-label",
+          `${row.title}: a venda. Quero remover — pedir avaliação inicial.`,
+        );
+      }
       item.innerHTML = `
         <span class="result-icon"></span>
         <div>
@@ -421,6 +432,13 @@ if (form) {
           ? "Lendo"
           : "Na fila";
       if (ready && row.tone) badge.classList.add(`is-${row.tone}`);
+      if (isSale) {
+        const hint = document.createElement("span");
+        hint.className = "result-hint";
+        hint.setAttribute("aria-hidden", "true");
+        hint.textContent = "quero remover";
+        badge.append(hint);
+      }
       results.append(item);
     });
   };

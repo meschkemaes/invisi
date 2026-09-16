@@ -141,6 +141,19 @@ if (intentDialog && intentForm) {
     const paths = intentForm.querySelector("[data-intent-paths]");
     const sourcePaths = document.querySelector("[data-opened-paths]");
     if (paths && sourcePaths) paths.value = sourcePaths.value;
+
+    const allowedFields = new Set([
+      "telefone",
+      "email",
+      "endereco",
+      "documento",
+    ]);
+    const field = lastTrigger?.getAttribute?.("data-intent-field") || "";
+    const safeField = allowedFields.has(field) ? field : "";
+    const signal = intentForm.querySelector("[data-intent-signal]");
+    const target = intentForm.querySelector("[data-intent-target]");
+    if (signal) signal.value = safeField ? "quero_remover" : "";
+    if (target) target.value = safeField;
   };
 
   const isDialogOpen = () =>
