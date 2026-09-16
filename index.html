@@ -37,7 +37,7 @@
         />
         <link rel="canonical" href="https://invisi.com.br/" />
         <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="styles.css?v=20260916-4" />
         <title>Invisi | Privacidade para quem empreende</title>
     </head>
     <body>
@@ -154,8 +154,9 @@
                             <div class="hero-actions">
                                 <a
                                     class="button"
-                                    href="#diagnostico"
+                                    href="#avaliacao-inicial"
                                     data-mirror-cta
+                                    data-intent-open
                                     >Pedir avaliação inicial</a
                                 >
                                 <a class="text-link light" href="#como-funciona"
@@ -292,8 +293,9 @@
                                 ></div>
                                 <a
                                     class="button button-full mirror-card-cta"
-                                    href="#diagnostico"
+                                    href="#avaliacao-inicial"
                                     data-mirror-card-cta
+                                    data-intent-open
                                     hidden
                                     >Pedir avaliação inicial</a
                                 >
@@ -810,6 +812,7 @@
                                     pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
                                     title="Informe um celular brasileiro com DDD, no formato (11) 99999-9999"
                                     aria-describedby="telefone-ajuda"
+                                    data-phone-mask
                                 />
                                 <p class="field-hint" id="telefone-ajuda">
                                     Celular com DDD, só se quiser retorno por
@@ -936,7 +939,157 @@
             </div>
         </footer>
 
-        <script src="script.js" defer></script>
-        <script src="espelho.js" defer></script>
+        <dialog
+            class="intent-dialog"
+            id="avaliacao-inicial"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="intent-title"
+            aria-describedby="intent-desc"
+        >
+            <div class="intent-panel">
+                <button
+                    class="intent-close"
+                    type="button"
+                    data-intent-close
+                    aria-label="Fechar"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p class="eyebrow dark"><span></span> Avaliação inicial</p>
+                <h2 id="intent-title">Confirme o contato para seguir</h2>
+                <p id="intent-desc">
+                    Precisamos de e-mail e WhatsApp para retornar. O pedido
+                    entra na fila de análise. Não há cobrança agora — e o
+                    envio não inicia contratação.
+                </p>
+                <form
+                    class="intent-form"
+                    action="https://formsubmit.co/invisi.oficial@gmail.com"
+                    method="POST"
+                    data-intent-form
+                >
+                    <input
+                        type="hidden"
+                        name="_subject"
+                        value="Novo lead da landing page Invisi"
+                    />
+                    <input type="hidden" name="_template" value="table" />
+                    <input
+                        type="hidden"
+                        name="_next"
+                        value="https://invisi.com.br/obrigado.html"
+                    />
+                    <input type="hidden" name="_captcha" value="true" />
+                    <input
+                        type="text"
+                        name="_honey"
+                        tabindex="-1"
+                        autocomplete="off"
+                        class="honeypot"
+                        aria-hidden="true"
+                    />
+                    <input
+                        type="hidden"
+                        name="Nome"
+                        value=""
+                        data-intent-name
+                    />
+                    <input
+                        type="hidden"
+                        name="Origem"
+                        value="Modal de intencao"
+                    />
+                    <input
+                        type="hidden"
+                        name="Previa_exposicao"
+                        value="Nao"
+                        data-intent-preview
+                    />
+                    <input
+                        type="hidden"
+                        name="Nome_consultado"
+                        value=""
+                        data-intent-consulted
+                    />
+                    <input
+                        type="hidden"
+                        name="Campos_encontrados"
+                        value=""
+                        data-intent-paths
+                    />
+                    <input type="hidden" name="UTM_source" value="" />
+                    <input type="hidden" name="UTM_medium" value="" />
+                    <input type="hidden" name="UTM_campaign" value="" />
+                    <input type="hidden" name="UTM_content" value="" />
+
+                    <div class="field">
+                        <label for="intent-email">E-mail</label>
+                        <input
+                            id="intent-email"
+                            name="Email"
+                            type="email"
+                            autocomplete="email"
+                            placeholder="voce@empresa.com.br"
+                            required
+                        />
+                    </div>
+                    <div class="field">
+                        <label for="intent-telefone">Telefone / WhatsApp</label>
+                        <input
+                            id="intent-telefone"
+                            name="WhatsApp"
+                            type="tel"
+                            autocomplete="tel"
+                            inputmode="numeric"
+                            placeholder="(11) 99999-9999"
+                            maxlength="15"
+                            pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
+                            title="Informe um celular brasileiro com DDD, no formato (11) 99999-9999"
+                            aria-describedby="intent-telefone-ajuda"
+                            data-phone-mask
+                            required
+                        />
+                        <p class="field-hint" id="intent-telefone-ajuda">
+                            Celular com DDD. É por aqui que avisamos a fila.
+                        </p>
+                    </div>
+                    <p class="form-note">
+                        Não pedimos CPF. Ao enviar, você autoriza a Invisi a
+                        usar estes dados para retornar sobre a avaliação,
+                        conforme a
+                        <a
+                            href="privacidade.html"
+                            target="_blank"
+                            rel="noopener"
+                            >Política de Privacidade</a
+                        >.
+                    </p>
+                    <button
+                        class="button button-full submit-button"
+                        type="submit"
+                    >
+                        <span>Enviar e entrar na fila</span>
+                        <svg viewBox="0 0 20 20" aria-hidden="true">
+                            <path d="m7 4 6 6-6 6" />
+                        </svg>
+                    </button>
+                    <p
+                        class="form-status"
+                        role="status"
+                        aria-live="polite"
+                    ></p>
+                    <a
+                        class="intent-fallback"
+                        href="#diagnostico"
+                        data-intent-fallback
+                        >Prefere o formulário completo?</a
+                    >
+                </form>
+            </div>
+        </dialog>
+
+        <script src="script.js?v=20260916-4" defer></script>
+        <script src="espelho.js?v=20260916-4" defer></script>
     </body>
 </html>

@@ -1371,6 +1371,96 @@ a.result-item:focus-visible {
     pointer-events: none !important;
 }
 
+.intent-dialog {
+    width: min(calc(100vw - 32px), 460px);
+    max-height: calc(100vh - 32px);
+    padding: 0;
+    overflow: auto;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+}
+.intent-dialog:focus {
+    outline: none;
+}
+.intent-dialog::backdrop {
+    background: rgba(4, 17, 29, 0.72);
+}
+.intent-dialog:target {
+    display: block;
+    position: fixed;
+    inset: 8vh 16px auto;
+    margin-inline: auto;
+    z-index: 4000;
+}
+.intent-panel {
+    position: relative;
+    padding: 36px 32px 28px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+.intent-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    color: var(--muted);
+    background: transparent;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+.intent-close:hover {
+    color: var(--navy-900);
+}
+.intent-dialog h2 {
+    margin: 0 0 12px;
+    font-size: clamp(26px, 5vw, 32px);
+    letter-spacing: -1px;
+}
+.intent-dialog .intent-panel > p:not(.eyebrow) {
+    margin: 0 0 22px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+.intent-form {
+    display: grid;
+    gap: 16px;
+}
+.intent-form .form-note {
+    text-align: left;
+}
+.intent-form .form-note a {
+    color: #147e73;
+    font-weight: 700;
+}
+.intent-fallback {
+    display: block;
+    color: #147e73;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+}
+.intent-fallback:hover {
+    text-decoration: underline;
+}
+body.intent-open {
+    overflow: hidden;
+}
+
+@media (max-width: 760px) {
+    .intent-panel {
+        padding: 32px 22px 24px;
+    }
+}
+
 .site-footer {
     padding: 62px 0 28px;
     color: rgba(255, 255, 255, 0.58);
