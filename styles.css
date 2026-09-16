@@ -491,6 +491,7 @@ a.result-item {
     pointer-events: none;
     transform: translateY(-50%) translateX(4px);
 }
+.result-item.is-sale:focus .result-hint,
 .result-item.is-sale:focus-visible .result-hint {
     opacity: 1;
     transform: translateY(-50%);
