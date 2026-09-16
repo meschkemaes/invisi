@@ -452,6 +452,7 @@ if (form) {
     }
     if (insight) {
       insight.hidden = false;
+      insight.classList.toggle("is-alert", Boolean(report) && !report.others && kind !== "error");
       if (kind === "error") {
         insight.innerHTML =
           "<strong>A fonte pública falhou.</strong> Sem API no ar, a prévia para. Não voltamos ao teatro de números mascarados.";
@@ -487,6 +488,7 @@ if (form) {
     if (who) who.textContent = name;
     if (insight) {
       insight.hidden = true;
+      insight.classList.remove("is-alert");
       insight.replaceChildren();
     }
     if (conclusion) conclusion.hidden = true;
@@ -617,10 +619,7 @@ if (form) {
     pulse?.classList.add("is-ready");
     setProgress(1);
     if (status) status.textContent = "";
-    if (live) {
-      live.textContent =
-        "O recorte público já circula à venda na internet.";
-    }
+    if (live) live.textContent = "";
     if (label) label.textContent = "Relatório de exposição";
     renderRows(report.rows, "report");
     revealConclusion(name, report);
