@@ -299,7 +299,8 @@ a {
     font-size: 11px;
     font-weight: 900;
     margin-right: 8px;
-    vertical-align: middle;
+    margin-top: 2px;
+    vertical-align: top;
 }
 .question-help {
     margin: 7px 0 0 43px;
