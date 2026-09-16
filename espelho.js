@@ -545,7 +545,7 @@ if (form) {
       setProgress(1);
       if (status) status.textContent = "Nada público compatível com esse nome";
       if (live) live.textContent = "A busca não achou sócio que case com o nome digitado.";
-      if (label) label.textContent = "Relatório de exposição · prévia";
+      if (label) label.textContent = "Relatório de exposição";
       if (who) who.textContent = name;
       renderRows(
         [
@@ -616,16 +616,12 @@ if (form) {
     pulse?.classList.remove("is-live");
     pulse?.classList.add("is-ready");
     setProgress(1);
-    if (status) {
-      status.textContent = foundFields.includes("telefone") || foundFields.includes("email")
-        ? "Prévia pronta. Isso já estava público."
-        : "Prévia pronta. O nome aparece; o contato não veio.";
-    }
+    if (status) status.textContent = "";
     if (live) {
       live.textContent =
         "O recorte público já circula à venda na internet.";
     }
-    if (label) label.textContent = "Relatório de exposição · prévia";
+    if (label) label.textContent = "Relatório de exposição";
     renderRows(report.rows, "report");
     revealConclusion(name, report);
     form.dataset.busy = "false";
