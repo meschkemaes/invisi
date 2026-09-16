@@ -45,6 +45,8 @@ const IDLE_LEAD =
   "Digite o nome como no cadastro. A Invisi mostra o que já está público — incompleto. Você decide se quer tratar o que for cabível.";
 
 const PARTICLES = new Set(["DA", "DE", "DO", "DAS", "DOS", "E", "DI", "DU"]);
+const OFFICE_LOOKUP_CAP = 5;
+const MISSING_CONTACT = "não veio neste cadastro";
 
 const form = document.querySelector("[data-mirror-form]");
 if (form) {
@@ -80,6 +82,7 @@ if (form) {
 
   let queriedName = "";
   let foundFields = [];
+  let lastReport = null;
 
   const sleep = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
 
@@ -144,13 +147,19 @@ if (form) {
     return score;
   };
 
-  const pickSocio = (query, socios) => {
-    const ranked = (socios || [])
+  const rankSocios = (query, socios) => {
+    const seen = new Set();
+    return (socios || [])
       .map((socio) => ({ socio, score: scoreSocio(query, socio.nome) }))
       .filter((row) => row.score > 0)
-      .sort((a, b) => b.score - a.score);
-    if (!ranked.length) return { match: null, others: 0 };
-    return { match: ranked[0].socio, others: ranked.length - 1 };
+      .sort((a, b) => b.score - a.score)
+      .filter((row) => {
+        const key = `${fold(row.socio.nome)}|${String(row.socio.cnpj || "")}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      })
+      .map((row) => row.socio);
   };
 
   const cnpjFromRoot = (root) => {
@@ -252,7 +261,7 @@ if (form) {
     if (!payload || payload.enabled === false) {
       throw new Error("search-disabled");
     }
-    return pickSocio(name, payload.socios);
+    return rankSocios(name, payload.socios);
   };
 
   const lookupOffice = async (cnpj) => {
@@ -268,7 +277,26 @@ if (form) {
     throw lastError || new Error("office-missing");
   };
 
-  const buildReport = (name, socio, office, others) => {
+  const emptyOffice = () => ({ phones: [], emails: [], address: null });
+
+  const deepenMatches = async (matches) => {
+    const shown = matches.slice(0, OFFICE_LOOKUP_CAP);
+    const offices = await Promise.all(
+      shown.map(async (socio) => {
+        try {
+          return await lookupOffice(cnpjFromRoot(socio.cnpj));
+        } catch (error) {
+          return emptyOffice();
+        }
+      }),
+    );
+    return shown.map((socio, index) => ({
+      socio,
+      office: offices[index],
+    }));
+  };
+
+  const extractPublicFields = (socio, office = {}) => {
     const phone = (office.phones || []).find(
       (item) => !isPlaceholderPhone(item.area, item.number),
     );
@@ -281,16 +309,58 @@ if (form) {
           .filter(Boolean)
           .join("/")
       : "";
+    const companyName = office.company
+      ? titleCaseName(String(office.company).toLowerCase())
+      : "";
 
     return {
       person: titleCaseName(socio.nome.toLowerCase()),
-      others,
+      phone: phone ? maskPhone(phone.area, phone.number) : "",
+      email: email ? maskEmail(email) : "",
+      address,
+      document,
+      company,
+      city,
+      companyName,
+    };
+  };
+
+  const companyLine = (fields) =>
+    [
+      fields.company && `CNPJ ${fields.company}`,
+      fields.companyName,
+      fields.city,
+    ]
+      .filter(Boolean)
+      .join(" · ");
+
+  const hitFoundKeys = (fields) =>
+    [
+      fields.phone && "telefone",
+      fields.email && "email",
+      fields.address && "endereco",
+      fields.document && "documento",
+      "vinculo",
+    ].filter(Boolean);
+
+  const compatibleCountLabel = (total, shown) => {
+    const base = `${total} cadastros públicos compatíveis com seu nome`;
+    return total > shown ? `${base} (mostrando ${shown})` : base;
+  };
+
+  const buildReport = (socio, office) => {
+    const fields = extractPublicFields(socio, office);
+
+    return {
+      person: fields.person,
+      total: 1,
+      shown: 1,
       rows: [
         {
           key: "nome",
           icon: "N",
           title: "Nome no cadastro público",
-          value: titleCaseName(socio.nome.toLowerCase()),
+          value: fields.person,
           badge: "Público",
           tone: "public",
           found: true,
@@ -299,44 +369,44 @@ if (form) {
           key: "telefone",
           icon: "T",
           title: "Telefone associado",
-          value: phone ? maskPhone(phone.area, phone.number) : "Não veio neste cadastro público",
-          badge: phone ? "a venda" : "Não achado",
-          tone: phone ? "alert" : undefined,
-          found: Boolean(phone),
+          value: fields.phone || "Não veio neste cadastro público",
+          badge: fields.phone ? "a venda" : "Não achado",
+          tone: fields.phone ? "alert" : undefined,
+          found: Boolean(fields.phone),
         },
         {
           key: "email",
           icon: "M",
           title: "E-mail no cadastro",
-          value: email ? maskEmail(email) : "Não veio neste cadastro público",
-          badge: email ? "a venda" : "Não achado",
-          tone: email ? "alert" : undefined,
-          found: Boolean(email),
+          value: fields.email || "Não veio neste cadastro público",
+          badge: fields.email ? "a venda" : "Não achado",
+          tone: fields.email ? "alert" : undefined,
+          found: Boolean(fields.email),
         },
         {
           key: "endereco",
           icon: "E",
           title: "Endereço vinculado",
-          value: address || "Não veio neste cadastro público",
-          badge: address ? "a venda" : "Não achado",
-          tone: address ? "alert" : undefined,
-          found: Boolean(address),
+          value: fields.address || "Não veio neste cadastro público",
+          badge: fields.address ? "a venda" : "Não achado",
+          tone: fields.address ? "alert" : undefined,
+          found: Boolean(fields.address),
         },
         {
           key: "documento",
           icon: "D",
           title: "Documento",
-          value: document || "Não veio neste cadastro público",
-          badge: document ? "a venda" : "Não achado",
-          tone: document ? "alert" : undefined,
-          found: Boolean(document),
+          value: fields.document || "Não veio neste cadastro público",
+          badge: fields.document ? "a venda" : "Não achado",
+          tone: fields.document ? "alert" : undefined,
+          found: Boolean(fields.document),
         },
         {
           key: "vinculo",
           icon: "S",
           title: "Vínculo empresarial",
-          value: company
-            ? `CNPJ ${company}${city ? ` · ${city}` : ""}`
+          value: fields.company
+            ? `CNPJ ${fields.company}${fields.city ? ` · ${fields.city}` : ""}`
             : "Sócio em cadastro público",
           badge: "Público",
           tone: "public",
@@ -366,19 +436,35 @@ if (form) {
   const fillLeadForm = (name, report) => {
     if (leadName && !leadName.value.trim()) leadName.value = name;
     if (leadNote && !leadNote.value.trim()) {
-      leadNote.value = report
-        ? "Fiz a prévia de exposição no site e vi dados públicos incompletos. Quero a avaliação inicial e saber o que dá para tratar."
-        : "Fiz a prévia de exposição no site. Quero a avaliação inicial e saber o que dá para tratar.";
+      if (report && report.total > 1) {
+        leadNote.value = `Fiz a prévia de exposição no site e vi ${report.total} cadastros públicos compatíveis com o meu nome. Quero a avaliação inicial e saber o que dá para tratar.`;
+      } else if (report) {
+        leadNote.value =
+          "Fiz a prévia de exposição no site e vi dados públicos incompletos. Quero a avaliação inicial e saber o que dá para tratar.";
+      } else {
+        leadNote.value =
+          "Fiz a prévia de exposição no site. Quero a avaliação inicial e saber o que dá para tratar.";
+      }
     }
     if (previewField) previewField.value = "Sim";
     if (consultedName) consultedName.value = name;
     if (openedPaths) {
-      openedPaths.value = foundFields.join(", ");
+      openedPaths.value =
+        report && report.total > 1
+          ? [`${report.total} cadastros`, ...foundFields].filter(Boolean).join(", ")
+          : foundFields.join(", ");
     }
     if (contactTitle) {
-      contactTitle.textContent = report
-        ? "Você já viu o pedaço público. Agora a Invisi trata o que for cabível."
-        : "A prévia não achou esse nome. A avaliação inicial ainda pode ir atrás.";
+      if (report && report.total > 1) {
+        contactTitle.textContent =
+          "Há vários cadastros públicos com o seu nome. Agora a Invisi trata o que for cabível.";
+      } else if (report) {
+        contactTitle.textContent =
+          "Você já viu o pedaço público. Agora a Invisi trata o que for cabível.";
+      } else {
+        contactTitle.textContent =
+          "A prévia não achou esse nome. A avaliação inicial ainda pode ir atrás.";
+      }
     }
     if (contactText) {
       contactText.textContent =
@@ -388,6 +474,9 @@ if (form) {
 
   const renderRows = (rows, mode) => {
     if (!results) return;
+    results.classList.remove("is-grouped");
+    results.removeAttribute("aria-label");
+    results.removeAttribute("role");
     results.replaceChildren();
     rows.forEach((row, index) => {
       const checking =
@@ -425,6 +514,67 @@ if (form) {
     });
   };
 
+  const appendHitField = (list, label, value, always = true) => {
+    if (!value && !always) return;
+    const row = document.createElement("div");
+    row.className = "mirror-hit-field";
+    if (!value) row.classList.add("is-missing");
+    const term = document.createElement("dt");
+    term.textContent = label;
+    const detail = document.createElement("dd");
+    detail.textContent = value || MISSING_CONTACT;
+    row.append(term, detail);
+    list.append(row);
+  };
+
+  const renderGroupedHits = (report) => {
+    if (!results) return;
+    results.classList.add("is-grouped");
+    results.setAttribute("role", "region");
+    results.setAttribute(
+      "aria-label",
+      `${report.total} cadastros públicos compatíveis com o nome consultado`,
+    );
+    results.replaceChildren();
+
+    const groupHeading = document.createElement("h2");
+    groupHeading.className = "sr-only";
+    groupHeading.textContent = compatibleCountLabel(report.total, report.shown);
+    results.append(groupHeading);
+
+    report.hits.forEach((hit, index) => {
+      const section = document.createElement("section");
+      section.className = "mirror-hit";
+      const titleId = `mirror-hit-${index}`;
+      section.setAttribute("aria-labelledby", titleId);
+
+      const heading = document.createElement("h3");
+      heading.id = titleId;
+      heading.className = "mirror-hit-title";
+      const indexLabel = document.createElement("span");
+      indexLabel.className = "mirror-hit-index";
+      indexLabel.textContent = `Cadastro ${index + 1}`;
+      const personName = document.createElement("span");
+      personName.className = "mirror-hit-name";
+      personName.textContent = hit.person;
+      heading.append(indexLabel, personName);
+
+      const fields = document.createElement("dl");
+      fields.className = "mirror-hit-fields";
+      appendHitField(fields, "Telefone", hit.phone);
+      appendHitField(fields, "E-mail", hit.email);
+      appendHitField(fields, "Endereço", hit.address);
+      appendHitField(fields, "CPF", hit.document, false);
+
+      const meta = document.createElement("p");
+      meta.className = "mirror-hit-meta";
+      meta.textContent = companyLine(hit) || "Sócio em cadastro público";
+
+      section.append(heading, fields, meta);
+      results.append(section);
+    });
+  };
+
   const scanningRows = () => [
     { icon: "N", title: "Nome no cadastro público", scanning: "Cruzando o nome no QSA" },
     { icon: "T", title: "Telefone associado", scanning: "Lendo telefone do cadastro" },
@@ -442,6 +592,12 @@ if (form) {
       } else if (!report) {
         verdict.textContent =
           `${firstName(name)}, não achamos cadastro público compatível com esse nome. Se o dado existir em outro agregador, o diagnóstico completo vai atrás.`;
+      } else if (report.total > 1) {
+        verdict.textContent = foundFields.some(
+          (field) => field === "telefone" || field === "email" || field === "endereco",
+        )
+          ? `${firstName(name)}, o nome aparece em ${report.total} cadastros públicos. Parte do contato já está à venda. A Invisi mostra incompleto. O diagnóstico trata o que for cabível e acompanha por 1 ano.`
+          : `${firstName(name)}, o nome aparece em ${report.total} cadastros públicos, mas telefone e e-mail não vieram nestas fichas. O diagnóstico completo olha as outras bases.`;
       } else if (foundFields.some((field) => field === "telefone" || field === "email" || field === "endereco")) {
         verdict.textContent =
           `${firstName(name)}, esse pedaço já está público no cadastro empresarial. A Invisi mostra incompleto. O diagnóstico trata o que for cabível e acompanha por 1 ano.`;
@@ -458,10 +614,14 @@ if (form) {
       } else if (!report) {
         insight.innerHTML =
           "<strong>Nada para estampar.</strong> A busca pelo nome não achou sócio compatível. Homônimo frouxo não entra. A Invisi não completa a ficha.";
+      } else if (report.total > 1) {
+        insight.innerHTML =
+          report.total > report.shown
+            ? `<strong>Há ${report.total} cadastros públicos compatíveis com esse nome.</strong> Mostramos ${report.shown}. A prévia é incompleta: um recorte de cada ficha. O diagnóstico cruza as outras bases e trata o que for cabível.`
+            : `<strong>Há ${report.total} cadastros públicos compatíveis com esse nome.</strong> A prévia é incompleta: um recorte de cada ficha. O diagnóstico cruza as outras bases e trata o que for cabível.`;
       } else {
-        insight.innerHTML = report.others
-          ? `<strong>Há outros cadastros públicos com esse nome.</strong> Mostramos o de melhor casamento: ${report.person}. Se não for você, corrija o nome.`
-          : `<strong>Seus dados estão à venda.</strong> O que o cadastro empresarial solta, a internet já vende. A Invisi mostra o recorte.`;
+        insight.innerHTML =
+          "<strong>Seus dados estão à venda.</strong> O que o cadastro empresarial solta, a internet já vende. A Invisi mostra o recorte.";
       }
     }
     if (conclusion) conclusion.hidden = false;
@@ -473,6 +633,7 @@ if (form) {
   const runScan = async (name) => {
     queriedName = name;
     foundFields = [];
+    lastReport = null;
     form.dataset.busy = "true";
     nameInput.disabled = true;
     if (submitLabel) submitLabel.textContent = "Consultando...";
@@ -480,7 +641,7 @@ if (form) {
     hero?.classList.remove("is-mirror-report");
     hero?.classList.add("is-mirror-scanning");
     card?.classList.add("is-scanning");
-    card?.classList.remove("is-report");
+    card?.classList.remove("is-report", "is-grouped");
     pulse?.classList.add("is-live");
     pulse?.classList.remove("is-ready");
     if (label) label.textContent = "Prévia no seu nome";
@@ -504,9 +665,9 @@ if (form) {
       card?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
     }
 
-    let picked;
+    let matches;
     try {
-      picked = await lookupName(name);
+      matches = await lookupName(name);
     } catch (error) {
       card?.classList.remove("is-scanning");
       card?.classList.add("is-report");
@@ -537,7 +698,7 @@ if (form) {
     setProgress(0.45);
     if (stepMs) await sleep(stepMs);
 
-    if (!picked.match) {
+    if (!matches.length) {
       card?.classList.remove("is-scanning");
       card?.classList.add("is-report");
       pulse?.classList.remove("is-live");
@@ -592,41 +753,69 @@ if (form) {
       return;
     }
 
-    const cnpj = cnpjFromRoot(picked.match.cnpj);
-    if (status) status.textContent = "Lendo o cadastro da empresa ligada ao nome";
-    if (live) live.textContent = "Buscando telefone, e-mail e endereço no comprovante público…";
+    const deepenCount = Math.min(matches.length, OFFICE_LOOKUP_CAP);
+    if (status) {
+      status.textContent =
+        matches.length > 1
+          ? matches.length > deepenCount
+            ? `Lendo ${deepenCount} de ${matches.length} cadastros públicos`
+            : `Lendo ${matches.length} cadastros públicos ligados ao nome`
+          : "Lendo o cadastro da empresa ligada ao nome";
+    }
+    if (live) {
+      live.textContent =
+        matches.length > 1
+          ? "Buscando telefone, e-mail e endereço em cada ficha pública…"
+          : "Buscando telefone, e-mail e endereço no comprovante público…";
+    }
     card.dataset.activeIndex = "4";
     renderRows(rows, "scanning");
     setProgress(0.72);
 
-    let office = { phones: [], emails: [], address: null };
-    try {
-      office = await lookupOffice(cnpj);
-    } catch (error) {
-      office = { phones: [], emails: [], address: null };
-    }
-
-    const report = buildReport(name, picked.match, office, picked.others);
-    foundFields = report.rows.filter((row) => row.found).map((row) => row.key);
-    if (who) who.textContent = report.person;
+    const deepened = await deepenMatches(matches);
+    const grouped = matches.length > 1;
+    const report = grouped
+      ? {
+          person: extractPublicFields(deepened[0].socio, deepened[0].office).person,
+          total: matches.length,
+          shown: deepened.length,
+          hits: deepened.map(({ socio, office }) => {
+            const fields = extractPublicFields(socio, office);
+            return { ...fields, foundKeys: hitFoundKeys(fields) };
+          }),
+        }
+      : buildReport(deepened[0].socio, deepened[0].office);
+    lastReport = report;
+    foundFields = grouped
+      ? [...new Set(report.hits.flatMap((hit) => hit.foundKeys))]
+      : report.rows.filter((row) => row.found).map((row) => row.key);
+    if (who && !grouped) who.textContent = report.person;
 
     card.dataset.activeIndex = String(rows.length);
     card?.classList.remove("is-scanning");
     card?.classList.add("is-report");
+    card?.classList.toggle("is-grouped", grouped);
     pulse?.classList.remove("is-live");
     pulse?.classList.add("is-ready");
     setProgress(1);
     if (status) {
-      status.textContent = foundFields.includes("telefone") || foundFields.includes("email")
-        ? "Prévia pronta. Isso já estava público."
-        : "Prévia pronta. O nome aparece; o contato não veio.";
+      status.textContent = grouped
+        ? compatibleCountLabel(report.total, report.shown)
+        : foundFields.includes("telefone") || foundFields.includes("email")
+          ? "Prévia pronta. Isso já estava público."
+          : "Prévia pronta. O nome aparece; o contato não veio.";
     }
     if (live) {
-      live.textContent =
-        "O recorte público já circula à venda na internet.";
+      live.textContent = grouped
+        ? "Vários cadastros públicos com esse nome. Recorte incompleto."
+        : "O recorte público já circula à venda na internet.";
     }
     if (label) label.textContent = "Relatório de exposição · prévia";
-    renderRows(report.rows, "report");
+    if (grouped) {
+      renderGroupedHits(report);
+    } else {
+      renderRows(report.rows, "report");
+    }
     revealConclusion(name, report);
     form.dataset.busy = "false";
     nameInput.disabled = false;
@@ -655,13 +844,14 @@ if (form) {
   });
 
   const onCta = () => {
-    if (queriedName) fillLeadForm(queriedName, foundFields.length > 0);
+    if (queriedName) fillLeadForm(queriedName, lastReport);
   };
   cta?.addEventListener("click", onCta);
   cardCta?.addEventListener("click", onCta);
 
   resetButton?.addEventListener("click", () => {
     hero?.classList.remove("is-mirror-report", "is-mirror-scanning");
+    card?.classList.remove("is-grouped");
     if (conclusion) conclusion.hidden = true;
     if (cardCta) cardCta.hidden = true;
     nameInput.disabled = false;
