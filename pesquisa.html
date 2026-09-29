@@ -73,18 +73,26 @@
         <main class="survey-main" id="questionario">
             <form
                 class="survey-form"
-                action="https://formsubmit.co/invisi.oficial@gmail.com"
+                action="https://api.web3forms.com/submit"
                 method="POST"
                 data-survey-form
             >
                 <input
                     type="hidden"
-                    name="_subject"
+                    name="access_key"
+                    value="158390c0-432f-4ec7-aab9-e640e631f481"
+                />
+                <input
+                    type="hidden"
+                    name="subject"
                     value="Nova resposta: Pesquisa Invisi v2.4"
                 />
-                <input type="hidden" name="_template" value="table" />
-                <input type="hidden" name="_next" value="" />
-                <input type="hidden" name="_captcha" value="true" />
+                <input
+                    type="hidden"
+                    name="redirect"
+                    value="https://invisi.com.br/obrigado.html"
+                />
+                <input type="hidden" name="from_name" value="Invisi" />
                 <input
                     type="hidden"
                     name="Versao_da_pesquisa"
@@ -92,8 +100,9 @@
                 />
                 <input
                     class="honeypot"
-                    type="text"
-                    name="_honey"
+                    type="checkbox"
+                    name="botcheck"
+                    style="display: none"
                     tabindex="-1"
                     autocomplete="off"
                     aria-hidden="true"
@@ -970,6 +979,6 @@
             </p>
         </footer>
 
-        <script src="pesquisa.js?v=20260916-3" defer></script>
+        <script src="pesquisa.js?v=20260929-1" defer></script>
     </body>
 </html>

@@ -25,9 +25,9 @@ A landing page oferece uma prévia no próprio site: o visitante informa o nome,
 
 ## Formulários
 
-O formulário de diagnóstico e a pesquisa utilizam [FormSubmit](https://formsubmit.co/) e encaminham as submissões para o canal responsável da Invisi.
+O formulário de diagnóstico, o modal de contato e a pesquisa utilizam [Web3Forms](https://web3forms.com/) e encaminham as submissões para o canal responsável da Invisi.
 
-No primeiro envio real, o FormSubmit exige ativação pelo e-mail de destino. Antes dessa confirmação, as mensagens não são entregues normalmente.
+Após o envio, o visitante é redirecionado para `https://invisi.com.br/obrigado.html`.
 
 A pesquisa contém 10 perguntas e pode ser respondida sem identificadores diretos. Nome e WhatsApp são opcionais e usados somente quando o participante solicita contato e aceita a autorização correspondente.
 

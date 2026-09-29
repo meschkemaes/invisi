@@ -55,10 +55,6 @@ document.querySelectorAll("[data-phone-mask]").forEach((input) => {
 
 const applyFormContext = (form) => {
   if (!form) return;
-  const nextInput = form.querySelector('input[name="_next"]');
-  if (nextInput && window.location.protocol.startsWith("http")) {
-    nextInput.value = new URL("obrigado.html", window.location.href).href;
-  }
 
   const utmParams = new URLSearchParams(window.location.search);
   ["source", "medium", "campaign", "content"].forEach((key) => {
