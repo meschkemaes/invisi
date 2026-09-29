@@ -6,16 +6,6 @@ const selectionLimitRefreshers = [];
 
 const isSurveyIneligible = () => Boolean(ineligibleInput?.checked);
 
-const configureReturnUrl = () => {
-  const nextInput = surveyForm?.querySelector('input[name="_next"]');
-  if (!nextInput || !window.location.protocol.startsWith("http")) return;
-
-  nextInput.value = new URL(
-    "pesquisa-obrigado.html",
-    window.location.href,
-  ).href;
-};
-
 const clearCheckboxGroupError = (group) => {
   const checkboxes = group.querySelectorAll('input[type="checkbox"]');
   const hasSelection = [...checkboxes].some((checkbox) => checkbox.checked);
@@ -247,7 +237,6 @@ const validateCheckboxGroups = () => {
   return true;
 };
 
-configureReturnUrl();
 setupExclusiveOptions();
 setupCheckboxGroupFeedback();
 setupSelectionLimits();
