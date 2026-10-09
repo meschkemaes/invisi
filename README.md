@@ -1,6 +1,8 @@
 # Invisi
 
-Site público da **Invisi**, empresa brasileira de tecnologia e serviços de privacidade voltada à redução responsável da exposição online de dados pessoais ligados a atividades empresariais.
+Site público da **Invisi**, empresa brasileira de tecnologia e serviços de
+privacidade voltada à redução responsável da exposição online de dados
+pessoais ligados a atividades empresariais.
 
 ## Páginas
 
@@ -12,36 +14,47 @@ Site público da **Invisi**, empresa brasileira de tecnologia e serviços de pri
 
 ## Acesso público
 
-- Site: https://invisi.com.br/
-- Pesquisa: https://invisi.com.br/pesquisa.html
+- Site: "<https://invisi.com.br/>"
+- Pesquisa: "<https://invisi.com.br/pesquisa.html>"
 
 ## Execução local
 
-O site usa somente HTML, CSS e JavaScript. Não há etapa de build: abra `index.html` ou `pesquisa.html` diretamente no navegador.
+O site usa somente HTML, CSS e JavaScript. Não há etapa de build: abra
+`index.html` ou `pesquisa.html` diretamente no navegador.
 
 ## Prévia de exposição
 
-A landing page oferece uma prévia no próprio site: o visitante informa o nome, o navegador consulta cadastros públicos de sócio e CNPJ e a página mostra um recorte mascarado do que veio. Se a busca não achar, a prévia diz que não achou. O diagnóstico completo continua no formulário de contato.
+A landing page oferece uma prévia no próprio site: o visitante informa o nome,
+o navegador consulta cadastros públicos de sócio e CNPJ e a página mostra um
+recorte mascarado do que veio. Se a busca não achar, a prévia diz que não achou.
+O diagnóstico completo continua no formulário de contato.
 
 ## Formulários
 
-O formulário de diagnóstico, o modal de contato e a pesquisa utilizam [Web3Forms](https://web3forms.com/) e encaminham as submissões para o canal responsável da Invisi.
+O formulário de diagnóstico, o modal de contato e a pesquisa utilizam
+[Web3Forms](https://web3forms.com/) e encaminham as submissões para o canal
+responsável da Invisi.
 
 Após o envio, o visitante é redirecionado para `https://invisi.com.br/obrigado.html`.
 
-A pesquisa contém 10 perguntas e pode ser respondida sem identificadores diretos. Nome e WhatsApp são opcionais e usados somente quando o participante solicita contato e aceita a autorização correspondente.
+A pesquisa contém 10 perguntas e pode ser respondida sem identificadores
+diretos. Nome e WhatsApp são opcionais e usados somente quando o participante
+solicita contato e aceita a autorização correspondente.
 
 ## Arquivos públicos
 
-- `index.html`, `styles.css`, `script.js` e `espelho.js`: landing page e prévia de exposição;
+- `index.html`, `styles.css`, `script.js` e `espelho.js`: lp e prévia de exposição;
 - `pesquisa.html`, `pesquisa.css` e `pesquisa.js`: pesquisa de mercado;
 - `obrigado.html` e `pesquisa-obrigado.html`: páginas de confirmação;
 - `privacidade.html`: informações sobre tratamento de dados;
 - `favicon.svg`: identidade visual;
 - `.nojekyll`: configuração do GitHub Pages.
 
-Planos estratégicos, Canvas, playbooks, pipelines, resultados e registros internos não são armazenados neste repositório público.
+Planos estratégicos, Canvas, playbooks, pipelines, resultados e registros
+internos não são armazenados neste repositório público.
 
 ## Aviso
 
-A Invisi não promete remoção universal de dados nem substitui aconselhamento jurídico. A aplicabilidade de solicitações depende da fonte, da base legal, de obrigações regulatórias e de decisões de terceiros.
+A Invisi não promete remoção universal de dados nem substitui aconselhamento
+jurídico. A aplicabilidade de solicitações depende da fonte, da base legal, de
+obrigações regulatórias e de decisões de terceiros.
