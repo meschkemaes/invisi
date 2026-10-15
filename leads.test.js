@@ -258,7 +258,7 @@ test("live landing forms keep the Web3Forms action and an invisible hp field", (
   assert.doesNotMatch(script, /avalia\[cç\]/);
   assert.match(html, /leads\.js\?v=20261015-2/);
   assert.match(html, /script\.js\?v=20261015-2/);
-  assert.match(html, /espelho\.js\?v=20261015-3/);
+  assert.match(html, /espelho\.js\?v=20261015-4/);
 
   const pesquisa = fs.readFileSync(
     path.join(__dirname, "pesquisa.html"),

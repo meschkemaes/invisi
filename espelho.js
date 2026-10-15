@@ -1,8 +1,52 @@
-(() => {
+(function (root, factory) {
+  const api = factory();
+  if (typeof module === "object" && module.exports) {
+    module.exports = api;
+  } else {
+    root.InvisiEspelho = api;
+  }
+  if (typeof document !== "undefined") api.start();
+})(typeof globalThis !== "undefined" ? globalThis : this, function () {
+  const API_BASE = "https://api.invisi.com.br";
+  const API_TIMEOUT_MS = 6000;
   const SEARCH_URL = "https://empresas.credithub.com.br/api/buscar";
+
+  const parseInvisiOffice = (data) => {
+    if (!data || typeof data !== "object") {
+      throw new Error("malformed-office");
+    }
+    return {
+      phones: (Array.isArray(data.phones) ? data.phones : [])
+        .filter((item) => item && item.number)
+        .map((item) => ({
+          area: String(item.area || ""),
+          number: String(item.number || ""),
+        })),
+      emails: (Array.isArray(data.emails) ? data.emails : [])
+        .map((item) => (item == null ? "" : String(item)))
+        .filter(Boolean),
+      address: data.address
+        ? {
+            street: String(data.address.street || ""),
+            number: String(data.address.number || ""),
+            district: String(data.address.district || ""),
+            city: String(data.address.city || ""),
+            state: String(data.address.state || ""),
+          }
+        : null,
+      company: data.company == null ? data.company : String(data.company),
+    };
+  };
+
   const OFFICE_LOOKUPS = [
     {
+      url: (cnpj) => `${API_BASE}/espelho/office/${cnpj}`,
+      timeoutMs: API_TIMEOUT_MS,
+      parse: parseInvisiOffice,
+    },
+    {
       url: (cnpj) => `https://open.cnpja.com/office/${cnpj}`,
+      timeoutMs: 9000,
       parse: (data) => ({
         phones: (data.phones || [])
           .filter((item) => item && item.number && item.type !== "FAX")
@@ -27,6 +71,7 @@
     },
     {
       url: (cnpj) => `https://api.opencnpj.org/${cnpj}`,
+      timeoutMs: 9000,
       parse: (data) => ({
         phones: (data.telefones || [])
           .filter((item) => item && item.numero && !item.is_fax)
@@ -50,10 +95,111 @@
     },
   ];
 
+  const PARTICLES = new Set(["DA", "DE", "DO", "DAS", "DOS", "E", "DI", "DU"]);
+
+  const fold = (value) =>
+    String(value || "")
+      .normalize("NFD")
+      .replace(/\p{M}/gu, "")
+      .toUpperCase()
+      .replace(/[^A-Z0-9 ]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  const tokens = (value) =>
+    fold(value)
+      .split(" ")
+      .filter((part) => part && !PARTICLES.has(part));
+
+  const scoreSocio = (query, socioName) => {
+    const asked = tokens(query);
+    const found = tokens(socioName);
+    if (asked.length < 2 || found.length < 2) return 0;
+    if (asked[0] !== found[0]) return 0;
+    let cursor = 0;
+    for (const part of asked) {
+      const at = found.indexOf(part, cursor);
+      if (at === -1) return 0;
+      cursor = at + 1;
+    }
+    const extra = found.length - asked.length;
+    let score = 100 - extra * 5;
+    if (found.slice(0, asked.length).join(" ") === asked.join(" ")) score += 20;
+    return score;
+  };
+
+  const pickSocio = (query, socios) => {
+    const ranked = (socios || [])
+      .map((socio) => ({ socio, score: scoreSocio(query, socio.nome) }))
+      .filter((row) => row.score > 0)
+      .sort((a, b) => b.score - a.score);
+    if (!ranked.length) return { match: null, others: 0 };
+    return { match: ranked[0].socio, others: ranked.length - 1 };
+  };
+
+  const fetchJson = async (url, timeoutMs, fetchImpl) => {
+    const doFetch = fetchImpl || fetch;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const response = await doFetch(url, {
+        method: "GET",
+        signal: controller.signal,
+      });
+      if (!response.ok) {
+        const error = new Error(`http-${response.status}`);
+        error.status = response.status;
+        throw error;
+      }
+      return response.json();
+    } finally {
+      clearTimeout(timer);
+    }
+  };
+
+  const lookupName = async (name, options) => {
+    const opts = options || {};
+    const timeoutMs = opts.timeoutMs == null ? API_TIMEOUT_MS : opts.timeoutMs;
+    const apiUrl = `${API_BASE}/espelho/socios?q=${encodeURIComponent(name)}`;
+    try {
+      const payload = await fetchJson(apiUrl, timeoutMs, opts.fetchImpl);
+      if (!payload || !Array.isArray(payload.socios)) {
+        throw new Error("malformed-socios");
+      }
+      return pickSocio(name, payload.socios);
+    } catch (error) {
+      const url = `${SEARCH_URL}?q=${encodeURIComponent(name)}&t=all&limit=8`;
+      const payload = await fetchJson(url, 9000, opts.fetchImpl);
+      if (!payload || payload.enabled === false) {
+        throw new Error("search-disabled");
+      }
+      return pickSocio(name, payload.socios);
+    }
+  };
+
+  const lookupOffice = async (cnpj, options) => {
+    const opts = options || {};
+    let lastError = null;
+    for (const source of OFFICE_LOOKUPS) {
+      const timeoutMs =
+        opts.timeoutMs == null ? source.timeoutMs || 9000 : opts.timeoutMs;
+      try {
+        const data = await fetchJson(
+          source.url(cnpj),
+          timeoutMs,
+          opts.fetchImpl,
+        );
+        return source.parse(data);
+      } catch (error) {
+        lastError = error;
+      }
+    }
+    throw lastError || new Error("office-missing");
+  };
+
+  const start = () => {
   const IDLE_LEAD =
     "Digite seu nome no campo abaixo para ver se seus dados estão à venda.";
-
-  const PARTICLES = new Set(["DA", "DE", "DO", "DAS", "DOS", "E", "DI", "DU"]);
 
   const form = document.querySelector("[data-mirror-form]");
   if (form) {
@@ -93,20 +239,6 @@
     const sleep = (ms) =>
       new Promise((resolve) => window.setTimeout(resolve, ms));
 
-    const fold = (value) =>
-      String(value || "")
-        .normalize("NFD")
-        .replace(/\p{M}/gu, "")
-        .toUpperCase()
-        .replace(/[^A-Z0-9 ]/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-
-    const tokens = (value) =>
-      fold(value)
-        .split(" ")
-        .filter((part) => part && !PARTICLES.has(part));
-
     const titleCaseName = (value) =>
       value
         .split(/\s+/)
@@ -137,33 +269,6 @@
         return "Confira a grafia do nome.";
       }
       return "";
-    };
-
-    const scoreSocio = (query, socioName) => {
-      const asked = tokens(query);
-      const found = tokens(socioName);
-      if (asked.length < 2 || found.length < 2) return 0;
-      if (asked[0] !== found[0]) return 0;
-      let cursor = 0;
-      for (const part of asked) {
-        const at = found.indexOf(part, cursor);
-        if (at === -1) return 0;
-        cursor = at + 1;
-      }
-      const extra = found.length - asked.length;
-      let score = 100 - extra * 5;
-      if (found.slice(0, asked.length).join(" ") === asked.join(" "))
-        score += 20;
-      return score;
-    };
-
-    const pickSocio = (query, socios) => {
-      const ranked = (socios || [])
-        .map((socio) => ({ socio, score: scoreSocio(query, socio.nome) }))
-        .filter((row) => row.score > 0)
-        .sort((a, b) => b.score - a.score);
-      if (!ranked.length) return { match: null, others: 0 };
-      return { match: ranked[0].socio, others: ranked.length - 1 };
     };
 
     const cnpjFromRoot = (root) => {
@@ -250,47 +355,6 @@
       const digits = String(value || "").replace(/\D/g, "");
       if (digits.length !== 14) return "";
       return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5, 8)}/${digits.slice(8, 12)}-**`;
-    };
-
-    const fetchJson = async (url, timeoutMs = 9000) => {
-      const controller = new AbortController();
-      const timer = window.setTimeout(() => controller.abort(), timeoutMs);
-      try {
-        const response = await fetch(url, {
-          method: "GET",
-          signal: controller.signal,
-        });
-        if (!response.ok) {
-          const error = new Error(`http-${response.status}`);
-          error.status = response.status;
-          throw error;
-        }
-        return response.json();
-      } finally {
-        window.clearTimeout(timer);
-      }
-    };
-
-    const lookupName = async (name) => {
-      const url = `${SEARCH_URL}?q=${encodeURIComponent(name)}&t=all&limit=8`;
-      const payload = await fetchJson(url);
-      if (!payload || payload.enabled === false) {
-        throw new Error("search-disabled");
-      }
-      return pickSocio(name, payload.socios);
-    };
-
-    const lookupOffice = async (cnpj) => {
-      let lastError = null;
-      for (const source of OFFICE_LOOKUPS) {
-        try {
-          const data = await fetchJson(source.url(cnpj));
-          return source.parse(data);
-        } catch (error) {
-          lastError = error;
-        }
-      }
-      throw lastError || new Error("office-missing");
     };
 
     const buildReport = (name, socio, office, others) => {
@@ -764,4 +828,13 @@
       if (submitLabel) submitLabel.textContent = "Ver minha exposição";
     });
   }
-})();
+  };
+
+  return {
+    API_BASE,
+    API_TIMEOUT_MS,
+    lookupName,
+    lookupOffice,
+    start,
+  };
+});
