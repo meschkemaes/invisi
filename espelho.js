@@ -407,6 +407,9 @@
       if (openedPaths) {
         openedPaths.value = foundFields.join(", ");
       }
+      /*
+        BACKUP — textos dinâmicos originais do formulário após a prévia.
+        Para reverter: substitua os dois blocos "if" abaixo por este trecho.
       if (contactTitle) {
         contactTitle.textContent = report
           ? "Você já viu sua exposição. Agora a Invisi trata o que for cabível."
@@ -415,6 +418,17 @@
       if (contactText) {
         contactText.textContent =
           "A prévia consulta fontes a partir do seu nome e mostra só um recorte. Envie o contato para receber o diagnóstico, o escopo e o acompanhamento de 1 ano. O envio não gera cobrança.";
+      }
+      */
+      if (contactTitle) {
+        contactTitle.textContent = report
+          ? "Plano sob medida para sua remoção."
+          : "A prévia não achou esse nome. A Invisi ainda pode ir atrás.";
+      }
+      if (contactText) {
+        contactText.textContent = report
+          ? "Com base na sua exposição encontrada, estruturamos a atuação técnica e jurídica perante a LGPD. Preencha abaixo para receber o escopo detalhado e iniciar."
+          : "A prévia consulta fontes a partir do seu nome e mostra só um recorte. Envie o contato para receber o diagnóstico, o escopo e o acompanhamento de 1 ano. O envio não gera cobrança.";
       }
     };
 
