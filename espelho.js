@@ -423,12 +423,12 @@
       if (contactTitle) {
         contactTitle.textContent = report
           ? "Plano sob medida para sua remoção."
-          : "A prévia não achou esse nome. A Invisi ainda pode ir atrás.";
+          : "Sua prévia rápida veio limpa. Mas a busca profunda continua.";
       }
       if (contactText) {
         contactText.textContent = report
           ? "Com base na sua exposição encontrada, estruturamos a atuação técnica e jurídica perante a LGPD. Preencha abaixo para receber o escopo detalhado e iniciar."
-          : "A prévia consulta fontes a partir do seu nome e mostra só um recorte. Envie o contato para receber o diagnóstico, o escopo e o acompanhamento de 1 ano. O envio não gera cobrança.";
+          : "A prévia rápida consulta apenas as fontes mais superficiais. Em muitos casos, registros residenciais e telefones continuam indexados em bases profundas e agregadores secundários. Envie seus dados abaixo para uma varredura manual completa e gratuita.";
       }
     };
 

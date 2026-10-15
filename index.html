@@ -1288,6 +1288,9 @@
       </div>
     </footer>
 
+    <!--
+      BACKUP — modal #avaliacao-inicial original antes da atualização (Bloco 3).
+      Para reverter: apague o <dialog> ativo abaixo e descomente este trecho.
     <dialog
       class="intent-dialog"
       id="avaliacao-inicial"
@@ -1409,6 +1412,141 @@
           </p>
           <button class="button button-full submit-button" type="submit">
             <span>Enviar e entrar na fila</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="m7 4 6 6-6 6" />
+            </svg>
+          </button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+          <a class="intent-fallback" href="#diagnostico" data-intent-fallback
+            >Prefere o formulário completo?</a
+          >
+        </form>
+      </div>
+    </dialog>
+    -->
+
+    <dialog
+      class="intent-dialog"
+      id="avaliacao-inicial"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="intent-title"
+      aria-describedby="intent-desc"
+    >
+      <div class="intent-panel">
+        <button
+          class="intent-close"
+          type="button"
+          data-intent-close
+          aria-label="Fechar"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <p class="eyebrow dark"><span></span> Avaliação inicial</p>
+        <h2 id="intent-title">Descubra o que a internet revela sobre você.</h2>
+        <p id="intent-desc">
+          Avaliamos onde seus dados pessoais (como endereço residencial e
+          celular) estão expostos e apresentamos o plano de remoção sob medida
+          para você.
+        </p>
+        <form
+          class="intent-form"
+          action="https://api.web3forms.com/submit"
+          method="POST"
+          data-intent-form
+        >
+          <input
+            type="hidden"
+            name="access_key"
+            value="158390c0-432f-4ec7-aab9-e640e631f481"
+          />
+          <input
+            type="hidden"
+            name="subject"
+            value="Novo lead da landing page Invisi"
+          />
+          <input
+            type="hidden"
+            name="redirect"
+            value="https://invisi.com.br/obrigado.html"
+          />
+          <input type="hidden" name="from_name" value="Invisi" />
+          <input
+            type="checkbox"
+            name="botcheck"
+            class="honeypot"
+            style="display: none"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
+          <input type="hidden" name="Nome" value="" data-intent-name />
+          <input type="hidden" name="Origem" value="Modal de intencao" />
+          <input
+            type="hidden"
+            name="Previa_exposicao"
+            value="Nao"
+            data-intent-preview
+          />
+          <input
+            type="hidden"
+            name="Nome_consultado"
+            value=""
+            data-intent-consulted
+          />
+          <input
+            type="hidden"
+            name="Campos_encontrados"
+            value=""
+            data-intent-paths
+          />
+          <input type="hidden" name="Intencao" value="" data-intent-signal />
+          <input type="hidden" name="Campo_alvo" value="" data-intent-target />
+          <input type="hidden" name="UTM_source" value="" />
+          <input type="hidden" name="UTM_medium" value="" />
+          <input type="hidden" name="UTM_campaign" value="" />
+          <input type="hidden" name="UTM_content" value="" />
+
+          <div class="field">
+            <label for="intent-email">E-mail</label>
+            <input
+              id="intent-email"
+              name="Email"
+              type="email"
+              autocomplete="email"
+              placeholder="seuemail@empresa.com.br"
+              required
+            />
+          </div>
+          <div class="field">
+            <label for="intent-telefone">Telefone / WhatsApp</label>
+            <input
+              id="intent-telefone"
+              name="WhatsApp"
+              type="tel"
+              autocomplete="tel"
+              inputmode="numeric"
+              placeholder="(11) 99999-9999"
+              maxlength="15"
+              pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"
+              title="Informe um celular brasileiro com DDD, no formato (11) 99999-9999"
+              aria-describedby="intent-telefone-ajuda"
+              data-phone-mask
+              required
+            />
+            <p class="field-hint" id="intent-telefone-ajuda">
+              Celular com DDD. É por aqui que avisamos a fila.
+            </p>
+          </div>
+          <p class="form-note">
+            Não pedimos CPF. Ao enviar, você autoriza a Invisi a usar estes
+            dados para retornar sobre a avaliação, conforme a
+            <a href="privacidade.html" target="_blank" rel="noopener"
+              >Política de Privacidade</a
+            >.
+          </p>
+          <button class="button button-full submit-button" type="submit">
+            <span>Pedir avaliação gratuita</span>
             <svg viewBox="0 0 20 20" aria-hidden="true">
               <path d="m7 4 6 6-6 6" />
             </svg>
