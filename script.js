@@ -95,10 +95,34 @@ const markFormSending = (form) => {
   if (status) status.textContent = "Aguarde a confirmação do envio.";
 };
 
+const bindInvisiLead = (form, beforeSend) => {
+  form.addEventListener("submit", (event) => {
+    const leads = window.InvisiLeads;
+    if (!leads) {
+      markFormSending(form);
+      return;
+    }
+
+    event.preventDefault();
+    if (typeof beforeSend === "function") beforeSend();
+    if (!leads.claimSubmit(form)) return;
+
+    markFormSending(form);
+    leads
+      .deliverSiteLead(leads.buildSiteLead(form))
+      .then(() => {
+        window.location.assign(leads.THANKS_URL);
+      })
+      .catch(() => {
+        form.submit();
+      });
+  });
+};
+
 const leadForm = document.querySelector("[data-lead-form]");
 if (leadForm) {
   applyFormContext(leadForm);
-  leadForm.addEventListener("submit", () => markFormSending(leadForm));
+  bindInvisiLead(leadForm);
 }
 
 const intentDialog = document.querySelector("#avaliacao-inicial");
@@ -246,10 +270,9 @@ if (intentDialog && intentForm) {
     }
   });
 
-  intentForm.addEventListener("submit", () => {
+  bindInvisiLead(intentForm, () => {
     copyMirrorIntoIntent();
     applyFormContext(intentForm);
-    markFormSending(intentForm);
   });
 
   applyFormContext(intentForm);
