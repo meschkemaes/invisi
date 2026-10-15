@@ -183,18 +183,10 @@ if (intentDialog && intentForm) {
   const isIntentCta = (element) => {
     if (!element || element.hasAttribute("data-intent-fallback")) return false;
     if (element.closest("[data-intent-form], [data-lead-form]")) return false;
-    if (
-      element.hasAttribute("data-intent-open") ||
-      element.hasAttribute("data-mirror-cta") ||
-      element.hasAttribute("data-mirror-card-cta")
-    ) {
-      return true;
+    if (element.matches("button[type='submit'], input[type='submit']")) {
+      return false;
     }
-    const href = element.getAttribute("href") || "";
-    return (
-      (href === "#diagnostico" || href.endsWith("#diagnostico")) &&
-      /avalia[cç][aã]o inicial/i.test(element.textContent || "")
-    );
+    return element.hasAttribute("data-open-modal");
   };
 
   document.addEventListener("click", (event) => {

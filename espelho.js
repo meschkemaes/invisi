@@ -453,6 +453,7 @@
           item.classList.add("is-sale");
           item.href = "#avaliacao-inicial";
           item.setAttribute("data-intent-open", "");
+          item.setAttribute("data-open-modal", "");
           item.setAttribute("data-intent-field", row.key || "");
           item.setAttribute(
             "aria-label",
@@ -547,7 +548,7 @@
         } else {
           insight.innerHTML = report.others
             ? `<strong>Há outros cadastros públicos com esse nome.</strong> Mostramos o de melhor casamento: ${report.person}. Se não for você, corrija o nome.`
-            : `<strong>Seus dados estão à venda.</strong> O que o cadastro empresarial solta, a internet já vende. A Invisi mostra o recorte.`;
+            : `<strong>Seus dados estão à venda.</strong> Os sites de consulta publicam suas informações para quem quiser ver. Peça o diagnóstico completo e veja como a Invisi pode te ajudar`;
         }
       }
       if (conclusion) conclusion.hidden = false;
