@@ -253,12 +253,12 @@ test("live landing forms keep the Web3Forms action and an invisible hp field", (
   assert.match(script, /deliverSiteLead/);
   assert.match(script, /preventDefault/);
   assert.match(script, /form\.submit\(\)/);
-  assert.equal((html.match(/Quero meu diagnóstico grátis/g) || []).length, 2);
+  assert.equal((html.match(/Quero meu diagnóstico grátis/g) || []).length, 4);
   assert.match(script, /data-open-modal/);
   assert.doesNotMatch(script, /avalia\[cç\]/);
   assert.match(html, /leads\.js\?v=20261015-2/);
   assert.match(html, /script\.js\?v=20261015-2/);
-  assert.match(html, /espelho\.js\?v=20261015-1/);
+  assert.match(html, /espelho\.js\?v=20261015-3/);
 
   const pesquisa = fs.readFileSync(
     path.join(__dirname, "pesquisa.html"),
