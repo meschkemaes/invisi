@@ -457,7 +457,7 @@
           item.setAttribute("data-intent-field", row.key || "");
           item.setAttribute(
             "aria-label",
-            `${row.title}: a venda. Quero remover — pedir avaliação inicial.`,
+            `${row.title}: a venda. Quero meu diagnóstico grátis.`,
           );
         }
         item.innerHTML = `
