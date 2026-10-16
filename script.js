@@ -53,6 +53,41 @@ document.querySelectorAll("[data-phone-mask]").forEach((input) => {
   });
 });
 
+const cursorAfterCnpjDigits = (masked, digitCount) => {
+  if (digitCount <= 0) return 0;
+  let seen = 0;
+  for (let index = 0; index < masked.length; index += 1) {
+    if (/\d/.test(masked.charAt(index))) seen += 1;
+    if (seen >= digitCount) return index + 1;
+  }
+  return masked.length;
+};
+
+document.querySelectorAll("[data-cnpj]").forEach((input) => {
+  const form = input.closest("form");
+  input.addEventListener("input", () => {
+    const leads = window.InvisiLeads;
+    if (!leads) return;
+    const caret = input.selectionStart;
+    const digitsBefore = leads.cnpjDigits(
+      String(input.value).slice(0, caret == null ? input.value.length : caret),
+    ).length;
+    const masked = leads.maskCnpj(input.value);
+    if (input.value !== masked) {
+      input.value = masked;
+      const pos = cursorAfterCnpjDigits(masked, digitsBefore);
+      try {
+        input.setSelectionRange(pos, pos);
+      } catch (_) {
+        /* some input modes reject a selection range */
+      }
+    }
+    const hidden = form?.querySelector("[data-cnpj-digits]");
+    if (hidden) hidden.value = leads.cnpjDigits(input.value);
+    if (typeof leads.clearCnpjError === "function") leads.clearCnpjError(form);
+  });
+});
+
 const applyFormContext = (form) => {
   if (!form) return;
 
@@ -123,11 +158,19 @@ const bindInvisiLead = (form, beforeSend) => {
 
     event.preventDefault();
     if (typeof beforeSend === "function") beforeSend();
+    if (typeof leads.ensureValidCnpj === "function" && !leads.ensureValidCnpj(form)) {
+      return;
+    }
     if (!leads.claimSubmit(form)) return;
 
     markFormSending(form);
     leads.submitLeadForm(form).then((result) => {
-      if (result && result.outcome === "duplicate") markFormIdle(form);
+      if (
+        result &&
+        (result.outcome === "duplicate" || result.outcome === "invalid-cnpj")
+      ) {
+        markFormIdle(form);
+      }
     });
   });
 };

@@ -35,8 +35,10 @@ O formulário de diagnóstico, o modal de contato e a pesquisa utilizam
 [Web3Forms](https://web3forms.com/) e encaminham as submissões para o canal
 responsável da Invisi.
 
+O diagnóstico pede o CNPJ da empresa, confere os dígitos na página e envia só os 14 números. Não pedimos CPF.
 Após um envio aceito pela API, o visitante é redirecionado para `https://invisi.com.br/obrigado.html`.
 Se o e-mail já tem cadastro, o formulário mostra o aviso na própria página e um link para o painel, sem reenviar pelo Web3Forms.
+Se a API recusar o CNPJ, o aviso fica no campo, sem reenviar pelo Web3Forms.
 Se a API falhar por outro motivo, o envio segue pelo Web3Forms.
 
 A pesquisa contém 10 perguntas e pode ser respondida sem identificadores
