@@ -35,7 +35,9 @@ O formulário de diagnóstico, o modal de contato e a pesquisa utilizam
 [Web3Forms](https://web3forms.com/) e encaminham as submissões para o canal
 responsável da Invisi.
 
-Após o envio, o visitante é redirecionado para `https://invisi.com.br/obrigado.html`.
+Após um envio aceito pela API, o visitante é redirecionado para `https://invisi.com.br/obrigado.html`.
+Se o e-mail já tem cadastro, o formulário mostra o aviso na própria página e um link para o painel, sem reenviar pelo Web3Forms.
+Se a API falhar por outro motivo, o envio segue pelo Web3Forms.
 
 A pesquisa contém 10 perguntas e pode ser respondida sem identificadores
 diretos. Nome e WhatsApp são opcionais e usados somente quando o participante

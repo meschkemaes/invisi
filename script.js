@@ -89,16 +89,34 @@ const markFormSending = (form) => {
   const status = form.querySelector(".form-status");
 
   if (button && buttonText) {
+    if (!buttonText.dataset.idleLabel) {
+      buttonText.dataset.idleLabel = buttonText.textContent;
+    }
     button.disabled = true;
     buttonText.textContent = "Enviando...";
   }
   if (status) status.textContent = "Aguarde a confirmação do envio.";
 };
 
+const markFormIdle = (form) => {
+  const button = form.querySelector(".submit-button");
+  const buttonText = button?.querySelector("span");
+  const status = form.querySelector(".form-status");
+
+  if (button) button.disabled = false;
+  if (buttonText) {
+    buttonText.textContent =
+      buttonText.dataset.idleLabel || buttonText.textContent;
+  }
+  if (status && status.textContent === "Aguarde a confirmação do envio.") {
+    status.textContent = "";
+  }
+};
+
 const bindInvisiLead = (form, beforeSend) => {
   form.addEventListener("submit", (event) => {
     const leads = window.InvisiLeads;
-    if (!leads) {
+    if (!leads || typeof leads.submitLeadForm !== "function") {
       markFormSending(form);
       return;
     }
@@ -108,14 +126,9 @@ const bindInvisiLead = (form, beforeSend) => {
     if (!leads.claimSubmit(form)) return;
 
     markFormSending(form);
-    leads
-      .deliverSiteLead(leads.buildSiteLead(form))
-      .then(() => {
-        window.location.assign(leads.THANKS_URL);
-      })
-      .catch(() => {
-        form.submit();
-      });
+    leads.submitLeadForm(form).then((result) => {
+      if (result && result.outcome === "duplicate") markFormIdle(form);
+    });
   });
 };
 

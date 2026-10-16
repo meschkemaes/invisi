@@ -1419,6 +1419,51 @@ a.result-item:focus-visible {
     font-size: 12px;
     text-align: center;
 }
+.form-status:empty {
+    display: none;
+}
+.lead-known {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+    margin: 0;
+    padding: 14px 14px 16px;
+    color: var(--ink);
+    background: var(--teal-100);
+    border: 1px solid rgba(30, 184, 166, 0.5);
+    border-radius: 12px;
+    outline: none;
+    scroll-margin: 96px;
+}
+.lead-known:focus {
+    outline: 3px solid #0b6f65;
+    outline-offset: 3px;
+}
+.lead-known-title {
+    margin: 0;
+    color: var(--navy-900);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+}
+.lead-known-text {
+    margin: 0;
+    color: var(--navy-800);
+    font-size: 14px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+.lead-known .button {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 4px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    line-height: 1.3;
+    white-space: normal;
+    text-align: center;
+}
 .honeypot {
     position: absolute !important;
     left: -9999px !important;
