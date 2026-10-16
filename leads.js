@@ -15,6 +15,10 @@
   const KNOWN_EMAIL_TITLE = "Esse e-mail já tem cadastro";
   const KNOWN_EMAIL_DETAIL = "Entre no painel pra ver seu diagnóstico.";
   const KNOWN_EMAIL_MENSAGEM = KNOWN_EMAIL_TITLE + ". " + KNOWN_EMAIL_DETAIL;
+  const CNPJ_INVALID_CODE = "CNPJ_INVALIDO";
+  const CNPJ_INVALID_MESSAGE = "Confira o CNPJ, parece ter um número errado.";
+  const CNPJ_WEIGHTS_FIRST = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+  const CNPJ_WEIGHTS_SECOND = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
   const sending = new WeakSet();
 
   const claimSubmit = (form) => {
@@ -54,13 +58,145 @@
     };
     const email = readText(form, "Email");
     const whatsapp = readText(form, "WhatsApp");
-    const cnpj =
-      readText(form, "CNPJ") || readText(form, "cnpj") || readText(form, "Cnpj");
+    const cnpj = cnpjDigits(
+      readText(form, "CNPJ") || readText(form, "cnpj") || readText(form, "Cnpj"),
+    );
 
     if (email) payload.email = email;
     if (whatsapp) payload.whatsapp = whatsapp;
     if (cnpj) payload.cnpj = cnpj;
     return payload;
+  };
+
+  const cnpjDigits = (value) =>
+    String(value == null ? "" : value)
+      .replace(/\D/g, "")
+      .slice(0, 14);
+
+  const maskCnpj = (value) => {
+    const digits = cnpjDigits(value);
+    let out = digits.slice(0, 2);
+    if (digits.length > 2) out += "." + digits.slice(2, 5);
+    if (digits.length > 5) out += "." + digits.slice(5, 8);
+    if (digits.length > 8) out += "/" + digits.slice(8, 12);
+    if (digits.length > 12) out += "-" + digits.slice(12, 14);
+    return out;
+  };
+
+  const cnpjCheckDigit = (digits, weights) => {
+    let sum = 0;
+    for (let index = 0; index < weights.length; index += 1) {
+      sum += Number(digits.charAt(index)) * weights[index];
+    }
+    const rest = sum % 11;
+    return rest < 2 ? 0 : 11 - rest;
+  };
+
+  const isValidCnpj = (value) => {
+    const digits = cnpjDigits(value);
+    if (digits.length !== 14) return false;
+    if (/^(\d)\1{13}$/.test(digits)) return false;
+    const first = cnpjCheckDigit(digits, CNPJ_WEIGHTS_FIRST);
+    const second = cnpjCheckDigit(digits, CNPJ_WEIGHTS_SECOND);
+    return (
+      digits.charAt(12) === String(first) && digits.charAt(13) === String(second)
+    );
+  };
+
+  const findCnpjInput = (form) => {
+    if (!form) return null;
+    if (typeof form.querySelector === "function") {
+      const marked = form.querySelector("[data-cnpj]");
+      if (marked) return marked;
+    }
+    return readControl(form, "CNPJ") || readControl(form, "cnpj");
+  };
+
+  const syncCnpjDigits = (form) => {
+    const visible = findCnpjInput(form);
+    const digits = cnpjDigits(visible && visible.value);
+    if (form && typeof form.querySelector === "function") {
+      const hidden = form.querySelector("[data-cnpj-digits]");
+      if (hidden && hidden !== visible) hidden.value = digits;
+    }
+    return digits;
+  };
+
+  const cnpjErrorMessage = (mensagem) =>
+    typeof mensagem === "string" && mensagem.trim()
+      ? mensagem.trim()
+      : CNPJ_INVALID_MESSAGE;
+
+  const showCnpjError = (form, mensagem) => {
+    const text = cnpjErrorMessage(mensagem);
+    const input = findCnpjInput(form);
+    const error =
+      form && typeof form.querySelector === "function"
+        ? form.querySelector("[data-cnpj-error]")
+        : null;
+
+    if (error) {
+      error.hidden = false;
+      if (typeof error.removeAttribute === "function") error.removeAttribute("hidden");
+      error.textContent = text;
+    }
+
+    if (input && typeof input.setAttribute === "function") {
+      input.setAttribute("aria-invalid", "true");
+      const errorId = error && (error.id || (input.id ? input.id + "-erro" : ""));
+      if (error && errorId && !error.id) error.id = errorId;
+      const described = String(
+        (typeof input.getAttribute === "function" &&
+          input.getAttribute("aria-describedby")) ||
+          "",
+      )
+        .split(/\s+/)
+        .filter(Boolean);
+      if (errorId && described.indexOf(errorId) === -1) described.push(errorId);
+      if (described.length) {
+        input.setAttribute("aria-describedby", described.join(" "));
+      }
+    }
+
+    if (input && typeof input.focus === "function") input.focus();
+    return input;
+  };
+
+  const clearCnpjError = (form) => {
+    const input = findCnpjInput(form);
+    const error =
+      form && typeof form.querySelector === "function"
+        ? form.querySelector("[data-cnpj-error]")
+        : null;
+    if (error) {
+      error.hidden = true;
+      error.textContent = "";
+      if (typeof error.setAttribute === "function") error.setAttribute("hidden", "");
+    }
+    if (input && typeof input.getAttribute === "function") {
+      if (typeof input.removeAttribute === "function") {
+        input.removeAttribute("aria-invalid");
+      }
+      const errorId = error && error.id;
+      if (errorId) {
+        const described = String(input.getAttribute("aria-describedby") || "")
+          .split(/\s+/)
+          .filter((id) => id && id !== errorId);
+        input.setAttribute("aria-describedby", described.join(" "));
+      }
+    }
+  };
+
+  const ensureValidCnpj = (form) => {
+    const input = findCnpjInput(form);
+    if (!input) return true;
+    const digits = syncCnpjDigits(form);
+    if (isValidCnpj(digits)) {
+      clearCnpjError(form);
+      return true;
+    }
+    showCnpjError(form, CNPJ_INVALID_MESSAGE);
+    return false;
   };
 
   const readJson = async (response) => {
@@ -147,9 +283,17 @@
     if (!response || response.ok !== true) {
       const error = new Error("Lead API respondeu sem sucesso");
       error.status = response ? response.status : 0;
-      if (error.status === 409) {
+      if (error.status === 400 || error.status === 409) {
         const body = await readJson(response);
-        if (leadErrorCode(body) === KNOWN_EMAIL_CODE) {
+        const code = leadErrorCode(body);
+        if (error.status === 400 && code === CNPJ_INVALID_CODE) {
+          error.code = CNPJ_INVALID_CODE;
+          error.campo =
+            body && typeof body.campo === "string" && body.campo
+              ? body.campo
+              : "cnpj";
+          error.mensagem = cnpjErrorMessage(body && body.mensagem);
+        } else if (error.status === 409 && code === KNOWN_EMAIL_CODE) {
           const copy = knownEmailCopy(body && body.mensagem);
           error.code = KNOWN_EMAIL_CODE;
           error.mensagem =
@@ -238,8 +382,22 @@
           };
 
     try {
+      syncCnpjDigits(form);
       await deliverSiteLead(buildSiteLead(form), opts);
     } catch (error) {
+      if (error && error.status === 400 && error.code === CNPJ_INVALID_CODE) {
+        releaseSubmit(form);
+        try {
+          showCnpjError(form, error.mensagem);
+        } catch (_) {
+          const status =
+            form && typeof form.querySelector === "function"
+              ? form.querySelector(".form-status")
+              : null;
+          if (status) status.textContent = error.mensagem || CNPJ_INVALID_MESSAGE;
+        }
+        return { outcome: "invalid-cnpj" };
+      }
       if (error && error.code === KNOWN_EMAIL_CODE && error.status === 409) {
         releaseSubmit(form);
         try {
@@ -267,8 +425,14 @@
     THANKS_URL,
     PAINEL_URL,
     KNOWN_EMAIL_MENSAGEM,
+    CNPJ_INVALID_MESSAGE,
     claimSubmit,
     buildSiteLead,
+    cnpjDigits,
+    maskCnpj,
+    isValidCnpj,
+    ensureValidCnpj,
+    clearCnpjError,
     deliverSiteLead,
     submitLeadForm,
   };

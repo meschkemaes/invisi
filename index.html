@@ -34,7 +34,7 @@
     <meta property="og:url" content="https://invisi.com.br/" />
     <link rel="canonical" href="https://invisi.com.br/" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=20261015-1" />
+    <link rel="stylesheet" href="styles.css?v=20261016-1" />
     <title>Invisi | Privacidade para quem empreende</title>
   </head>
   <body>
@@ -1101,6 +1101,35 @@
               aria-hidden="true"
             />
 
+            <div class="field">
+              <label for="cnpj">CNPJ da sua empresa</label>
+              <input
+                id="cnpj"
+                name="CNPJ"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="00.000.000/0000-00"
+                maxlength="18"
+                aria-describedby="cnpj-ajuda"
+                data-cnpj
+                required
+              />
+              <p class="field-hint" id="cnpj-ajuda">
+                Usamos pra buscar onde os dados da empresa e dos sócios
+                aparecem.
+              </p>
+              <p
+                class="field-error"
+                id="cnpj-erro"
+                data-cnpj-error
+                role="alert"
+                hidden
+              ></p>
+            </div>
+            <input type="hidden" name="cnpj" value="" data-cnpj-digits />
+
             <div class="form-row">
               <div class="field">
                 <label for="email">E-mail para contato</label>
@@ -1515,6 +1544,34 @@
           />
 
           <div class="field">
+            <label for="intent-cnpj">CNPJ da sua empresa</label>
+            <input
+              id="intent-cnpj"
+              name="CNPJ"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="00.000.000/0000-00"
+              maxlength="18"
+              aria-describedby="intent-cnpj-ajuda"
+              data-cnpj
+              required
+            />
+            <p class="field-hint" id="intent-cnpj-ajuda">
+              Usamos pra buscar onde os dados da empresa e dos sócios aparecem.
+            </p>
+            <p
+              class="field-error"
+              id="intent-cnpj-erro"
+              data-cnpj-error
+              role="alert"
+              hidden
+            ></p>
+          </div>
+          <input type="hidden" name="cnpj" value="" data-cnpj-digits />
+
+          <div class="field">
             <label for="intent-email">E-mail</label>
             <input
               id="intent-email"
@@ -1579,8 +1636,8 @@
       </div>
     </dialog>
 
-    <script src="leads.js?v=20261015-3" defer></script>
-    <script src="script.js?v=20261015-3" defer></script>
+    <script src="leads.js?v=20261016-1" defer></script>
+    <script src="script.js?v=20261016-1" defer></script>
     <script src="espelho.js?v=20261015-4" defer></script>
   </body>
 </html>

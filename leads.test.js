@@ -9,11 +9,23 @@ const {
   THANKS_URL,
   PAINEL_URL,
   KNOWN_EMAIL_MENSAGEM,
+  CNPJ_INVALID_MESSAGE,
+  cnpjDigits,
+  maskCnpj,
+  isValidCnpj,
+  ensureValidCnpj,
   buildSiteLead,
   deliverSiteLead,
   claimSubmit,
   submitLeadForm,
 } = require("./leads.js");
+
+const CNPJ_INVALID_BODY = {
+  erro: "CNPJ_INVALIDO",
+  code: "CNPJ_INVALIDO",
+  campo: "cnpj",
+  mensagem: "O CNPJ informado não confere.",
+};
 
 const DUPLICATE_BODY = {
   erro: "EMAIL_JA_CADASTRADO",
@@ -37,6 +49,9 @@ const domNode = (tag) => {
     setAttribute(name, value) {
       this.attributes[name] = String(value);
       if (name === "id") this.id = String(value);
+    },
+    removeAttribute(name) {
+      delete this.attributes[name];
     },
     getAttribute(name) {
       return Object.prototype.hasOwnProperty.call(this.attributes, name)
@@ -133,6 +148,45 @@ const instrumentedForm = (fields) => {
   status.className = "form-status";
   status.textContent = "";
   form.append(status);
+
+  if (elements.CNPJ) {
+    const input = elements.CNPJ;
+    input.id = "cnpj";
+    input.attributes = {};
+    input.children = [];
+    input.focused = false;
+    input.setAttribute = function setAttribute(name, value) {
+      this.attributes[name] = String(value);
+    };
+    input.getAttribute = function getAttribute(name) {
+      return Object.prototype.hasOwnProperty.call(this.attributes, name)
+        ? this.attributes[name]
+        : null;
+    };
+    input.removeAttribute = function removeAttribute(name) {
+      delete this.attributes[name];
+    };
+    input.focus = function focus() {
+      this.focused = true;
+    };
+    input.setAttribute("data-cnpj", "");
+    input.setAttribute("aria-describedby", "cnpj-ajuda");
+    form.append(input);
+
+    const error = domNode("p");
+    error.id = "cnpj-erro";
+    error.className = "field-error";
+    error.hidden = true;
+    error.setAttribute("data-cnpj-error", "");
+    error.setAttribute("hidden", "");
+    form.append(error);
+
+    const hidden = domNode("input");
+    hidden.value = "";
+    hidden.setAttribute("data-cnpj-digits", "");
+    form.append(hidden);
+  }
+
   return form;
 };
 
@@ -232,7 +286,52 @@ test("includes cnpj only when a CNPJ field has a value", () => {
     }),
   );
 
-  assert.equal(payload.cnpj, "04.252.011/0001-10");
+  assert.equal(payload.cnpj, "04252011000110");
+});
+
+test("accepts a valid CNPJ and rejects a bad check digit or repeated digits", () => {
+  assert.equal(isValidCnpj("04.252.011/0001-10"), true);
+  assert.equal(isValidCnpj("04252011000110"), true);
+  assert.equal(isValidCnpj("04252011000111"), false);
+  assert.equal(isValidCnpj("11111111111111"), false);
+  assert.equal(isValidCnpj("00.000.000/0000-00"), false);
+  assert.equal(cnpjDigits("04.252.011/0001-10"), "04252011000110");
+});
+
+test("masks CNPJ digits as the user types or pastes", () => {
+  assert.equal(maskCnpj("04252011000110"), "04.252.011/0001-10");
+  assert.equal(maskCnpj("04.252.011/0001-10"), "04.252.011/0001-10");
+  assert.equal(maskCnpj("04252"), "04.252");
+  assert.equal(maskCnpj("04.252.011/0001-10999"), "04.252.011/0001-10");
+  assert.equal(maskCnpj(""), "");
+});
+
+test("blocks submit when the CNPJ check digits are wrong", () => {
+  const form = instrumentedForm({
+    Nome: "Ana Souza",
+    Email: "ana@empresa.com.br",
+    CNPJ: "00.000.000/0000-00",
+    Consentimento: { checked: true },
+    hp: "",
+  });
+
+  assert.equal(ensureValidCnpj(form), false);
+  const input = form.querySelector("[data-cnpj]");
+  const error = form.querySelector("[data-cnpj-error]");
+  assert.equal(input.getAttribute("aria-invalid"), "true");
+  assert.match(input.getAttribute("aria-describedby"), /cnpj-erro/);
+  assert.equal(input.focused, true);
+  assert.equal(error.hidden, false);
+  assert.equal(error.textContent, CNPJ_INVALID_MESSAGE);
+  assert.equal(ensureValidCnpj(
+    instrumentedForm({
+      Nome: "Ana Souza",
+      Email: "ana@empresa.com.br",
+      CNPJ: "04.252.011/0001-10",
+      Consentimento: { checked: true },
+      hp: "",
+    }),
+  ), true);
 });
 
 test("sends consentimento false when the checkbox is unchecked", () => {
@@ -355,6 +454,88 @@ test("rejects when the request exceeds the timeout", async () => {
   );
   assert.equal(SITE_LEAD_TIMEOUT_MS, 8000);
   assert.equal(THANKS_URL, "https://invisi.com.br/obrigado.html");
+});
+
+test("400 CNPJ_INVALIDO shows the field error and skips redirect and Web3Forms", async () => {
+  const form = instrumentedForm({
+    Nome: "Ana Souza",
+    Email: "ana@empresa.com.br",
+    CNPJ: "04.252.011/0001-10",
+    Consentimento: { checked: true },
+    hp: "",
+  });
+
+  const { result, assigns, calls } = await runSubmit(form, async () => ({
+    ok: false,
+    status: 400,
+    json: async () => CNPJ_INVALID_BODY,
+  }));
+
+  assert.equal(result.outcome, "invalid-cnpj");
+  assert.deepEqual(assigns, []);
+  assert.equal(form.nativeSubmits, 0);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].url, SITE_LEAD_URL);
+  assert.equal(JSON.parse(calls[0].init.body).cnpj, "04252011000110");
+  assert.equal(form.querySelector("[data-lead-known]"), null);
+
+  const input = form.querySelector("[data-cnpj]");
+  const error = form.querySelector("[data-cnpj-error]");
+  assert.equal(input.getAttribute("aria-invalid"), "true");
+  assert.match(input.getAttribute("aria-describedby"), /cnpj-erro/);
+  assert.equal(input.focused, true);
+  assert.equal(error.hidden, false);
+  assert.equal(error.textContent, CNPJ_INVALID_BODY.mensagem);
+  assert.equal(form.querySelector("[data-cnpj-digits]").value, "04252011000110");
+});
+
+test("400 CNPJ_INVALIDO without mensagem uses the default field text", async () => {
+  const form = instrumentedForm({
+    Nome: "Ana Souza",
+    Email: "ana@empresa.com.br",
+    CNPJ: "04.252.011/0001-11",
+    Consentimento: { checked: true },
+    hp: "",
+  });
+
+  const { result, assigns } = await runSubmit(form, async () => ({
+    ok: false,
+    status: 400,
+    json: async () => ({
+      erro: "CNPJ_INVALIDO",
+      code: "CNPJ_INVALIDO",
+      campo: "cnpj",
+    }),
+  }));
+
+  assert.equal(result.outcome, "invalid-cnpj");
+  assert.deepEqual(assigns, []);
+  assert.equal(form.nativeSubmits, 0);
+  assert.equal(
+    form.querySelector("[data-cnpj-error]").textContent,
+    CNPJ_INVALID_MESSAGE,
+  );
+});
+
+test("400 with another code still falls back to Web3Forms", async () => {
+  const form = instrumentedForm({
+    Nome: "Ana Souza",
+    Email: "ana@empresa.com.br",
+    CNPJ: "04.252.011/0001-10",
+    Consentimento: { checked: true },
+    hp: "",
+  });
+
+  const { result, assigns } = await runSubmit(form, async () => ({
+    ok: false,
+    status: 400,
+    json: async () => ({ code: "OUTRO", campo: "cnpj" }),
+  }));
+
+  assert.equal(result.outcome, "fallback");
+  assert.deepEqual(assigns, []);
+  assert.equal(form.nativeSubmits, 1);
+  assert.equal(form.querySelector("[data-cnpj-digits]").value, "04252011000110");
 });
 
 test("409 EMAIL_JA_CADASTRADO shows the message and skips redirect and Web3Forms", async () => {
@@ -553,8 +734,10 @@ test("live landing forms keep the Web3Forms action and an invisible hp field", (
   const script = fs.readFileSync(path.join(__dirname, "script.js"), "utf8");
   const leadsSource = fs.readFileSync(path.join(__dirname, "leads.js"), "utf8");
   assert.match(script, /submitLeadForm/);
+  assert.match(script, /ensureValidCnpj/);
   assert.match(script, /preventDefault/);
   assert.match(script, /outcome === "duplicate"/);
+  assert.match(script, /invalid-cnpj/);
   assert.doesNotMatch(script, /form\.submit\(\)/);
   assert.match(leadsSource, /deliverSiteLead/);
   assert.match(leadsSource, /form\.submit\(\)/);
@@ -562,10 +745,27 @@ test("live landing forms keep the Web3Forms action and an invisible hp field", (
   assert.equal((html.match(/Quero meu diagnóstico grátis/g) || []).length, 4);
   assert.match(script, /data-open-modal/);
   assert.doesNotMatch(script, /avalia\[cç\]/);
-  assert.match(html, /leads\.js\?v=20261015-3/);
-  assert.match(html, /script\.js\?v=20261015-3/);
-  assert.match(html, /styles\.css\?v=20261015-1/);
+  assert.match(html, /leads\.js\?v=20261016-1/);
+  assert.match(html, /script\.js\?v=20261016-1/);
+  assert.match(html, /styles\.css\?v=20261016-1/);
   assert.match(html, /espelho\.js\?v=20261015-4/);
+
+  for (const form of leadForms) {
+    const cnpjInput = form.match(/<input\b[^>]*data-cnpj\b[^>]*>/);
+    assert.ok(cnpjInput);
+    assert.match(cnpjInput[0], /inputmode="numeric"/);
+    assert.match(cnpjInput[0], /required/);
+    assert.match(cnpjInput[0], /name="CNPJ"/);
+    assert.match(form, /CNPJ da sua empresa/);
+    assert.match(
+      form,
+      /Usamos pra buscar onde os dados da empresa e dos sócios\s+aparecem\./,
+    );
+    assert.match(form, /data-cnpj-error/);
+    assert.match(form, /data-cnpj-digits/);
+    assert.match(form, /name="cnpj"/);
+    assert.doesNotMatch(form, /CPF/);
+  }
 
   const pesquisa = fs.readFileSync(
     path.join(__dirname, "pesquisa.html"),
