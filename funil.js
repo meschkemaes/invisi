@@ -82,10 +82,40 @@
     value === "rede" ||
     /^http_[1-5]\d\d$/.test(value);
 
+  const metaOf = (options) => {
+    if (options && options.meta) return options.meta;
+    try {
+      if (typeof globalThis.InvisiMeta === "object" && globalThis.InvisiMeta) {
+        return globalThis.InvisiMeta;
+      }
+    } catch (e) {}
+    return null;
+  };
+
+  const notifyMeta = (step, erro, options) => {
+    try {
+      const meta = metaOf(options);
+      if (!meta) return;
+      const storage = options && options.storage;
+      const fbq = options && options.fbq;
+      if (
+        step === "previa_resultado" &&
+        (erro == null || erro === "sem_resultado") &&
+        typeof meta.viewContent === "function"
+      ) {
+        meta.viewContent(storage, fbq);
+      }
+      if (step === "envio_ok" && typeof meta.leadFromEnvio === "function") {
+        meta.leadFromEnvio(storage, fbq);
+      }
+    } catch (e) {}
+  };
+
   const passo = (step, erro, deps) => {
     try {
       if (!STEPS.has(step)) return;
       const options = deps || {};
+      notifyMeta(step, erro, options);
       const body = {
         visita: visitaId(options.storage, options.cryptoObj),
         passo: step,
