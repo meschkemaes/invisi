@@ -261,7 +261,7 @@ test("landing wires the anonymous funnel without putting personal data in the ca
   const leads = fs.readFileSync(path.join(__dirname, "leads.js"), "utf8");
   const script = fs.readFileSync(path.join(__dirname, "script.js"), "utf8");
 
-  assert.match(html, /funil\.js\?v=20261110-1/);
+  assert.match(html, /funil\.js\?v=20261110-2/);
   assert.match(source, /sendBeacon/);
   assert.match(source, /text\/plain/);
   assert.match(source, /keepalive:\s*true/);

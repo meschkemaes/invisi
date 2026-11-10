@@ -37,6 +37,24 @@ resultado, clique no cadastro e envio aceito ou recusado. O identificador é um
 UUID aleatório guardado no `sessionStorage` do navegador. O corpo não leva
 nome, CNPJ, e-mail, telefone nem o texto da busca.
 
+## Meta Pixel
+
+O pixel mede visitas e conversões sem parâmetros e sem dados pessoais
+(nada de nome, CPF, CNPJ, e-mail, telefone ou texto da busca). O snippet
+desliga a configuração automática (`autoConfig`) antes do `init`, para o
+navegador não ler os campos da página nem enviar correspondência avançada:
+
+- `PageView` em cada página pública.
+- `ViewContent` uma vez por visita quando a prévia termina. A busca com zero
+  resultados também conta: a consulta respondeu e a página mostrou o recorte.
+  Se a consulta falha, o evento não dispara.
+- `Lead` quando `POST /leads/site` responde com sucesso, antes do
+  redirecionamento. `obrigado.html` dispara `Lead` no carregamento só se essa
+  visita ainda não disparou (é o caso do envio que cai no Web3Forms) e apaga
+  essa marca da sessão.
+- As páginas públicas não têm link de contratação, pagamento ou checkout, então
+  `InitiateCheckout` não é usado.
+
 ## Formulários
 
 O formulário de diagnóstico, o modal de contato e a pesquisa utilizam
@@ -55,7 +73,7 @@ solicita contato e aceita a autorização correspondente.
 
 ## Arquivos públicos
 
-- `index.html`, `styles.css`, `script.js` e `espelho.js`: lp e prévia de exposição;
+- `index.html`, `styles.css`, `script.js`, `espelho.js`, `funil.js` e `meta.js`: lp, prévia, funil anônimo e eventos do pixel;
 - `pesquisa.html`, `pesquisa.css` e `pesquisa.js`: pesquisa de mercado;
 - `obrigado.html` e `pesquisa-obrigado.html`: páginas de confirmação;
 - `privacidade.html`: informações sobre tratamento de dados;

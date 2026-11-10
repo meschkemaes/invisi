@@ -25,9 +25,15 @@
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('set', 'autoConfig', false, '1470624634449778');
             fbq('init', '1470624634449778');
             fbq('track', 'PageView');
-            fbq('track', 'Lead');
+        </script>
+        <script src="meta.js?v=20261110-2"></script>
+        <script>
+            try {
+                if (window.InvisiMeta) window.InvisiMeta.leadOnThanks();
+            } catch (e) {}
         </script>
         <!-- End Meta Pixel Code -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
