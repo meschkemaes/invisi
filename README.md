@@ -29,6 +29,14 @@ o navegador consulta cadastros públicos de sócio e CNPJ e a página mostra um
 recorte mascarado do que veio. Se a busca não achar, a prévia diz que não achou.
 O diagnóstico completo continua no formulário de contato.
 
+## Funil anônimo
+
+A landing (`funil.js`) registra passos da visita em
+`POST https://api.invisi.com.br/funil`: página, prévia visível, prévia pedida,
+resultado, clique no cadastro e envio aceito ou recusado. O identificador é um
+UUID aleatório guardado no `sessionStorage` do navegador. O corpo não leva
+nome, CNPJ, e-mail, telefone nem o texto da busca.
+
 ## Formulários
 
 O formulário de diagnóstico, o modal de contato e a pesquisa utilizam

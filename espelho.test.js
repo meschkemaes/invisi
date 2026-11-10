@@ -232,7 +232,7 @@ test("the page keeps a friendly retry when every name source fails", () => {
     source,
     /a consulta pública não respondeu\. Sem chute: a Invisi não inventa telefone, e-mail ou endereço\./,
   );
-  assert.match(html, /espelho\.js\?v=20261015-4/);
+  assert.match(html, /espelho\.js\?v=20261110-1/);
   assert.doesNotMatch(source, /Authorization/);
   assert.doesNotMatch(source, /Bearer /);
 });
