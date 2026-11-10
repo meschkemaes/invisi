@@ -72,7 +72,7 @@ document.querySelectorAll("[data-cnpj]").forEach((input) => {
     const digitsBefore = leads.cnpjDigits(
       String(input.value).slice(0, caret == null ? input.value.length : caret),
     ).length;
-    const masked = leads.maskCnpj(input.value);
+    const masked = leads.maskDocument(input.value);
     if (input.value !== masked) {
       input.value = masked;
       const pos = cursorAfterCnpjDigits(masked, digitsBefore);

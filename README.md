@@ -35,7 +35,7 @@ A landing (`funil.js`) registra passos da visita em
 `POST https://api.invisi.com.br/funil`: página, prévia visível, prévia pedida,
 resultado, clique no cadastro e envio aceito ou recusado. O identificador é um
 UUID aleatório guardado no `sessionStorage` do navegador. O corpo não leva
-nome, CNPJ, e-mail, telefone nem o texto da busca.
+nome, CPF, CNPJ, e-mail, telefone nem o texto da busca.
 
 ## Meta Pixel
 
@@ -61,10 +61,10 @@ O formulário de diagnóstico, o modal de contato e a pesquisa utilizam
 [Web3Forms](https://web3forms.com/) e encaminham as submissões para o canal
 responsável da Invisi.
 
-O diagnóstico pede o CNPJ da empresa, confere os dígitos na página e envia só os 14 números. Não pedimos CPF.
+O diagnóstico pede e-mail. No modal, telefone/WhatsApp também é obrigatório; no formulário longo, o WhatsApp segue opcional. CPF ou CNPJ é um único campo opcional: vazio, o documento não entra no JSON; 11 dígitos válidos vão em `cpf` e 14 em `cnpj`, somente números. A página confere o dígito verificador só quando o campo vem preenchido.
 Após um envio aceito pela API, o visitante é redirecionado para `https://invisi.com.br/obrigado.html`.
 Se o e-mail já tem cadastro, o formulário mostra o aviso na própria página e um link para o painel, sem reenviar pelo Web3Forms.
-Se a API recusar o CNPJ, o aviso fica no campo, sem reenviar pelo Web3Forms.
+Se a API recusar o documento (`CNPJ_INVALIDO`), o aviso fica no campo e fala de CPF ou CNPJ, sem reenviar pelo Web3Forms.
 Se a API falhar por outro motivo, o envio segue pelo Web3Forms.
 
 A pesquisa contém 10 perguntas e pode ser respondida sem identificadores

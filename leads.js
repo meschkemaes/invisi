@@ -16,7 +16,8 @@
   const KNOWN_EMAIL_DETAIL = "Entre no painel pra ver seu diagnóstico.";
   const KNOWN_EMAIL_MENSAGEM = KNOWN_EMAIL_TITLE + ". " + KNOWN_EMAIL_DETAIL;
   const CNPJ_INVALID_CODE = "CNPJ_INVALIDO";
-  const CNPJ_INVALID_MESSAGE = "Confira o CNPJ, parece ter um número errado.";
+  const CNPJ_INVALID_MESSAGE =
+    "Confira o CPF ou CNPJ, parece ter um número errado.";
   const CNPJ_WEIGHTS_FIRST = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
   const CNPJ_WEIGHTS_SECOND = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
   const sending = new WeakSet();
@@ -77,14 +78,23 @@
     };
     const email = readText(form, "Email");
     const whatsapp = readText(form, "WhatsApp");
-    const cnpj = cnpjDigits(
-      readText(form, "CNPJ") || readText(form, "cnpj") || readText(form, "Cnpj"),
+    const document = cnpjDigits(
+      readText(form, "CPF ou CNPJ") ||
+        readText(form, "CNPJ") ||
+        readText(form, "cnpj") ||
+        readText(form, "Cnpj"),
     );
 
     if (email) payload.email = email;
     if (whatsapp) payload.whatsapp = whatsapp;
-    if (cnpj) payload.cnpj = cnpj;
+    assignLeadDocument(payload, document);
     return payload;
+  };
+
+  // Backend key for the optional document. Change this function when the API contract settles.
+  const assignLeadDocument = (payload, digits) => {
+    if (digits.length === 11) payload.cpf = digits;
+    else if (digits.length === 14) payload.cnpj = digits;
   };
 
   const cnpjDigits = (value) =>
@@ -92,8 +102,15 @@
       .replace(/\D/g, "")
       .slice(0, 14);
 
-  const maskCnpj = (value) => {
+  const maskDocument = (value) => {
     const digits = cnpjDigits(value);
+    if (digits.length <= 11) {
+      let out = digits.slice(0, 3);
+      if (digits.length > 3) out += "." + digits.slice(3, 6);
+      if (digits.length > 6) out += "." + digits.slice(6, 9);
+      if (digits.length > 9) out += "-" + digits.slice(9, 11);
+      return out;
+    }
     let out = digits.slice(0, 2);
     if (digits.length > 2) out += "." + digits.slice(2, 5);
     if (digits.length > 5) out += "." + digits.slice(5, 8);
@@ -101,6 +118,8 @@
     if (digits.length > 12) out += "-" + digits.slice(12, 14);
     return out;
   };
+
+  const maskCnpj = maskDocument;
 
   const cnpjCheckDigit = (digits, weights) => {
     let sum = 0;
@@ -119,6 +138,26 @@
     const second = cnpjCheckDigit(digits, CNPJ_WEIGHTS_SECOND);
     return (
       digits.charAt(12) === String(first) && digits.charAt(13) === String(second)
+    );
+  };
+
+  const cpfCheckDigit = (digits, length) => {
+    let sum = 0;
+    for (let index = 0; index < length; index += 1) {
+      sum += Number(digits.charAt(index)) * (length + 1 - index);
+    }
+    const rest = sum % 11;
+    return rest < 2 ? 0 : 11 - rest;
+  };
+
+  const isValidCpf = (value) => {
+    const digits = cnpjDigits(value);
+    if (digits.length !== 11) return false;
+    if (/^(\d)\1{10}$/.test(digits)) return false;
+    const first = cpfCheckDigit(digits, 9);
+    const second = cpfCheckDigit(digits, 10);
+    return (
+      digits.charAt(9) === String(first) && digits.charAt(10) === String(second)
     );
   };
 
@@ -210,7 +249,7 @@
     const input = findCnpjInput(form);
     if (!input) return true;
     const digits = syncCnpjDigits(form);
-    if (isValidCnpj(digits)) {
+    if (!digits || isValidCpf(digits) || isValidCnpj(digits)) {
       clearCnpjError(form);
       return true;
     }
@@ -451,8 +490,11 @@
     buildSiteLead,
     cnpjDigits,
     maskCnpj,
+    maskDocument,
     isValidCnpj,
+    isValidCpf,
     ensureValidCnpj,
+    assignLeadDocument,
     clearCnpjError,
     deliverSiteLead,
     submitLeadForm,
