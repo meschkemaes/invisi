@@ -21,6 +21,25 @@
   const CNPJ_WEIGHTS_SECOND = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
   const sending = new WeakSet();
 
+  const funilPasso = (step, erro) => {
+    try {
+      const api = globalThis.InvisiFunil;
+      if (api && typeof api.passo === "function") api.passo(step, erro);
+    } catch (_) {
+      /* a medição não pode interromper o envio */
+    }
+  };
+
+  const funilEnvioErro = (error) => {
+    let code = "rede";
+    const status = error && typeof error.status === "number" ? error.status : 0;
+    if (status === 409) code = "http_409";
+    else if (status === 400 && error && error.code === CNPJ_INVALID_CODE) {
+      code = "http_400_cnpj";
+    } else if (status) code = "http_" + status;
+    funilPasso("envio_erro", code);
+  };
+
   const claimSubmit = (form) => {
     if (!form || sending.has(form)) return false;
     sending.add(form);
@@ -384,7 +403,9 @@
     try {
       syncCnpjDigits(form);
       await deliverSiteLead(buildSiteLead(form), opts);
+      funilPasso("envio_ok");
     } catch (error) {
+      funilEnvioErro(error);
       if (error && error.status === 400 && error.code === CNPJ_INVALID_CODE) {
         releaseSubmit(form);
         try {

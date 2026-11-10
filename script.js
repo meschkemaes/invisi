@@ -273,6 +273,13 @@ if (intentDialog && intentForm) {
     const trigger = event.target.closest("a, button");
     if (!isIntentCta(trigger)) return;
     event.preventDefault();
+    try {
+      if (window.InvisiFunil && typeof window.InvisiFunil.passo === "function") {
+        window.InvisiFunil.passo("cadastro_clique");
+      }
+    } catch (_) {
+      /* a medição não pode impedir o modal */
+    }
     openIntent(trigger);
   });
 

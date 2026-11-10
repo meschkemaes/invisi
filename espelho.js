@@ -11,6 +11,15 @@
   const API_TIMEOUT_MS = 6000;
   const SEARCH_URL = "https://empresas.credithub.com.br/api/buscar";
 
+  const funilPasso = (step, erro) => {
+    try {
+      const api = globalThis.InvisiFunil;
+      if (api && typeof api.passo === "function") api.passo(step, erro);
+    } catch (_) {
+      /* a medição não pode interromper a prévia */
+    }
+  };
+
   const parseInvisiOffice = (data) => {
     if (!data || typeof data !== "object") {
       throw new Error("malformed-office");
@@ -683,6 +692,7 @@
         );
         setProgress(1);
         revealConclusion(name, null, "error");
+        funilPasso("previa_resultado", "falha");
         form.dataset.busy = "false";
         nameInput.disabled = false;
         if (submitLabel) submitLabel.textContent = "Tentar de novo";
@@ -746,6 +756,7 @@
           "report",
         );
         revealConclusion(name, null);
+        funilPasso("previa_resultado", "sem_resultado");
         form.dataset.busy = "false";
         nameInput.disabled = false;
         if (submitLabel) submitLabel.textContent = "Ver de novo";
@@ -787,6 +798,7 @@
       if (label) label.textContent = "Relatório de exposição";
       renderRows(report.rows, "report");
       revealConclusion(name, report);
+      funilPasso("previa_resultado");
       form.dataset.busy = "false";
       nameInput.disabled = false;
       if (submitLabel) submitLabel.textContent = "Ver de novo";
@@ -810,6 +822,7 @@
         return;
       }
       nameInput.value = name;
+      funilPasso("previa_pedida");
       runScan(name);
     });
 
