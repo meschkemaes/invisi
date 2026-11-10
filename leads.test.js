@@ -12,8 +12,11 @@ const {
   CNPJ_INVALID_MESSAGE,
   cnpjDigits,
   maskCnpj,
+  maskDocument,
   isValidCnpj,
+  isValidCpf,
   ensureValidCnpj,
+  assignLeadDocument,
   buildSiteLead,
   deliverSiteLead,
   claimSubmit,
@@ -287,6 +290,45 @@ test("includes cnpj only when a CNPJ field has a value", () => {
   );
 
   assert.equal(payload.cnpj, "04252011000110");
+  assert.equal("cpf" in payload, false);
+});
+
+test("maps 11 digits to cpf, 14 digits to cnpj, and omits the document when empty", () => {
+  assert.equal(typeof assignLeadDocument, "function");
+
+  const base = {
+    Nome: "Ana Souza",
+    Email: "ana@empresa.com.br",
+    Consentimento: { checked: true },
+    hp: "",
+  };
+  const cpfPayload = buildSiteLead(
+    fakeForm({ ...base, "CPF ou CNPJ": "529.982.247-25" }),
+  );
+  assert.equal(cpfPayload.cpf, "52998224725");
+  assert.equal("cnpj" in cpfPayload, false);
+
+  const cnpjPayload = buildSiteLead(
+    fakeForm({ ...base, "CPF ou CNPJ": "04.252.011/0001-10" }),
+  );
+  assert.equal(cnpjPayload.cnpj, "04252011000110");
+  assert.equal("cpf" in cnpjPayload, false);
+
+  const emptyPayload = buildSiteLead(
+    fakeForm({ ...base, "CPF ou CNPJ": "   " }),
+  );
+  assert.equal("cpf" in emptyPayload, false);
+  assert.equal("cnpj" in emptyPayload, false);
+
+  const partial = {};
+  assignLeadDocument(partial, "123456789012");
+  assert.deepEqual(partial, {});
+  assignLeadDocument(partial, "");
+  assert.deepEqual(partial, {});
+  assignLeadDocument(partial, "52998224725");
+  assert.deepEqual(partial, { cpf: "52998224725" });
+  assignLeadDocument(partial, "04252011000110");
+  assert.equal(partial.cnpj, "04252011000110");
 });
 
 test("accepts a valid CNPJ and rejects a bad check digit or repeated digits", () => {
@@ -298,12 +340,58 @@ test("accepts a valid CNPJ and rejects a bad check digit or repeated digits", ()
   assert.equal(cnpjDigits("04.252.011/0001-10"), "04252011000110");
 });
 
-test("masks CNPJ digits as the user types or pastes", () => {
+test("accepts a valid CPF and rejects a bad check digit, repeated digits, or other lengths", () => {
+  assert.equal(typeof isValidCpf, "function");
+  assert.equal(isValidCpf("529.982.247-25"), true);
+  assert.equal(isValidCpf("52998224725"), true);
+  assert.equal(isValidCpf("529.982.247-24"), false);
+  assert.equal(isValidCpf("111.111.111-11"), false);
+  assert.equal(isValidCpf("00000000000"), false);
+  assert.equal(isValidCpf("5299822472"), false);
+  assert.equal(isValidCpf("529982247251"), false);
+  assert.equal(isValidCpf(""), false);
+});
+
+test("masks CPF through 11 digits and CNPJ after that", () => {
+  assert.equal(typeof maskDocument, "function");
+  assert.equal(maskDocument("52998224725"), "529.982.247-25");
+  assert.equal(maskDocument("529.982.247-25"), "529.982.247-25");
+  assert.equal(maskDocument("529982"), "529.982");
+  assert.equal(maskDocument("529982247251"), "52.998.224/7251");
+  assert.equal(maskDocument("04252011000110"), "04.252.011/0001-10");
+  assert.equal(maskDocument("04.252.011/0001-10"), "04.252.011/0001-10");
+  assert.equal(maskDocument("04.252.011/0001-10999"), "04.252.011/0001-10");
+  assert.equal(maskDocument(""), "");
   assert.equal(maskCnpj("04252011000110"), "04.252.011/0001-10");
-  assert.equal(maskCnpj("04.252.011/0001-10"), "04.252.011/0001-10");
-  assert.equal(maskCnpj("04252"), "04.252");
-  assert.equal(maskCnpj("04.252.011/0001-10999"), "04.252.011/0001-10");
-  assert.equal(maskCnpj(""), "");
+});
+
+test("allows an empty document and blocks an invalid CPF or a partial number", () => {
+  const fields = {
+    Nome: "Ana Souza",
+    Email: "ana@empresa.com.br",
+    Consentimento: { checked: true },
+    hp: "",
+  };
+  const blank = instrumentedForm({ ...fields, CNPJ: "   " });
+  assert.equal(ensureValidCnpj(blank), true);
+  assert.equal(blank.querySelector("[data-cnpj]").getAttribute("aria-invalid"), null);
+  assert.equal(blank.querySelector("[data-cnpj-error]").hidden, true);
+
+  const badCpf = instrumentedForm({ ...fields, CNPJ: "529.982.247-24" });
+  assert.equal(ensureValidCnpj(badCpf), false);
+  assert.equal(
+    badCpf.querySelector("[data-cnpj-error]").textContent,
+    CNPJ_INVALID_MESSAGE,
+  );
+  assert.match(CNPJ_INVALID_MESSAGE, /CPF/);
+  assert.match(CNPJ_INVALID_MESSAGE, /CNPJ/);
+
+  const partial = instrumentedForm({ ...fields, CNPJ: "529.982.247-251" });
+  assert.equal(ensureValidCnpj(partial), false);
+
+  const goodCpf = instrumentedForm({ ...fields, CNPJ: "529.982.247-25" });
+  assert.equal(ensureValidCnpj(goodCpf), true);
+  assert.equal(goodCpf.querySelector("[data-cnpj-digits]").value, "52998224725");
 });
 
 test("blocks submit when the CNPJ check digits are wrong", () => {
@@ -746,27 +834,33 @@ test("live landing forms keep the Web3Forms action and an invisible hp field", (
   assert.match(script, /data-open-modal/);
   assert.doesNotMatch(script, /avalia\[cç\]/);
   assert.match(html, /funil\.js\?v=20261110-2/);
-  assert.match(html, /leads\.js\?v=20261110-1/);
-  assert.match(html, /script\.js\?v=20261110-1/);
+  assert.match(html, /leads\.js\?v=20261110-3/);
+  assert.match(html, /script\.js\?v=20261110-3/);
   assert.match(html, /styles\.css\?v=20261016-1/);
   assert.match(html, /espelho\.js\?v=20261110-1/);
 
   for (const form of leadForms) {
-    const cnpjInput = form.match(/<input\b[^>]*data-cnpj\b[^>]*>/);
-    assert.ok(cnpjInput);
-    assert.match(cnpjInput[0], /inputmode="numeric"/);
-    assert.match(cnpjInput[0], /required/);
-    assert.match(cnpjInput[0], /name="CNPJ"/);
-    assert.match(form, /CNPJ da sua empresa/);
-    assert.match(
-      form,
-      /Usamos pra buscar onde os dados da empresa e dos sócios\s+aparecem\./,
-    );
+    const docInput = form.match(/<input\b[^>]*data-cnpj\b[^>]*>/);
+    assert.ok(docInput);
+    assert.match(docInput[0], /inputmode="numeric"/);
+    assert.doesNotMatch(docInput[0], /\srequired(?:\s|>|\/)/);
+    assert.match(docInput[0], /name="CPF ou CNPJ"/);
+    assert.match(form, /CPF ou CNPJ\s*<span>\(opcional\)<\/span>/);
+    assert.match(form, /busca fica mais precisa/);
     assert.match(form, /data-cnpj-error/);
     assert.match(form, /data-cnpj-digits/);
-    assert.match(form, /name="cnpj"/);
-    assert.doesNotMatch(form, /CPF/);
+    assert.match(form, /name="documento"/);
+    assert.doesNotMatch(form, /name="cnpj"/);
+    assert.doesNotMatch(form, /CNPJ da sua empresa/);
+    const email = form.match(/<input\b[^>]*name="Email"[^>]*>/);
+    assert.ok(email);
+    assert.match(email[0], /required/);
   }
+
+  const intent = leadForms.find((form) => form.includes("data-intent-form"));
+  const phone = intent.match(/<input\b[^>]*name="WhatsApp"[^>]*>/);
+  assert.ok(phone);
+  assert.match(phone[0], /required/);
 
   const pesquisa = fs.readFileSync(
     path.join(__dirname, "pesquisa.html"),

@@ -1029,8 +1029,8 @@
                   que publicam seus dados.</strong
                 ><small
                   >Usamos seus dados exclusivamente para gerar este
-                  diagnóstico. Não solicitamos CPF, senhas nem informações
-                  bancárias.</small
+                  diagnóstico. CPF ou CNPJ é opcional. Não solicitamos senhas
+                  nem informações bancárias.</small
                 ></span
               >
             </div>
@@ -1102,8 +1102,7 @@
                 required
               />
               <p class="field-hint" id="nome-ajuda">
-                Para identificarmos as ocorrências ligadas a você. Sem
-                documentos ou burocracia.
+                Para identificarmos as ocorrências ligadas a você.
               </p>
             </div>
             <input
@@ -1118,23 +1117,21 @@
             />
 
             <div class="field">
-              <label for="cnpj">CNPJ da sua empresa</label>
+              <label for="cnpj">CPF ou CNPJ <span>(opcional)</span></label>
               <input
                 id="cnpj"
-                name="CNPJ"
+                name="CPF ou CNPJ"
                 type="text"
                 inputmode="numeric"
                 autocomplete="off"
                 spellcheck="false"
-                placeholder="00.000.000/0000-00"
+                placeholder="000.000.000-00"
                 maxlength="18"
                 aria-describedby="cnpj-ajuda"
                 data-cnpj
-                required
               />
               <p class="field-hint" id="cnpj-ajuda">
-                Usamos pra buscar onde os dados da empresa e dos sócios
-                aparecem.
+                Opcional. Com o número, a busca fica mais precisa.
               </p>
               <p
                 class="field-error"
@@ -1144,7 +1141,7 @@
                 hidden
               ></p>
             </div>
-            <input type="hidden" name="cnpj" value="" data-cnpj-digits />
+            <input type="hidden" name="documento" value="" data-cnpj-digits />
 
             <div class="form-row">
               <div class="field">
@@ -1560,22 +1557,23 @@
           />
 
           <div class="field">
-            <label for="intent-cnpj">CNPJ da sua empresa</label>
+            <label for="intent-cnpj"
+              >CPF ou CNPJ <span>(opcional)</span></label
+            >
             <input
               id="intent-cnpj"
-              name="CNPJ"
+              name="CPF ou CNPJ"
               type="text"
               inputmode="numeric"
               autocomplete="off"
               spellcheck="false"
-              placeholder="00.000.000/0000-00"
+              placeholder="000.000.000-00"
               maxlength="18"
               aria-describedby="intent-cnpj-ajuda"
               data-cnpj
-              required
             />
             <p class="field-hint" id="intent-cnpj-ajuda">
-              Usamos pra buscar onde os dados da empresa e dos sócios aparecem.
+              Opcional. Com o número, a busca fica mais precisa.
             </p>
             <p
               class="field-error"
@@ -1585,7 +1583,7 @@
               hidden
             ></p>
           </div>
-          <input type="hidden" name="cnpj" value="" data-cnpj-digits />
+          <input type="hidden" name="documento" value="" data-cnpj-digits />
 
           <div class="field">
             <label for="intent-email">E-mail</label>
@@ -1654,8 +1652,8 @@
 
     <script src="meta.js?v=20261110-2" defer></script>
     <script src="funil.js?v=20261110-2" defer></script>
-    <script src="leads.js?v=20261110-1" defer></script>
-    <script src="script.js?v=20261110-1" defer></script>
+    <script src="leads.js?v=20261110-3" defer></script>
+    <script src="script.js?v=20261110-3" defer></script>
     <script src="espelho.js?v=20261110-1" defer></script>
   </body>
 </html>
