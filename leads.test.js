@@ -855,6 +855,28 @@ test("live landing forms keep the Web3Forms action and an invisible hp field", (
     const email = form.match(/<input\b[^>]*name="Email"[^>]*>/);
     assert.ok(email);
     assert.match(email[0], /required/);
+
+    const docAt = form.search(/\bdata-cnpj\b/);
+    const submitAt = form.indexOf("<button", docAt);
+    assert.ok(docAt > 0 && submitAt > docAt);
+    for (const name of [
+      "Nome",
+      "Email",
+      "WhatsApp",
+      "Perfil",
+      "Preocupacao",
+      "Consentimento",
+    ]) {
+      const at = form.indexOf(`name="${name}"`);
+      if (at === -1) continue;
+      assert.ok(at < docAt, `${name} stays before CPF ou CNPJ`);
+    }
+    const hiddenAt = form.indexOf("data-cnpj-digits");
+    const hiddenTag = form.lastIndexOf("<input", hiddenAt);
+    assert.ok(hiddenAt > docAt && hiddenTag > docAt && hiddenTag < submitAt);
+    const tail = form.slice(hiddenTag, submitAt);
+    assert.equal((tail.match(/<input\b/g) || []).length, 1);
+    assert.doesNotMatch(tail, /<(select|textarea|button)\b/);
   }
 
   const intent = leadForms.find((form) => form.includes("data-intent-form"));

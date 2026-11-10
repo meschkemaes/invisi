@@ -1116,33 +1116,6 @@
               aria-hidden="true"
             />
 
-            <div class="field">
-              <label for="cnpj">CPF ou CNPJ <span>(opcional)</span></label>
-              <input
-                id="cnpj"
-                name="CPF ou CNPJ"
-                type="text"
-                inputmode="numeric"
-                autocomplete="off"
-                spellcheck="false"
-                placeholder="000.000.000-00"
-                maxlength="18"
-                aria-describedby="cnpj-ajuda"
-                data-cnpj
-              />
-              <p class="field-hint" id="cnpj-ajuda">
-                Opcional. Com o número, a busca fica mais precisa.
-              </p>
-              <p
-                class="field-error"
-                id="cnpj-erro"
-                data-cnpj-error
-                role="alert"
-                hidden
-              ></p>
-            </div>
-            <input type="hidden" name="documento" value="" data-cnpj-digits />
-
             <div class="form-row">
               <div class="field">
                 <label for="email">E-mail para contato</label>
@@ -1219,6 +1192,32 @@
               <span aria-hidden="true">🔒</span> Consulta 100% gratuita. O envio
               não gera cobrança nem contratação automática.
             </p>
+            <div class="field">
+              <label for="cnpj">CPF ou CNPJ <span>(opcional)</span></label>
+              <input
+                id="cnpj"
+                name="CPF ou CNPJ"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="000.000.000-00"
+                maxlength="18"
+                aria-describedby="cnpj-ajuda"
+                data-cnpj
+              />
+              <p class="field-hint" id="cnpj-ajuda">
+                Opcional. Com o número, a busca fica mais precisa.
+              </p>
+              <p
+                class="field-error"
+                id="cnpj-erro"
+                data-cnpj-error
+                role="alert"
+                hidden
+              ></p>
+            </div>
+            <input type="hidden" name="documento" value="" data-cnpj-digits />
             <button class="button button-full submit-button" type="submit">
               <span>Quero meu diagnóstico grátis</span>
               <svg viewBox="0 0 20 20" aria-hidden="true">
@@ -1557,35 +1556,6 @@
           />
 
           <div class="field">
-            <label for="intent-cnpj"
-              >CPF ou CNPJ <span>(opcional)</span></label
-            >
-            <input
-              id="intent-cnpj"
-              name="CPF ou CNPJ"
-              type="text"
-              inputmode="numeric"
-              autocomplete="off"
-              spellcheck="false"
-              placeholder="000.000.000-00"
-              maxlength="18"
-              aria-describedby="intent-cnpj-ajuda"
-              data-cnpj
-            />
-            <p class="field-hint" id="intent-cnpj-ajuda">
-              Opcional. Com o número, a busca fica mais precisa.
-            </p>
-            <p
-              class="field-error"
-              id="intent-cnpj-erro"
-              data-cnpj-error
-              role="alert"
-              hidden
-            ></p>
-          </div>
-          <input type="hidden" name="documento" value="" data-cnpj-digits />
-
-          <div class="field">
             <label for="intent-email">E-mail</label>
             <input
               id="intent-email"
@@ -1636,6 +1606,34 @@
             <span aria-hidden="true">🔒</span> Consulta 100% gratuita. O envio
             não gera cobrança nem contratação automática.
           </p>
+          <div class="field">
+            <label for="intent-cnpj"
+              >CPF ou CNPJ <span>(opcional)</span></label
+            >
+            <input
+              id="intent-cnpj"
+              name="CPF ou CNPJ"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="000.000.000-00"
+              maxlength="18"
+              aria-describedby="intent-cnpj-ajuda"
+              data-cnpj
+            />
+            <p class="field-hint" id="intent-cnpj-ajuda">
+              Opcional. Com o número, a busca fica mais precisa.
+            </p>
+            <p
+              class="field-error"
+              id="intent-cnpj-erro"
+              data-cnpj-error
+              role="alert"
+              hidden
+            ></p>
+          </div>
+          <input type="hidden" name="documento" value="" data-cnpj-digits />
           <button class="button button-full submit-button" type="submit">
             <span>Quero meu diagnóstico grátis</span>
             <svg viewBox="0 0 20 20" aria-hidden="true">
