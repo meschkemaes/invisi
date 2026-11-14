@@ -186,6 +186,35 @@
     }
   };
 
+  const normalizeName = (value) => value.trim().replace(/\s+/g, " ");
+
+  const validateName = (value) => {
+    const name = normalizeName(value);
+    if (!name) return "Digite o seu nome completo.";
+    if (/\d/.test(name) || /@/.test(name) || /https?:/i.test(name)) {
+      return "Use só o nome. Sem CPF, e-mail ou link.";
+    }
+    const parts = name.split(" ");
+    if (parts.length < 2) {
+      return "Escreva seu nome completo";
+    }
+    if (name.length > 80) {
+      return "Use o nome civil, sem texto extra.";
+    }
+    const middleParticle = (part, index) =>
+      index > 0 && index < parts.length - 1 && /^(e|y)$/i.test(part);
+    if (
+      parts.some(
+        (part, index) =>
+          !/^[\p{L}'’-]+$/u.test(part) ||
+          (part.length < 2 && !middleParticle(part, index)),
+      )
+    ) {
+      return "Confira a grafia do nome.";
+    }
+    return "";
+  };
+
   const lookupOffice = async (cnpj, options) => {
     const opts = options || {};
     let lastError = null;
@@ -256,29 +285,6 @@
           return part.charAt(0).toUpperCase() + part.slice(1).toLowerCase();
         })
         .join(" ");
-
-    const normalizeName = (value) => value.trim().replace(/\s+/g, " ");
-
-    const validateName = (value) => {
-      const name = normalizeName(value);
-      if (!name) return "Digite o seu nome completo.";
-      if (/\d/.test(name) || /@/.test(name) || /https?:/i.test(name)) {
-        return "Use só o nome. Sem CPF, e-mail ou link.";
-      }
-      const parts = name.split(" ");
-      if (parts.length < 2) {
-        return "Escreva seu nome completo";
-      }
-      if (parts.length > 6 || name.length > 80) {
-        return "Use o nome civil, sem texto extra.";
-      }
-      if (
-        parts.some((part) => !/^[\p{L}'’-]+$/u.test(part) || part.length < 2)
-      ) {
-        return "Confira a grafia do nome.";
-      }
-      return "";
-    };
 
     const cnpjFromRoot = (root) => {
       const base = `${String(root || "")
@@ -848,6 +854,7 @@
     API_TIMEOUT_MS,
     lookupName,
     lookupOffice,
+    validateName,
     start,
   };
 });
