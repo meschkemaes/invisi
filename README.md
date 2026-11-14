@@ -33,9 +33,15 @@ O diagnóstico completo continua no formulário de contato.
 
 A landing (`funil.js`) registra passos da visita em
 `POST https://api.invisi.com.br/funil`: página, prévia visível, prévia pedida,
-resultado, clique no cadastro e envio aceito ou recusado. O identificador é um
-UUID aleatório guardado no `sessionStorage` do navegador. O corpo não leva
-nome, CPF, CNPJ, e-mail, telefone nem o texto da busca.
+resultado, clique no cadastro, envio aceito ou recusado e saída. O identificador
+é um UUID aleatório guardado no `sessionStorage` do navegador. No passo da
+página, a primeira visita da sessão pode incluir parâmetros de campanha da URL
+(`utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, até 100
+caracteres), o referrer (a API guarda só o host) e as marcas booleanas
+`fbclid` e `gclid`, sem o valor do clique. Esses dados ficam no `sessionStorage`
+para um `pagina` posterior na mesma sessão. Na saída, o navegador envia o tempo
+na página e a profundidade máxima de rolagem. O corpo não leva nome, CPF, CNPJ,
+e-mail, telefone nem o texto da busca.
 
 ## Meta Pixel
 

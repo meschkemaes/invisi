@@ -261,7 +261,7 @@ test("landing wires the anonymous funnel without putting personal data in the ca
   const leads = fs.readFileSync(path.join(__dirname, "leads.js"), "utf8");
   const script = fs.readFileSync(path.join(__dirname, "script.js"), "utf8");
 
-  assert.match(html, /funil\.js\?v=20261110-2/);
+  assert.match(html, /funil\.js\?v=20261114-1/);
   assert.match(source, /sendBeacon/);
   assert.match(source, /text\/plain/);
   assert.match(source, /keepalive:\s*true/);
@@ -278,4 +278,208 @@ test("landing wires the anonymous funnel without putting personal data in the ca
   assert.match(script, /cadastro_clique/);
   const withoutErroCode = source.replace(/http_400_cnpj/g, "");
   assert.doesNotMatch(withoutErroCode, /nome|cnpj|e-mail|email|telefone|whatsapp/i);
+  assert.match(source, /pagehide/);
+  assert.match(source, /visibilitychange/);
+  assert.match(source, /passive:\s*true/);
+});
+
+test("pagina adds truncated utms, referrer and click flags without the click id", async () => {
+  const storage = memoryStorage();
+  const transport = captureTransport();
+  const clickId = "IwAR-CLICK-SECRET-VALUE";
+  const googleId = "GCLID-SECRET-99";
+  const campaign = "c".repeat(140);
+  const deps = {
+    storage,
+    navigator: transport.navigator,
+    fetchImpl: transport.fetchImpl,
+    location: {
+      search:
+        "?utm_source=%20%20meta%20%20" +
+        "&utm_medium=" +
+        "&utm_campaign=" +
+        campaign +
+        "&utm_content=criativo" +
+        "&utm_term=advogado" +
+        "&fbclid=" +
+        clickId +
+        "&gclid=" +
+        googleId,
+    },
+    referrer: "https://l.facebook.com/l.php?fbclid=" + clickId + "&u=1",
+  };
+
+  funil.passo("pagina", undefined, deps);
+
+  const body = JSON.parse(await readBody(transport.beacons[0].body));
+  assert.equal(body.passo, "pagina");
+  assert.equal(body.utm_source, "meta");
+  assert.equal("utm_medium" in body, false);
+  assert.equal(body.utm_campaign, "c".repeat(100));
+  assert.equal(body.utm_content, "criativo");
+  assert.equal(body.utm_term, "advogado");
+  assert.equal(body.fbclid, true);
+  assert.equal(body.gclid, true);
+  assert.equal(typeof body.fbclid, "boolean");
+  assert.equal(typeof body.gclid, "boolean");
+  assert.equal(body.referrer.includes("facebook.com"), true);
+  assert.equal(body.referrer.includes(clickId), false);
+  assert.equal(body.referrer.includes(googleId), false);
+
+  const raw = JSON.stringify(body);
+  assert.equal(raw.includes(clickId), false);
+  assert.equal(raw.includes(googleId), false);
+  assert.equal(raw.includes("c".repeat(101)), false);
+
+  const stored = JSON.parse(storage.getItem(funil.CAMPAIGN_KEY));
+  assert.equal(stored.utm_source, "meta");
+  assert.equal(stored.fbclid, true);
+  assert.equal(stored.gclid, true);
+  assert.equal(JSON.stringify(stored).includes(clickId), false);
+});
+
+test("pagina omits an empty referrer and reuses the first campaign of the session", async () => {
+  const storage = memoryStorage();
+  const transport = captureTransport();
+  const base = {
+    storage,
+    navigator: transport.navigator,
+    fetchImpl: transport.fetchImpl,
+  };
+
+  funil.passo("pagina", undefined, {
+    ...base,
+    location: { search: "?utm_source=primeira&fbclid=SECRET-ONE" },
+    referrer: "   ",
+  });
+  funil.passo("pagina", undefined, {
+    ...base,
+    location: { search: "?utm_source=segunda&utm_medium=cpc" },
+    referrer: "https://invisi.com.br/",
+  });
+  funil.passo("previa_pedida", undefined, {
+    ...base,
+    location: { search: "?utm_source=nao-entra&gclid=SECRET-TWO" },
+    referrer: "https://news.example/a",
+  });
+
+  const first = JSON.parse(await readBody(transport.beacons[0].body));
+  const second = JSON.parse(await readBody(transport.beacons[1].body));
+  const other = JSON.parse(await readBody(transport.beacons[2].body));
+
+  assert.deepEqual(Object.keys(first).sort(), ["fbclid", "passo", "utm_source", "visita"]);
+  assert.equal(first.utm_source, "primeira");
+  assert.equal(first.fbclid, true);
+  assert.equal("referrer" in first, false);
+
+  assert.equal(second.utm_source, "primeira");
+  assert.equal(second.utm_medium, "cpc");
+  assert.equal(second.fbclid, true);
+  assert.equal("gclid" in second, false);
+  assert.equal(second.referrer, "https://invisi.com.br/");
+
+  assert.deepEqual(Object.keys(other).sort(), ["passo", "visita"]);
+  assert.equal(JSON.stringify([first, second, other]).includes("SECRET"), false);
+});
+
+test("a bare pagina payload stays visita and passo", async () => {
+  const storage = memoryStorage();
+  const transport = captureTransport();
+
+  funil.passo("pagina", undefined, {
+    storage,
+    navigator: transport.navigator,
+    fetchImpl: transport.fetchImpl,
+    location: { search: "" },
+    referrer: "",
+  });
+
+  assert.deepEqual(JSON.parse(await readBody(transport.beacons[0].body)), {
+    visita: storage.getItem(funil.STORAGE_KEY),
+    passo: "pagina",
+  });
+});
+
+test("saida clamps tempo and scroll and still uses the beacon", async () => {
+  const storage = memoryStorage({
+    [funil.STORAGE_KEY]: "22222222-2222-4222-8222-222222222222",
+  });
+  const transport = captureTransport();
+  const deps = {
+    storage,
+    navigator: transport.navigator,
+    fetchImpl: transport.fetchImpl,
+  };
+
+  funil.passo("saida", undefined, { ...deps, tempoMs: -12.4, scrollPct: 140.2 });
+  funil.passo("saida", undefined, { ...deps, tempoMs: 7200000.6, scrollPct: -4 });
+  funil.passo("saida", undefined, { ...deps, tempoMs: 1500.4 });
+
+  const high = JSON.parse(await readBody(transport.beacons[0].body));
+  const low = JSON.parse(await readBody(transport.beacons[1].body));
+  const bare = JSON.parse(await readBody(transport.beacons[2].body));
+
+  assert.deepEqual(high, {
+    visita: "22222222-2222-4222-8222-222222222222",
+    passo: "saida",
+    tempo_ms: 0,
+    scroll_pct: 100,
+  });
+  assert.equal(low.tempo_ms, 7200000);
+  assert.equal(low.scroll_pct, 0);
+  assert.deepEqual(Object.keys(bare).sort(), ["passo", "tempo_ms", "visita"]);
+  assert.equal(bare.tempo_ms, 1500);
+  assert.equal(transport.beacons[0].body.type, "text/plain");
+  assert.equal(transport.beacons[0].url, funil.FUNIL_URL);
+
+  transport.navigator.sendBeacon = () => false;
+  funil.passo("saida", undefined, { ...deps, tempoMs: 10, scrollPct: 0 });
+  assert.equal(transport.fetches.length, 1);
+  assert.equal(transport.fetches[0].init.keepalive, true);
+  assert.deepEqual(JSON.parse(transport.fetches[0].init.body), {
+    visita: "22222222-2222-4222-8222-222222222222",
+    passo: "saida",
+    tempo_ms: 10,
+    scroll_pct: 0,
+  });
+});
+
+test("scroll depth is an integer from 0 to 100 and saida fires once per hide", async () => {
+  assert.equal(funil.scrollPctFrom({ scrollTop: 0, viewport: 250, scrollHeight: 1000 }), 25);
+  assert.equal(funil.scrollPctFrom({ scrollTop: 750, viewport: 250, scrollHeight: 1000 }), 100);
+  assert.equal(funil.scrollPctFrom({ scrollTop: 0, viewport: 800, scrollHeight: 500 }), 100);
+  assert.equal(funil.scrollPctFrom({ scrollTop: -20, viewport: 100, scrollHeight: 1000 }), 10);
+  assert.equal(funil.scrollPctFrom({ scrollTop: 10.4, viewport: 0, scrollHeight: 80 }), 13);
+  assert.equal(funil.scrollPctFrom({ scrollTop: 0, viewport: 0, scrollHeight: 0 }), null);
+
+  const storage = memoryStorage();
+  const transport = captureTransport();
+  const tracker = funil.createExitTracker({
+    storage,
+    navigator: transport.navigator,
+    fetchImpl: transport.fetchImpl,
+    now: () => 842.2,
+  });
+
+  tracker.onScroll({ scrollTop: 0, viewport: 100, scrollHeight: 1000 });
+  tracker.onScroll({ scrollTop: 400, viewport: 100, scrollHeight: 1000 });
+  tracker.onScroll({ scrollTop: 50, viewport: 100, scrollHeight: 1000 });
+  tracker.onVisibility("hidden");
+  tracker.onPageHide();
+  tracker.onVisibility("hidden");
+
+  assert.equal(transport.beacons.length, 1);
+  assert.deepEqual(JSON.parse(await readBody(transport.beacons[0].body)), {
+    visita: storage.getItem(funil.STORAGE_KEY),
+    passo: "saida",
+    tempo_ms: 842,
+    scroll_pct: 50,
+  });
+
+  tracker.onVisibility("visible");
+  tracker.onPageHide();
+  assert.equal(transport.beacons.length, 2);
+  const again = JSON.parse(await readBody(transport.beacons[1].body));
+  assert.equal(again.passo, "saida");
+  assert.equal(again.scroll_pct, 50);
 });

@@ -10,6 +10,15 @@
   const FUNIL_URL = "https://api.invisi.com.br/funil";
   const STORAGE_KEY = "invisi.visita";
   const PREVIA_KEY = "invisi.funil.previa_visivel";
+  const CAMPAIGN_KEY = "invisi.funil.campanha";
+  const UTM_KEYS = [
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_content",
+    "utm_term",
+  ];
+  const TEMPO_MAX = 7200000;
   const UUID_V4 =
     /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
   const STEPS = new Set([
@@ -20,6 +29,7 @@
     "cadastro_clique",
     "envio_ok",
     "envio_erro",
+    "saida",
   ]);
   let previaSent = false;
 
@@ -74,6 +84,163 @@
     return id;
   };
 
+  const clipUtm = (value) => {
+    if (value == null) return "";
+    return String(value).trim().slice(0, 100);
+  };
+
+  const dropClickKeys = (params) => {
+    const drop = [];
+    for (const key of params.keys()) {
+      const name = String(key).toLowerCase();
+      if (name === "fbclid" || name === "gclid") drop.push(key);
+    }
+    drop.forEach((key) => params.delete(key));
+  };
+
+  const referrerValue = (value) => {
+    const text = String(value == null ? "" : value).trim();
+    if (!text || !/fbclid|gclid/i.test(text)) return text;
+    try {
+      const url = new URL(text);
+      dropClickKeys(url.searchParams);
+      return url.toString();
+    } catch (_) {
+      return text
+        .replace(/([?&#])fbclid=[^&#]*/gi, "$1")
+        .replace(/([?&#])gclid=[^&#]*/gi, "$1")
+        .replace(/[?&#](?=[?&#]|$)/g, "")
+        .replace(/[?&]$/g, "");
+    }
+  };
+
+  const attributionFrom = (search, referrer) => {
+    let params;
+    try {
+      params = new URLSearchParams(typeof search === "string" ? search : "");
+    } catch (_) {
+      params = new URLSearchParams();
+    }
+    const out = {};
+    UTM_KEYS.forEach((key) => {
+      if (!params.has(key)) return;
+      const clipped = clipUtm(params.get(key));
+      if (clipped) out[key] = clipped;
+    });
+    if (params.has("fbclid")) out.fbclid = true;
+    if (params.has("gclid")) out.gclid = true;
+    const origin = referrerValue(referrer);
+    if (origin) out.referrer = origin;
+    return out;
+  };
+
+  const storedAttribution = (raw) => {
+    let parsed;
+    try {
+      parsed = JSON.parse(raw);
+    } catch (_) {
+      return {};
+    }
+    if (!parsed || typeof parsed !== "object") return {};
+    const out = {};
+    UTM_KEYS.forEach((key) => {
+      const clipped = clipUtm(parsed[key]);
+      if (clipped) out[key] = clipped;
+    });
+    if (parsed.fbclid === true) out.fbclid = true;
+    if (parsed.gclid === true) out.gclid = true;
+    const origin = referrerValue(parsed.referrer);
+    if (origin) out.referrer = origin;
+    return out;
+  };
+
+  const storeOf = (options) => {
+    if (options && options.storage) return options.storage;
+    if (typeof sessionStorage !== "undefined") return sessionStorage;
+    return null;
+  };
+
+  const loadAttribution = (storage) => {
+    try {
+      if (!storage) return {};
+      const raw = storage.getItem(CAMPAIGN_KEY);
+      if (!raw) return {};
+      return storedAttribution(raw);
+    } catch (_) {
+      return {};
+    }
+  };
+
+  const saveAttribution = (storage, data) => {
+    try {
+      if (!storage || !data || !Object.keys(data).length) return;
+      storage.setItem(CAMPAIGN_KEY, JSON.stringify(data));
+    } catch (_) {
+      /* storage may be blocked */
+    }
+  };
+
+  const pageSearch = (options) => {
+    if (options && options.location && typeof options.location.search === "string") {
+      return options.location.search;
+    }
+    if (options && options.location) return "";
+    try {
+      if (typeof location !== "undefined" && location && typeof location.search === "string") {
+        return location.search;
+      }
+    } catch (_) {
+      /* location may be blocked */
+    }
+    return "";
+  };
+
+  const pageReferrer = (options) => {
+    if (options && typeof options.referrer === "string") return options.referrer;
+    try {
+      if (typeof document !== "undefined" && document && typeof document.referrer === "string") {
+        return document.referrer;
+      }
+    } catch (_) {
+      /* referrer may be blocked */
+    }
+    return "";
+  };
+
+  const campaignFor = (options) => {
+    const storage = storeOf(options);
+    const current = attributionFrom(pageSearch(options), pageReferrer(options));
+    const merged = { ...current, ...loadAttribution(storage) };
+    saveAttribution(storage, merged);
+    return merged;
+  };
+
+  const clampTempo = (value) => {
+    const rounded = Math.round(Number(value));
+    if (!Number.isFinite(rounded) || rounded < 0) return 0;
+    if (rounded > TEMPO_MAX) return TEMPO_MAX;
+    return rounded;
+  };
+
+  const clampScroll = (value) => {
+    const rounded = Math.round(Number(value));
+    if (!Number.isFinite(rounded) || rounded < 0) return 0;
+    if (rounded > 100) return 100;
+    return rounded;
+  };
+
+  const scrollPctFrom = (metrics) => {
+    const source = metrics || {};
+    const top = Number(source.scrollTop);
+    const view = Number(source.viewport);
+    const height = Number(source.scrollHeight);
+    if (!Number.isFinite(top) || !Number.isFinite(view) || !Number.isFinite(height)) {
+      return null;
+    }
+    if (height <= 0) return null;
+    return clampScroll(((Math.max(0, top) + Math.max(0, view)) / height) * 100);
+  };
+
   const erroOk = (value) =>
     value === "sem_resultado" ||
     value === "falha" ||
@@ -120,6 +287,19 @@
         visita: visitaId(options.storage, options.cryptoObj),
         passo: step,
       };
+      if (step === "pagina") Object.assign(body, campaignFor(options));
+      if (step === "saida") {
+        const tempo =
+          options.tempoMs != null
+            ? options.tempoMs
+            : typeof options.now === "function"
+              ? options.now()
+              : typeof performance !== "undefined" && performance.now
+                ? performance.now()
+                : 0;
+        body.tempo_ms = clampTempo(tempo);
+        if (options.scrollPct != null) body.scroll_pct = clampScroll(options.scrollPct);
+      }
       if (erroOk(erro)) body.erro = erro;
       const json = JSON.stringify(body);
       const url = FUNIL_URL;
@@ -182,9 +362,90 @@
     }
   };
 
+  const createExitTracker = (deps) => {
+    const options = deps || {};
+    let sentWhileHidden = false;
+    let maxScroll = null;
+    const send = () => {
+      const tempoMs =
+        typeof options.now === "function"
+          ? options.now()
+          : typeof performance !== "undefined" && performance.now
+            ? performance.now()
+            : 0;
+      passo("saida", undefined, {
+        storage: options.storage,
+        navigator: options.navigator,
+        fetchImpl: options.fetchImpl,
+        cryptoObj: options.cryptoObj,
+        tempoMs,
+        scrollPct: maxScroll,
+      });
+    };
+    return {
+      onScroll(metrics) {
+        const pct = scrollPctFrom(metrics);
+        if (pct == null) return;
+        maxScroll = maxScroll == null ? pct : Math.max(maxScroll, pct);
+      },
+      onVisibility(state) {
+        if (state === "hidden") {
+          if (sentWhileHidden) return;
+          sentWhileHidden = true;
+          send();
+          return;
+        }
+        if (state === "visible") sentWhileHidden = false;
+      },
+      onPageHide() {
+        if (sentWhileHidden) return;
+        sentWhileHidden = true;
+        send();
+      },
+    };
+  };
+
+  const wireExit = () => {
+    if (typeof window === "undefined" || typeof document === "undefined") return;
+    const tracker = createExitTracker({});
+    const sample = () => {
+      try {
+        const root = document.documentElement;
+        tracker.onScroll({
+          scrollTop: window.scrollY || (root && root.scrollTop) || 0,
+          viewport: window.innerHeight || (root && root.clientHeight) || 0,
+          scrollHeight: (root && root.scrollHeight) || 0,
+        });
+      } catch (_) {
+        /* scroll metrics are optional */
+      }
+    };
+    try {
+      sample();
+      window.addEventListener("scroll", sample, { passive: true });
+      document.addEventListener("visibilitychange", () => {
+        try {
+          tracker.onVisibility(document.visibilityState);
+        } catch (_) {
+          /* measurement never blocks the page */
+        }
+      });
+      window.addEventListener("pagehide", () => {
+        try {
+          tracker.onPageHide();
+        } catch (_) {
+          /* measurement never blocks the page */
+        }
+      });
+    } catch (_) {
+      /* measurement never blocks the page */
+    }
+  };
+
   const start = () => {
     try {
       passo("pagina");
+      wireExit();
       if (typeof document === "undefined" || previaAlready()) return;
       const target =
         document.querySelector("[data-mirror-visual]") ||
@@ -213,8 +474,11 @@
   return {
     FUNIL_URL,
     STORAGE_KEY,
+    CAMPAIGN_KEY,
     visitaId,
     passo,
     start,
+    scrollPctFrom,
+    createExitTracker,
   };
 });
