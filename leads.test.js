@@ -244,6 +244,37 @@ const consentedLead = (extra = {}) =>
     ...extra,
   });
 
+test("reads fields after a later turn so a late autofill is included", async () => {
+  const form = fakeForm({
+    Nome: "",
+    Email: "",
+    WhatsApp: "",
+    Consentimento: { checked: false },
+    hp: "",
+  });
+  let body = null;
+
+  const result = await submitLeadForm(form, {
+    waitImpl() {
+      form.elements.namedItem("Nome").value = "Ana Souza";
+      form.elements.namedItem("Email").value = "ana@empresa.com.br";
+      form.elements.namedItem("WhatsApp").value = "(11) 98888-7777";
+      form.elements.namedItem("Consentimento").checked = true;
+    },
+    fetchImpl: async (_url, init) => {
+      body = JSON.parse(init.body);
+      return { ok: true, status: 201 };
+    },
+    assign() {},
+  });
+
+  assert.equal(result.outcome, "redirect");
+  assert.equal(body.nome, "Ana Souza");
+  assert.equal(body.email, "ana@empresa.com.br");
+  assert.equal(body.whatsapp, "(11) 98888-7777");
+  assert.equal(body.consentimento, true);
+});
+
 test("maps the landing fields onto the site lead contract", () => {
   const payload = buildSiteLead(consentedLead());
 
@@ -833,10 +864,10 @@ test("live landing forms keep the Web3Forms action and an invisible hp field", (
   assert.equal((html.match(/Quero meu diagnóstico grátis/g) || []).length, 4);
   assert.match(script, /data-open-modal/);
   assert.doesNotMatch(script, /avalia\[cç\]/);
-  assert.match(html, /funil\.js\?v=20261110-2/);
-  assert.match(html, /leads\.js\?v=20261110-3/);
-  assert.match(html, /script\.js\?v=20261110-3/);
-  assert.match(html, /styles\.css\?v=20261016-1/);
+  assert.match(html, /funil\.js\?v=20261114-1/);
+  assert.match(html, /leads\.js\?v=20261114-1/);
+  assert.match(html, /script\.js\?v=20261114-1/);
+  assert.match(html, /styles\.css\?v=20261114-1/);
   assert.match(html, /espelho\.js\?v=20261110-1/);
 
   for (const form of leadForms) {

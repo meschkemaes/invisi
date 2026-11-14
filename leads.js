@@ -429,8 +429,20 @@
     return alert;
   };
 
+  // iOS Safari can submit with autofill visible while input.value is still
+  // empty, and can drop a fetch body started inside the submit event.
+  // Reading on a later turn picks up the committed values before POST.
+  const commitFormValues = (options) => {
+    const wait = options && options.waitImpl;
+    if (typeof wait === "function") return Promise.resolve().then(wait);
+    return new Promise((resolve) => {
+      setTimeout(resolve, 0);
+    });
+  };
+
   const submitLeadForm = async (form, options) => {
     const opts = options || {};
+    await commitFormValues(opts);
     const assign =
       typeof opts.assign === "function"
         ? opts.assign
