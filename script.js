@@ -157,21 +157,26 @@ const bindInvisiLead = (form, beforeSend) => {
     }
 
     event.preventDefault();
-    if (typeof beforeSend === "function") beforeSend();
-    if (typeof leads.ensureValidCnpj === "function" && !leads.ensureValidCnpj(form)) {
-      return;
-    }
-    if (!leads.claimSubmit(form)) return;
-
-    markFormSending(form);
-    leads.submitLeadForm(form).then((result) => {
+    window.setTimeout(() => {
+      if (typeof beforeSend === "function") beforeSend();
       if (
-        result &&
-        (result.outcome === "duplicate" || result.outcome === "invalid-cnpj")
+        typeof leads.ensureValidCnpj === "function" &&
+        !leads.ensureValidCnpj(form)
       ) {
-        markFormIdle(form);
+        return;
       }
-    });
+      if (!leads.claimSubmit(form)) return;
+
+      markFormSending(form);
+      leads.submitLeadForm(form).then((result) => {
+        if (
+          result &&
+          (result.outcome === "duplicate" || result.outcome === "invalid-cnpj")
+        ) {
+          markFormIdle(form);
+        }
+      });
+    }, 0);
   });
 };
 

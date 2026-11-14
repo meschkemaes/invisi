@@ -442,14 +442,25 @@
     }
   };
 
+  const previaTarget = (doc) => {
+    try {
+      if (!doc || typeof doc.querySelector !== "function") return null;
+      return (
+        doc.querySelector("[data-mirror-form]") ||
+        doc.querySelector("#espelho") ||
+        doc.querySelector("[data-mirror-visual]")
+      );
+    } catch (_) {
+      return null;
+    }
+  };
+
   const start = () => {
     try {
       passo("pagina");
       wireExit();
       if (typeof document === "undefined" || previaAlready()) return;
-      const target =
-        document.querySelector("[data-mirror-visual]") ||
-        document.querySelector("#espelho");
+      const target = previaTarget(document);
       if (!target || typeof IntersectionObserver !== "function") return;
       const observer = new IntersectionObserver((entries) => {
         try {
@@ -477,6 +488,7 @@
     CAMPAIGN_KEY,
     visitaId,
     passo,
+    previaTarget,
     start,
     scrollPctFrom,
     createExitTracker,

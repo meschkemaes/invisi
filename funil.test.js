@@ -254,6 +254,24 @@ test("lead API failures record envio_erro and still do not throw", async () => {
   }
 });
 
+test("previa visivel watches the lookup before the illustration", () => {
+  const formFirst = {
+    querySelector(sel) {
+      if (sel === "[data-mirror-form]") return { id: "espelho" };
+      return { id: "visual" };
+    },
+  };
+  assert.equal(funil.previaTarget(formFirst).id, "espelho");
+
+  const visualOnly = {
+    querySelector(sel) {
+      return sel === "[data-mirror-visual]" ? { id: "visual" } : null;
+    },
+  };
+  assert.equal(funil.previaTarget(visualOnly).id, "visual");
+  assert.equal(funil.previaTarget(null), null);
+});
+
 test("landing wires the anonymous funnel without putting personal data in the call", () => {
   const html = fs.readFileSync(path.join(__dirname, "index.html"), "utf8");
   const source = fs.readFileSync(path.join(__dirname, "funil.js"), "utf8");
@@ -261,7 +279,8 @@ test("landing wires the anonymous funnel without putting personal data in the ca
   const leads = fs.readFileSync(path.join(__dirname, "leads.js"), "utf8");
   const script = fs.readFileSync(path.join(__dirname, "script.js"), "utf8");
 
-  assert.match(html, /funil\.js\?v=20261114-1/);
+  assert.match(html, /funil\.js\?v=20261114-2/);
+  assert.match(source, /data-mirror-form/);
   assert.match(source, /sendBeacon/);
   assert.match(source, /text\/plain/);
   assert.match(source, /keepalive:\s*true/);

@@ -1744,12 +1744,39 @@ body.intent-open {
         margin-top: 12px;
         padding: 0 18px;
     }
+    .hero {
+        min-height: 0;
+    }
+    .hero-grid {
+        min-height: 0;
+        padding-top: 88px;
+        padding-bottom: 36px;
+        gap: 28px;
+    }
+    .hero-copy {
+        padding: 4px 0 0;
+    }
+    .hero .eyebrow {
+        margin-bottom: 10px;
+    }
     h1 {
-        font-size: clamp(42px, 13vw, 58px);
-        letter-spacing: -2.5px;
+        font-size: 34px;
+        letter-spacing: -1.1px;
+        line-height: 1.12;
+        margin-bottom: 12px;
     }
     .hero-lead {
         font-size: 16px;
+        line-height: 1.45;
+        margin-bottom: 14px;
+    }
+    .mirror-hint {
+        margin-top: 8px;
+        font-size: 12px;
+        line-height: 1.4;
+    }
+    .trust-list {
+        margin-top: 16px;
     }
     .hero-actions {
         align-items: stretch;
@@ -1774,7 +1801,7 @@ body.intent-open {
         gap: 11px;
     }
     .hero-visual {
-        min-height: 425px;
+        min-height: 0;
     }
     .scan-card {
         transform: none;
