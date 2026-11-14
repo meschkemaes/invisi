@@ -868,7 +868,7 @@ test("live landing forms keep the Web3Forms action and an invisible hp field", (
   assert.match(html, /leads\.js\?v=20261114-1/);
   assert.match(html, /script\.js\?v=20261114-1/);
   assert.match(html, /styles\.css\?v=20261114-1/);
-  assert.match(html, /espelho\.js\?v=20261110-1/);
+  assert.match(html, /espelho\.js\?v=20261114-1/);
 
   for (const form of leadForms) {
     const docInput = form.match(/<input\b[^>]*data-cnpj\b[^>]*>/);

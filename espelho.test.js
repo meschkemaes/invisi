@@ -3,7 +3,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 
-const { API_BASE, API_TIMEOUT_MS, lookupName, lookupOffice } = require("./espelho.js");
+const { API_BASE, API_TIMEOUT_MS, lookupName, lookupOffice, validateName } = require("./espelho.js");
 
 const SEARCH_URL = "https://empresas.credithub.com.br/api/buscar";
 const SOCIO = {
@@ -223,6 +223,31 @@ test("lookupOffice falls through the API, then cnpja, then opencnpj", async () =
   assert.equal(office.company, "Souza Comercio LTDA");
 });
 
+test("validateName accepts a long civil name with several particles", () => {
+  assert.equal(
+    validateName("Maria da Conceição dos Santos de Oliveira Lima"),
+    "",
+  );
+});
+
+test("validateName accepts the one-letter particles e and y", () => {
+  assert.equal(validateName("Silva e Souza"), "");
+  assert.equal(validateName("Silva E Souza"), "");
+  assert.equal(validateName("Silva y Souza"), "");
+  assert.equal(validateName("Silva Y Souza"), "");
+});
+
+test("validateName rejects a name longer than 80 characters", () => {
+  const name = `Ana ${"B".repeat(78)}`;
+  assert.ok(name.length > 80);
+  assert.equal(validateName(name), "Use o nome civil, sem texto extra.");
+});
+
+test("validateName still rejects a loose letter other than e or y", () => {
+  assert.equal(validateName("Ana X Souza"), "Confira a grafia do nome.");
+  assert.equal(validateName("Ana a Souza"), "Confira a grafia do nome.");
+});
+
 test("the page keeps a friendly retry when every name source fails", () => {
   const source = fs.readFileSync(path.join(__dirname, "espelho.js"), "utf8");
   const html = fs.readFileSync(path.join(__dirname, "index.html"), "utf8");
@@ -232,7 +257,7 @@ test("the page keeps a friendly retry when every name source fails", () => {
     source,
     /a consulta pública não respondeu\. Sem chute: a Invisi não inventa telefone, e-mail ou endereço\./,
   );
-  assert.match(html, /espelho\.js\?v=20261110-1/);
+  assert.match(html, /espelho\.js\?v=20261114-1/);
   assert.doesNotMatch(source, /Authorization/);
   assert.doesNotMatch(source, /Bearer /);
 });
