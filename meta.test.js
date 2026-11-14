@@ -232,7 +232,7 @@ test("landing and thanks page wire the helper and do not invent InitiateCheckout
   ];
 
   assert.match(html, /meta\.js\?v=20261110-2/);
-  assert.match(html, /funil\.js\?v=20261114-1/);
+  assert.match(html, /funil\.js\?v=20261114-2/);
   assert.match(thanks, /meta\.js\?v=20261110-2/);
   assert.match(thanks, /leadOnThanks/);
   assert.doesNotMatch(thanks, /fbq\('track',\s*'Lead'\)/);
