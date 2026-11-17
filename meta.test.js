@@ -229,6 +229,7 @@ test("landing and thanks page wire the helper and do not invent InitiateCheckout
     "privacidade.html",
     "obrigado.html",
     "pesquisa-obrigado.html",
+    "teste-gratis.html",
   ];
 
   assert.match(html, /meta\.js\?v=20261110-2/);
