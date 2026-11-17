@@ -7,6 +7,7 @@ pessoais ligados a atividades empresariais.
 ## Páginas
 
 - Landing page: `index.html`
+- Teste grátis: `teste-gratis.html` (URL pública `/teste-gratis`)
 - Pesquisa de mercado: `pesquisa.html`
 - Política de Privacidade: `privacidade.html`
 - Confirmação de lead: `obrigado.html`
@@ -16,6 +17,7 @@ pessoais ligados a atividades empresariais.
 
 - Site: "<https://invisi.com.br/>"
 - Pesquisa: "<https://invisi.com.br/pesquisa.html>"
+- Teste grátis: "<https://invisi.com.br/teste-gratis>"
 
 ## Execução local
 
@@ -63,9 +65,11 @@ navegador não ler os campos da página nem enviar correspondência avançada:
 
 ## Formulários
 
-O formulário de diagnóstico, o modal de contato e a pesquisa utilizam
-[Web3Forms](https://web3forms.com/) e encaminham as submissões para o canal
-responsável da Invisi.
+O formulário de diagnóstico, o modal de contato, a página de teste grátis
+e a pesquisa utilizam [Web3Forms](https://web3forms.com/) e encaminham as
+submissões para o canal responsável da Invisi. A página de teste grátis pede
+nome e WhatsApp, confirma o pedido na própria página e usa a mesma chave de
+acesso da landing.
 
 O diagnóstico pede e-mail. No modal, telefone/WhatsApp também é obrigatório; no formulário longo, o WhatsApp segue opcional. CPF ou CNPJ é um único campo opcional: vazio, o documento não entra no JSON; 11 dígitos válidos vão em `cpf` e 14 em `cnpj`, somente números. A página confere o dígito verificador só quando o campo vem preenchido.
 Após um envio aceito pela API, o visitante é redirecionado para `https://invisi.com.br/obrigado.html`.
@@ -80,6 +84,7 @@ solicita contato e aceita a autorização correspondente.
 ## Arquivos públicos
 
 - `index.html`, `styles.css`, `script.js`, `espelho.js`, `funil.js` e `meta.js`: lp, prévia, funil anônimo e eventos do pixel;
+- `teste-gratis.html` e `teste-gratis.js`: pedido de teste grátis;
 - `pesquisa.html`, `pesquisa.css` e `pesquisa.js`: pesquisa de mercado;
 - `obrigado.html` e `pesquisa-obrigado.html`: páginas de confirmação;
 - `privacidade.html`: informações sobre tratamento de dados;

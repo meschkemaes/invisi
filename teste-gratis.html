@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#faf9f6" />
+    <meta
+      name="description"
+      content="Diagnóstico gratuito e 3 remoções de teste. Descubra onde seus dados estão expostos com a Invisi."
+    />
+    <link rel="icon" href="data:," />
+    <title>Invisi — Diagnóstico gratuito</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #faf9f6;
+        --ink: #232924;
+        --muted: #5e655e;
+        --line: #d6d9d0;
+        --green: #185b40;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font:
+          16px/1.55 system-ui,
+          sans-serif;
+      }
+      button,
+      input {
+        font: inherit;
+      }
+      a {
+        color: inherit;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      :focus-visible {
+        outline: 3px solid var(--green);
+        outline-offset: 4px;
+      }
+      .page {
+        max-width: 1000px;
+        margin: auto;
+        padding: 0 22px;
+      }
+      header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 22px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .brand {
+        font-size: 29px;
+        font-weight: 800;
+        letter-spacing: -1.8px;
+        text-decoration: none;
+      }
+      .category {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      main {
+        padding: 32px 0 28px;
+      }
+      .audience {
+        margin: 0 0 17px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      h1 {
+        max-width: 600px;
+        margin: 0 0 22px;
+        font-size: clamp(36px, 7.5vw, 62px);
+        line-height: 1.08;
+        letter-spacing: -0.055em;
+        font-weight: 750;
+      }
+      h1 span {
+        display: table;
+        margin-top: 5px;
+        padding: 0 5px 4px;
+        background: #e8b180;
+      }
+      .intro {
+        max-width: 470px;
+        margin: 0 0 20px;
+      }
+      .explanation {
+        max-width: 450px;
+        color: var(--muted);
+        font-size: 14px;
+        margin: 0;
+      }
+      .offer {
+        margin-top: 29px;
+        border-top: 2px solid var(--ink);
+        padding-top: 22px;
+      }
+      h2 {
+        margin: 0 0 11px;
+        font-size: 24px;
+        line-height: 1.2;
+        letter-spacing: -0.7px;
+      }
+      .included {
+        margin: 0 0 23px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .included strong {
+        color: var(--ink);
+      }
+      .form-heading {
+        margin: 0 0 18px;
+        font-size: 14px;
+      }
+      .field {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      input {
+        width: 100%;
+        min-height: 49px;
+        border: 1px solid #8c9589;
+        border-radius: 3px;
+        background: #fff;
+        padding: 11px 12px;
+        color: var(--ink);
+      }
+      input::placeholder {
+        color: #70776e;
+      }
+      button {
+        width: 100%;
+        min-height: 52px;
+        padding: 13px 16px;
+        border: 0;
+        border-radius: 3px;
+        background: var(--green);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 650;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #10452f;
+      }
+      .free {
+        margin: 11px 0 0;
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .prototype {
+        margin: 22px 0 0;
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .details {
+        max-width: 680px;
+        padding: 27px 0;
+        border-top: 1px solid var(--line);
+      }
+      .details h2 {
+        font-size: 17px;
+        letter-spacing: -0.3px;
+      }
+      .details p {
+        color: var(--muted);
+        font-size: 14px;
+        margin: 0;
+      }
+      .terms {
+        margin: 0 0 25px;
+        color: var(--muted);
+        font-size: 12px;
+        max-width: 740px;
+      }
+      footer {
+        padding: 17px 0 24px;
+        border-top: 1px solid var(--line);
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .error {
+        color: #a52b20;
+        font-size: 14px;
+        margin: 0 0 13px;
+      }
+      .success {
+        display: block;
+        max-width: 520px;
+        padding: 48px 0 60px;
+      }
+      .success h1 {
+        font-size: 40px;
+      }
+      .success p {
+        margin: 0 0 23px;
+      }
+      .success button {
+        width: auto;
+      }
+      @media (min-width: 780px) {
+        .page {
+          padding: 0 36px;
+        }
+        header {
+          padding: 26px 0;
+        }
+        main {
+          display: grid;
+          grid-template-columns: 1.15fr 1fr;
+          gap: 65px;
+          padding: 64px 0 52px;
+        }
+        .offer {
+          margin: 0;
+          padding-top: 24px;
+        }
+        .audience {
+          margin-bottom: 24px;
+        }
+        .intro {
+          font-size: 18px;
+          margin-top: 28px;
+        }
+        .explanation {
+          font-size: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <a class="brand" href="./" aria-label="Invisi, início">invisi</a>
+        <span class="category">Para empresários e empresárias</span>
+      </header>
+      <div id="landing">
+        <main>
+          <section aria-labelledby="headline">
+            <p class="audience"></p>
+            <h1 id="headline">
+              Proteção e privacidade para quem empreende
+              <h2>
+                Descubra onde seu telefone, endereço, e-mail, nome e CPF estão
+                expostos e solicite a remoção com base na LGPD.
+              </h2>
+            </h1>
+          </section>
+          <section class="offer" aria-labelledby="offer-title">
+            <h2 id="offer-title">
+              Teste gratuitamente.<br />Proteja-se na internet.
+            </h2>
+            <p class="form-heading">
+              Você recebe o resultado por WhatsApp, te atualizamos durante todo
+              o processo com
+              <strong>os registros de antes e depois</strong> das remoções.
+            </p>
+            <form id="lead-form">
+              <input
+                type="checkbox"
+                name="botcheck"
+                style="display: none"
+                tabindex="-1"
+                autocomplete="off"
+                aria-hidden="true"
+              />
+              <div class="field">
+                <label for="full-name">Nome completo</label>
+                <input
+                  id="full-name"
+                  name="name"
+                  autocomplete="name"
+                  placeholder="Seu nome e sobrenome"
+                  required
+                  minlength="3"
+                  maxlength="120"
+                />
+              </div>
+              <div class="field">
+                <label for="phone">WhatsApp com DDD</label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  inputmode="tel"
+                  autocomplete="tel"
+                  placeholder="(11) 99999-9999"
+                  required
+                  maxlength="22"
+                  aria-describedby="form-error"
+                />
+              </div>
+              <p class="error" id="form-error" role="alert" hidden></p>
+              <button type="submit">Quero testar gratuitamente</button>
+              <p class="free">Sem cartão. Sem assinatura.</p>
+              <p class="free">Ao enviar, você concorda com a <a href="privacidade.html">Política de Privacidade</a>.</p>
+            </form>
+          </section>
+        </main>
+      </div>
+      <main
+        class="success"
+        id="success"
+        aria-labelledby="success-title"
+        tabindex="-1"
+        hidden
+      >
+        <h1 id="success-title">Obrigado pelo interesse.</h1>
+        <p>
+          Recebemos seu pedido. Nossa equipe vai entrar em contato pelo WhatsApp.
+        </p>
+        <button type="button" id="restart">Voltar à página</button>
+      </main>
+      <footer>Invisi · Diagnóstico e remoção de dados pessoais</footer>
+    </div>
+    <script>
+      (function (w, d) {
+        if (w.fbq) return;
+        var n = (w.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        });
+        if (!w._fbq) w._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        fbq('set', 'autoConfig', false, '1470624634449778');
+        fbq('init', '1470624634449778');
+        fbq('track', 'PageView');
+
+        var started = false;
+        function loadTags() {
+          if (started) return;
+          started = true;
+          var first = d.getElementsByTagName("script")[0];
+          var pixel = d.createElement("script");
+          pixel.async = true;
+          pixel.src = "https://connect.facebook.net/en_US/fbevents.js";
+          first.parentNode.insertBefore(pixel, first);
+
+          w.dataLayer = w.dataLayer || [];
+          w.gtag = function () {
+            w.dataLayer.push(arguments);
+          };
+          w.gtag("js", new Date());
+          w.gtag("config", "G-NJHBCVJHD8");
+          var ga = d.createElement("script");
+          ga.async = true;
+          ga.src =
+            "https://www.googletagmanager.com/gtag/js?id=G-NJHBCVJHD8";
+          first.parentNode.insertBefore(ga, first);
+        }
+
+        function afterPaint() {
+          var frames = 0;
+          function step() {
+            frames += 1;
+            if (frames < 2) {
+              w.requestAnimationFrame(step);
+              return;
+            }
+            if (typeof w.requestIdleCallback === "function") {
+              w.requestIdleCallback(loadTags, { timeout: 1500 });
+            } else {
+              w.setTimeout(loadTags, 1);
+            }
+          }
+          if (typeof w.requestAnimationFrame === "function") {
+            w.requestAnimationFrame(step);
+          } else {
+            loadTags();
+          }
+        }
+
+        if (d.readyState === "complete") afterPaint();
+        else w.addEventListener("load", afterPaint);
+      })(window, document);
+    </script>
+    <script src="funil.js?v=20261114-2" defer></script>
+    <script src="teste-gratis.js?v=20261117-1" defer></script>
+  </body>
+</html>
